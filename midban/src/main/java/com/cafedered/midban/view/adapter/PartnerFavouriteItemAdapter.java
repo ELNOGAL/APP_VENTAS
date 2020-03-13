@@ -205,7 +205,7 @@ public class PartnerFavouriteItemAdapter extends BaseAdapter {
                 .getInstance()
                 .getLastOrderLineForProductAndPartner(
                         product.getProduct().getId(), partnerId).getPriceUnit()
-                + MidbanApplication.getContext().getString(
+                + " " + MidbanApplication.getContext().getString(
                 R.string.currency_symbol));
         holder.uomQty.setText("" + product.getUomQty());
         if (product.getProductPackaging() != null && product.getProductPackaging().equals("unit"))
@@ -221,7 +221,7 @@ public class PartnerFavouriteItemAdapter extends BaseAdapter {
                     null,
                     MidbanApplication.getContext().getResources()
                             .getDrawable(R.drawable.ficha_producto_caja), null);
-        holder.code.setText(product.getProduct().getId().toString());
+        holder.code.setText(product.getProduct().getDefaultCode().toString());
         if (null != product.getProduct().getProductUl()) {
             holder.packaging.setText(product.getProduct().getProductUl()
                     .getName());
@@ -233,11 +233,11 @@ public class PartnerFavouriteItemAdapter extends BaseAdapter {
             categories = product.getProduct().getProductTemplate()
                 .getProductCategory().getCompleteName().split("/");
             if (categories.length > 1)
-                holder.category.setText(categories[categories.length-2]);
+                holder.category.setText(categories[categories.length-2].trim());
             else holder.category.setText("");
             if (categories.length > 1)
                 holder.subcategory.setText(product.getProduct().getProductTemplate()
-                        .getProductCategory().getName());
+                        .getProductCategory().getName().trim());
         }
         else holder.category.setText("");
 

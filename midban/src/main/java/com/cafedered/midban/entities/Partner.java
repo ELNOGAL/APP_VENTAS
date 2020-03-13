@@ -160,8 +160,6 @@ public class Partner extends BaseRemoteEntity {
     @RemoteProperty(name = "property_product_pricelist_indirect_invoicing")
     private Number pricelistIndirectId;
 
-
-
     @Property(columnName = "user_id")
     @RemoteProperty(name = "user_id")
     private Number userId;
@@ -173,6 +171,15 @@ public class Partner extends BaseRemoteEntity {
     @Property(columnName = "property_payment_term")
     @RemoteProperty(name = "property_payment_term")
     private Number propertyPaymentTerm;
+
+    @Property(columnName = "customer_state")
+    @RemoteProperty(name = "customer_state")
+    private String customerState;
+
+    @Property(columnName = "route_id")
+    @RemoteProperty(name = "route_id")
+    private Number routeId;
+
 
     public Number getUserId() {
         return userId;
@@ -422,16 +429,13 @@ public class Partner extends BaseRemoteEntity {
         FilterCollection filters = new FilterCollection();
         try {
             Long uId = ((User) MidbanApplication.getValueFromContext(ContextAttributes.LOGGED_USER)).getId();
-            /*if (uId == 23){
-                filters.add("customer", "=", true);
-            }
-            else
-             */
             {
-                filters.add(FilterCollection.FilterOperator.AND);
-                filters.add(FilterCollection.FilterOperator.AND);
+                // filters.add(FilterCollection.FilterOperator.AND);
+                // filters.add(FilterCollection.FilterOperator.AND);
+                // filters.add(FilterCollection.FilterOperator.AND);
                 filters.add("customer", "=", true);
                 filters.add("user_id", "=", uId);
+                filters.add("customer_state", "in", new String[] {"active", "active_no_sales"});
                 filters.add(FilterCollection.FilterOperator.OR);
                 filters.add("is_company", "=", true);
                 filters.add("type", "=", "delivery");
@@ -487,5 +491,21 @@ public class Partner extends BaseRemoteEntity {
 
     public void setPricelistIndirectId(Number pricelistIndirectId) {
         this.pricelistIndirectId = pricelistIndirectId;
+    }
+
+    public String getCustomerState() {
+        return customerState;
+    }
+
+    public void setCustomerState(String customerState) {
+        this.customerState = customerState;
+    }
+
+    public Number getRouteId() {
+        return routeId;
+    }
+
+    public void setRouteId(Number routeId) {
+        this.routeId = routeId;
     }
 }

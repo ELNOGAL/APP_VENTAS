@@ -186,6 +186,8 @@ public class PartnerDetailFragment extends BaseSupportFragment {
                 || OrderRepository.getCurrentOrder().getPartnerId()
                         .equals(partner.getId())) {
             OrderRepository.getCurrentOrder().setPartnerId(partner.getId());
+            MidbanApplication.putValueInContext(ContextAttributes.PARTNER_TO_ORDER, partner);
+            MidbanApplication.putValueInContext(ContextAttributes.READ_ONLY_ORDER_MODE, Boolean.FALSE);
             startActivityForResult(
                     getNextIntent(new Bundle(), getView(), OrderActivity.class),
                     0);

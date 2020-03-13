@@ -203,7 +203,7 @@ public class TodayFragment extends BaseSupportFragment {
                                                 // show calendar view
             picker.setMaxDate(new Date().getTime());
             Calendar calendar = Calendar.getInstance();
-            calendar.add(Calendar.DATE, -7);
+            calendar.add(Calendar.DATE, -14);
             picker.setMinDate(calendar.getTimeInMillis());
             return dialog;
         }

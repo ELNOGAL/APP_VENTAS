@@ -320,9 +320,7 @@ public class Order extends BaseRemoteEntity implements Comparable<Order> {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {
             filters.add("date_order", ">", formatter.format(calendar.getTime()));
-            // se quieren todos, no sólo los de usuario logueado
-            // https://bitbucket.org/noroestesoluciones/odoo-app/issues/74/cambios-en-la-pesta-a-historial
-            // filters.add("create_uid", "=", ((User) MidbanApplication.getValueFromContext(ContextAttributes.LOGGED_USER)).getId());
+            filters.add("user_id", "=", ((User) MidbanApplication.getValueFromContext(ContextAttributes.LOGGED_USER)).getId());
         } catch (OpeneERPApiException e) {
             e.printStackTrace();
         }

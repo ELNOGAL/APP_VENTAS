@@ -185,8 +185,16 @@ public class OrderListItemAdapter extends BaseAdapter {
             holder.state.setText("Borrador");
         else if (order.getState() != null && order.getState().contains("sent"))
             holder.state.setText("Borrador");
+        else if (order.getState() != null && order.getState().contains("wait_risk"))
+            holder.state.setText("Esp. riesgo");
         else if (order.getState() != null && order.getState().contains("progress"))
             holder.state.setText("Confirmado");
+        else if (order.getState() != null && order.getState().contains("shipping_except"))
+            holder.state.setText("Excepción");
+        else if (order.getState() != null && order.getState().contains("done"))
+            holder.state.setText("Realizado");
+        else if (order.getState() != null)
+            holder.state.setText(order.getState());
         if (order.getPendingSynchronization() != null && order.getPendingSynchronization() == 1) {
             holder.state.setText("Pte. sincro");
             holder.edit.setVisibility(View.GONE);
