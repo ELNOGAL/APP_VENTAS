@@ -50,6 +50,7 @@ import com.cafedered.midban.entities.Account;
 import com.cafedered.midban.entities.AccountJournal;
 import com.cafedered.midban.entities.AccountMoveLine;
 import com.cafedered.midban.entities.AccountPaymentTerm;
+import com.cafedered.midban.entities.CommercialRoute;
 import com.cafedered.midban.entities.Company;
 import com.cafedered.midban.entities.Contact;
 import com.cafedered.midban.entities.Invoice;
@@ -85,6 +86,7 @@ import com.cafedered.midban.service.repositories.AccountJournalRepository;
 import com.cafedered.midban.service.repositories.AccountMoveLineRepository;
 import com.cafedered.midban.service.repositories.AccountPaymentTermRepository;
 import com.cafedered.midban.service.repositories.AccountRepository;
+import com.cafedered.midban.service.repositories.CommercialRouteRepository;
 import com.cafedered.midban.service.repositories.CompanyRepository;
 import com.cafedered.midban.service.repositories.ConfigurationRepository;
 import com.cafedered.midban.service.repositories.ContactRepository;
@@ -141,7 +143,7 @@ public class SynchronizationAsyncTask extends AsyncTask<User, String, Boolean> {
     private TextView messagesArea;
     private Context context;
     private Integer currentProgress;
-    public static int MAX_PROGRESS = 27;
+    public static int MAX_PROGRESS = 28;
     private String[] lastPublishedProgress;
 
     private static SynchronizationAsyncTask instance;
@@ -186,6 +188,7 @@ public class SynchronizationAsyncTask extends AsyncTask<User, String, Boolean> {
         User user = params[0];
         Long initTime = new Date().getTime();
         String error = "";
+
         try {
             lastPublishedProgress = new String[] { "Sincronización en curso...",
                     "" + currentProgress++ };
@@ -289,6 +292,7 @@ public class SynchronizationAsyncTask extends AsyncTask<User, String, Boolean> {
                         "Error al sincronizar Weekdays.");
             }
             */
+
             try {
                 lastPublishedProgress = new String[] { "Sincronizando impuestos...",
                         "" + currentProgress++ };
@@ -300,6 +304,7 @@ public class SynchronizationAsyncTask extends AsyncTask<User, String, Boolean> {
                 throw new SynchronizationErrorException(e,
                         "Error al sincronizar impuestos.");
             }
+
             try {
                 lastPublishedProgress = new String[] { "Sincronizando categorías de cliente...",
                         "" + currentProgress++ };
@@ -311,6 +316,19 @@ public class SynchronizationAsyncTask extends AsyncTask<User, String, Boolean> {
                 throw new SynchronizationErrorException(e,
                         "Error al sincronizar categorías de cliente.");
             }
+
+            try {
+                lastPublishedProgress =new String[] { "Sincronizando rutas comerciales...",
+                        "" + currentProgress++ };
+                publishProgress(lastPublishedProgress);
+                CommercialRouteRepository.getInstance().getRemoteObjects(new CommercialRoute(),
+                        user.getLogin(), user.getPasswd(), true);
+
+            } catch (ConfigurationException e) {
+                throw new SynchronizationErrorException(e,
+                        "Error al sincronizar rutas comerciales.");
+            }
+
             lastPublishedProgress = new String[] { "Sincronizando clientes pendientes...",
                     "" + currentProgress++ };
             publishProgress(lastPublishedProgress);

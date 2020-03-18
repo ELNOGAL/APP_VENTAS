@@ -7,7 +7,7 @@
     android:padding="@dimen/activity_horizontal_margin" >
 
     <Spinner
-        android:id="@+id/dialog_partner_filters_spinner_type"
+        android:id="@+id/dialog_partner_filters_spinner_commercial_route"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingRight="@dimen/activity_horizontal_margin" />
@@ -19,12 +19,14 @@
         android:paddingRight="@dimen/activity_horizontal_margin" />
 
 
-    <org.droidparts.widget.ClearableEditText         android:drawableRight="@drawable/general_filtrar_borrar"         android:drawablePadding="12dp"
+    <org.droidparts.widget.ClearableEditText
+        android:drawableRight="@drawable/general_filtrar_borrar"
+        android:drawablePadding="12dp"
         android:id="@+id/dialog_partner_filters_editext_zip"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="number"
-        android:hint="@string/dialog_partner_filters_zip"
+        android:hint="@string/filter_partners_dialog_zip"
         android:paddingRight="@dimen/activity_horizontal_margin" />
 
     <Button

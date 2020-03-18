@@ -34,9 +34,14 @@ import android.widget.TextView;
 
 import com.cafedered.cafedroidlitedao.extractor.Restriction;
 import com.cafedered.midban.R;
+import com.cafedered.midban.conf.ContextAttributes;
+import com.cafedered.midban.conf.MidbanApplication;
+import com.cafedered.midban.entities.CommercialRoute;
 import com.cafedered.midban.entities.Partner;
 import com.cafedered.midban.entities.PartnerCategory;
 import com.cafedered.midban.entities.State;
+import com.cafedered.midban.entities.User;
+import com.cafedered.midban.service.repositories.CommercialRouteRepository;
 import com.cafedered.midban.service.repositories.PartnerCategoryRepository;
 import com.cafedered.midban.service.repositories.PartnerRepository;
 import com.cafedered.midban.service.repositories.StateRepository;
@@ -48,7 +53,7 @@ import com.cafedered.midban.view.fragments.PartnerListFragment;
 
 public class FilterPartnersDialog extends Dialog {
 
-    private String type;
+    private String route;
     private String city;
     private String zipCode;
     List<Partner> currentPartners;
@@ -72,18 +77,18 @@ public class FilterPartnersDialog extends Dialog {
         super(context);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.setContentView(R.layout.dialog_partner_filters);
-        final Spinner types = (Spinner) findViewById(R.id.dialog_partner_filters_spinner_type);
-        Set setTypes = new LinkedHashSet<String>();
-        setTypes.add(getContext().getResources().getString(
-                R.string.filter_partners_dialog_types));
+        final Spinner routes = (Spinner) findViewById(R.id.dialog_partner_filters_spinner_commercial_route);
+        Set setRoutes = new LinkedHashSet<String>();
+        setRoutes.add(getContext().getResources().getString(
+                R.string.filter_partners_dialog_commercial_route));
         try {
-            setTypes.addAll(PartnerCategoryRepository.getInstance()
+            setRoutes.addAll(CommercialRouteRepository.getInstance()
                     .getAllDistinctSomeProperty("name"));
         } catch (ServiceException e1) {
             if (LoggerUtil.isDebugEnabled())
                 e1.printStackTrace();
         }
-        types.setAdapter(new CustomArrayAdapter<String>(context, setTypes));
+        routes.setAdapter(new CustomArrayAdapter<String>(context, setRoutes));
         final Spinner cities = (Spinner) findViewById(R.id.dialog_partner_filters_spinner_city);
         Set setCities = new LinkedHashSet<String>();
         setCities.add(getContext().getResources().getString(
@@ -105,16 +110,17 @@ public class FilterPartnersDialog extends Dialog {
             @Override
             public void onClick(View v) {
                 // FIXME add the correct values.
-                type = types.getSelectedItem().toString();
+                route = routes.getSelectedItem().toString();
                 city = cities.getSelectedItem().toString();
                 zipCode = zip.getText().toString();
                 partnerExample = new Partner();
-                if (!type.equals(getContext().getResources().getString(
-                        R.string.filter_partners_dialog_types))) {
-                    PartnerCategory categoryExample = new PartnerCategory();
-                    categoryExample.setName(type);
+                partnerExample.setUserId(((User) MidbanApplication.getValueFromContext(ContextAttributes.LOGGED_USER)).getId());
+                if (!route.equals(getContext().getResources().getString(
+                        R.string.filter_partners_dialog_commercial_route))) {
+                    CommercialRoute routeExample = new CommercialRoute();
+                    routeExample.setName(route);
                     try {
-                        partnerExample.setCategoryId(PartnerCategoryRepository.getInstance().getByExample(categoryExample, Restriction.AND, false, 0, 100000).get(0).getId());
+                        partnerExample.setCommercialRouteId(CommercialRouteRepository.getInstance().getByExample(routeExample, Restriction.AND, false, 0, 100000).get(0).getId());
                     } catch (ServiceException e) {
                         e.printStackTrace();
                     }
@@ -126,8 +132,8 @@ public class FilterPartnersDialog extends Dialog {
                     partnerExample.setZip(zipCode);
                 try {
                     currentPartners = PartnerRepository.getInstance()
-                            .getByExample(partnerExample, Restriction.AND,
-                                    true, 0, 10);
+                            .getByExampleUser(partnerExample, Restriction.AND,
+                                    true, 100000, 0);
                     adapter = new PartnerListItemAdapter(fragment,
                             currentPartners);
                     list.setAdapter(adapter);
@@ -144,7 +150,7 @@ public class FilterPartnersDialog extends Dialog {
 
             @Override
             public void onClick(View v) {
-                types.setSelection(0);
+                routes.setSelection(0);
                 cities.setSelection(0);
                 zip.setText("");
             }

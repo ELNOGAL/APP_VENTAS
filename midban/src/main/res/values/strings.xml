@@ -49,6 +49,7 @@
         <item>com.cafedered.midban.entities.Warehouse</item>
         <item>com.cafedered.midban.entities.Shop</item>
         <item>com.cafedered.midban.entities.PricelistPrices</item>
+        <item>com.cafedered.midban.entities.CommercialRoute</item>
     </string-array>
 
     <string name="configuration_debug_enabled">false</string>
@@ -137,7 +138,8 @@
     <string name="filter_partners_dialog_types">Tipo...</string>
     <string name="filter_partners_dialog_cities">Localidad...</string>
     <string name="filter_partners_dialog_states">Provincia...</string>
-    <string name="dialog_partner_filters_zip">Código postal</string>
+    <string name="filter_partners_dialog_zip">Código postal</string>
+    <string name="filter_partners_dialog_commercial_route">Ruta...</string>
 
     <!-- activity_google_maps -->
     <string name="maps_partner_location_cannot_be_retrieved">No se puede obtener la localización del cliente. Probablemente es errónea.</string>

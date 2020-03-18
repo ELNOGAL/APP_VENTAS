@@ -176,9 +176,9 @@ public class Partner extends BaseRemoteEntity {
     @RemoteProperty(name = "customer_state")
     private String customerState;
 
-    @Property(columnName = "route_id")
-    @RemoteProperty(name = "route_id")
-    private Number routeId;
+    @Property(columnName = "commercial_route_id")
+    @RemoteProperty(name = "commercial_route_id")
+    private Number commercialRouteId;
 
 
     public Number getUserId() {
@@ -501,11 +501,11 @@ public class Partner extends BaseRemoteEntity {
         this.customerState = customerState;
     }
 
-    public Number getRouteId() {
-        return routeId;
+    public Number getCommercialRouteId() {
+        return commercialRouteId;
     }
 
-    public void setRouteId(Number routeId) {
-        this.routeId = routeId;
+    public void setCommercialRouteId(Number commercialRouteId) {
+        this.commercialRouteId = commercialRouteId;
     }
 }
