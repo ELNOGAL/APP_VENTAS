@@ -130,7 +130,7 @@ import java.util.logging.Logger;
 public class OrderNewDispositionFragment extends BaseSupportFragment implements CancelAsyncTaskListener,
         ProductOrderItemAdapter.IProductSelectable, OrderLinesNewDispositionAdapter.OrderLineUnitChangedListener, OrderLinesNewDispositionAdapter.OrderLineSelected {
 
-    private boolean mostrarFavoritos = false;
+    private boolean mostrarFavoritos = true;
 
     @Wire(view = R.id.fragment_order_shop_tv)
     private TextView shopView;
@@ -216,6 +216,10 @@ public class OrderNewDispositionFragment extends BaseSupportFragment implements 
         if (!mostrarFavoritos) {
             favouritesToggle.setVisibility(View.GONE);
             favouriteProductsListView.setVisibility(View.GONE);
+        } else {
+            // hacemos que los favoritos no aparezcan desplegados, sino lo queremos así sobra el else
+            favouriteProductsListView.setVisibility(View.GONE);
+            favouritesToggle.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(MidbanApplication.getContext(), R.drawable.general_flecha_abajo), null);
         }
 
         setHasOptionsMenu(true);
@@ -434,21 +438,12 @@ public class OrderNewDispositionFragment extends BaseSupportFragment implements 
     }
 
     private void obtainProductsForPartner(Partner partner) {
-        if (mostrarFavoritos) {
-            if (favouriteProducts == null) {
-                favouriteProducts = OrderRepository.getInstance().getProductFavouritesForPartner(partner.getId());
-                currentFavouriteProducts.addAll(favouriteProducts);
-                adapterFavourite = new ProductOrderItemAdapter(this, currentFavouriteProducts);
-                favouriteProductsListView.setAdapter(adapterFavourite);
-            }
-        }
         // si recargo tengo que limpiar la lista anterior
         if (allProducts != null) {
             allProducts.clear();
             allProducts = null;
             indexListAllCatalog = -1;
         }
-
         if (allProducts == null && indexListAllCatalog == -1) {
             boolean loaded = false;
 
@@ -462,7 +457,7 @@ public class OrderNewDispositionFragment extends BaseSupportFragment implements 
  - Si indirect_invoicing = True
     - En primer lugar busca la tarifa de indirectos en el campo del cliente "property_product_pricelist_indirect_invoicing" (si fuese una direccion lo buscaría en su "parent_id")
     - Si no hay nada en ese campo:
-    - Si en la tienda está informado  "pricelist_id" , cargaria productos y precios de esta tarifa
+    - Si en la tienda está informado "pricelist_id" , cargaria productos y precios de esta tarifa
     - Si no está informado "pricelist_id" , caería en el caso de indirect_invoicing = False
 
   - Si indirect_invoicing = False
@@ -479,7 +474,6 @@ public class OrderNewDispositionFragment extends BaseSupportFragment implements 
                             if ((p != null) && (p.getType() != null) && (p.getType().equals("delivery")) && (p.getParentId().longValue() > 0)) {
                                 parent = PartnerRepository.getInstance().getById(p.getParentId().longValue());
                             }
-
                             // - En primer lugar busca la tarifa de indirectos en el campo del cliente "property_product_pricelist_indirect_invoicing" (si fuese una direccion lo buscaría en su "parent_id")
                             if ((parent != null) && (parent.getPricelistIndirectId() != null)) {
                                 loaded = true;
@@ -492,7 +486,6 @@ public class OrderNewDispositionFragment extends BaseSupportFragment implements 
                                     setTarifaActual(p.getPricelistIndirectId().toString());
                                 }
                             }
-
                             // - Si en la tienda está informado  "pricelist_id" , cargaria productos y precios de esta tarifa
                             if (!loaded) {
                                 if (shop.getPricelistId() != null) {
@@ -502,8 +495,6 @@ public class OrderNewDispositionFragment extends BaseSupportFragment implements 
                                 }
                             }
                         }
-
-
                         // - Si es una dirección busca su parent_id, coge la tarifa de este y carga estos productos y tarifas
                         if (!loaded) {
                             if ((parent != null) && (parent.getPricelistId() != null)) {
@@ -520,9 +511,7 @@ public class OrderNewDispositionFragment extends BaseSupportFragment implements 
                                 setTarifaActual(p.getPricelistId().toString());
                             }
                         }
-
                     }
-
                 } catch (ConfigurationException e) {
                     e.printStackTrace();
                 } catch (ServiceException e) {
@@ -537,8 +526,8 @@ public class OrderNewDispositionFragment extends BaseSupportFragment implements 
             adapterAll = new ProductOrderItemAdapter(this, currentAllProducts);
             allCatalogListView.setAdapter(adapterAll);
 
-            productSearchField.setText("");
             //onSearchTextChanged();
+            productSearchField.setText("");
 
             // vuelvo a mostrar la opción de búsqueda
             productSearchField.setVisibility(View.VISIBLE);
@@ -573,6 +562,29 @@ public class OrderNewDispositionFragment extends BaseSupportFragment implements 
         } else {
             if (indexListAllCatalog != -1 && topListAllCatalog != -1) {
                 allCatalogListView.setSelectionFromTop(indexListAllCatalog, topListAllCatalog);
+            }
+        }
+        if (mostrarFavoritos) {
+            if (favouriteProducts != null) {
+                favouriteProducts.clear();
+                favouriteProducts = null;
+            }
+            if (favouriteProducts == null) {
+                Long shop = null;
+                if (OrderRepository.getCurrentOrder().getShopId() != null) {
+                    shop = OrderRepository.getCurrentOrder().getShopId().longValue();
+                }
+                favouriteProducts = OrderRepository.getInstance().
+                        getProductFavouritesForPartner(partner.getId(), shop);
+                currentFavouriteProducts.addAll(favouriteProducts);
+                adapterFavourite = new ProductOrderItemAdapter(this, currentFavouriteProducts);
+                favouriteProductsListView.setAdapter(adapterFavourite);
+
+                // onSearchTextChanged();
+                productSearchField.setText("");
+
+                // vuelvo a mostrar la opción de búsqueda
+                productSearchField.setVisibility(View.VISIBLE);
             }
         }
 
@@ -927,7 +939,6 @@ public class OrderNewDispositionFragment extends BaseSupportFragment implements 
                 orderOdoo.put("date_order", confirmOrder.getDateOrder());
             if (confirmOrder.getRequestedDate() != null)
                 orderOdoo.put("requested_date", confirmOrder.getRequestedDate());
-
         } else {
             //Estamos guardando la edición del pedido
             List<Object> linesOrderOdoo = new ArrayList<Object>();
@@ -972,7 +983,6 @@ public class OrderNewDispositionFragment extends BaseSupportFragment implements 
                 orderOdoo.put("date_order", confirmOrder.getDateOrder());
             if (confirmOrder.getRequestedDate() != null)
                 orderOdoo.put("requested_date", confirmOrder.getRequestedDate());
-
         }
 
         return orderOdoo;
@@ -1282,7 +1292,6 @@ public class OrderNewDispositionFragment extends BaseSupportFragment implements 
                 e.printStackTrace();
             }
             try {
-
                 line.setPriceSubtotal(line.getProductUosQuantity().floatValue()
                         * line.getPriceUdv().floatValue()
                         - (line.getProductUosQuantity().floatValue()

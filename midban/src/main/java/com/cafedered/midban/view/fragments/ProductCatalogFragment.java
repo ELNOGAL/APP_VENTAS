@@ -89,7 +89,7 @@ public class ProductCatalogFragment extends BaseSupportFragment implements Cance
         super.onCreate(savedInstanceState);
     }
 
-    private String priceListToFilter(){
+    private String priceListToFilter() {
         String priceListId = "";
 
         if (OrderRepository.getInstance().isOrderInitialized()
@@ -97,7 +97,7 @@ public class ProductCatalogFragment extends BaseSupportFragment implements Cance
             priceListId = (String) MidbanApplication.getValueFromContext(ContextAttributes.ACTUAL_TARIFF);
             //priceListId = OrderRepository.getCurrentOrder().getPartner().getPricelistId().toString();
         }
-        if ((priceListId == null) || ("".equals(priceListId))){
+        if ((priceListId == null) || ("".equals(priceListId))) {
             if (!MidbanApplication.priceListIdActualCompany().equals("")) {
                 priceListId = MidbanApplication.priceListIdActualCompany();
             }

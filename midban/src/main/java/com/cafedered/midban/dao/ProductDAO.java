@@ -101,8 +101,9 @@ public class ProductDAO extends BaseDAO<Product> {
                         pl.setProductId(p.getId().longValue());
                         try {
                             List<PricelistPrices> list = PricelistPricesRepository.getInstance().getByExample(pl, Restriction.AND, true, 0, 1);
-                            if (list.size() == 1){
+                            if (list.size() == 1) {
                                 p.setLstPrice(list.get(0).getPrice());
+                                p.setListPrice(list.get(0).getPrice());
                             }
                         } catch (ServiceException e1) {
                             e1.printStackTrace();

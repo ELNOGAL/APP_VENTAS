@@ -166,7 +166,17 @@ public class ProductOrderItemAdapter extends BaseAdapter {
             if (product.getWeight() != null && product.getWeight().floatValue() != 0.0F)
                 holder.eurKg.setText("€/Kg: " + new BigDecimal(product.getLstPrice().floatValue() / product.getWeight().floatValue()).setScale(2, BigDecimal.ROUND_HALF_UP));
             */
-            holder.eurKg.setText("P. Und.: " + new BigDecimal(product.getLstPrice().floatValue()).setScale(3, BigDecimal.ROUND_HALF_UP) + " €");
+            holder.eurKg.setText(
+                    "P. Und.: "
+                    + new BigDecimal(product.getLstPrice().floatValue()).setScale(3, BigDecimal.ROUND_HALF_UP)
+                    + " €");
+            if (product.getLstPrice().floatValue() != product.getListPrice().floatValue()) {
+                holder.eurKg.setText(
+                        holder.eurKg.getText() + "\n"
+                        + "P. Ant.: "
+                        +  new BigDecimal(product.getListPrice().floatValue()).setScale(3, BigDecimal.ROUND_HALF_UP)
+                        + " €");
+            }
             if (null != product.getProductUl() && (Long) product.getUl() != 0) {
                 holder.packaging.setText(product.getProductUl().getName());
             }

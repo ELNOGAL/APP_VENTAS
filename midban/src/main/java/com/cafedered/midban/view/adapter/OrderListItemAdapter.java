@@ -167,7 +167,7 @@ public class OrderListItemAdapter extends BaseAdapter {
             try {
                 holder.date
                         .setText(DateUtil.toFormattedString(DateUtil.parseDate(
-                                        order.getRequestedDate(), "yyyy-MM-dd HH:mm:ss"),
+                                order.getRequestedDate(), "yyyy-MM-dd HH:mm:ss"),
                                 "dd.MM.yyyy"));
             } catch (Exception ex) {
                 holder.date.setText("");
@@ -193,6 +193,8 @@ public class OrderListItemAdapter extends BaseAdapter {
             holder.state.setText("Excepción");
         else if (order.getState() != null && order.getState().contains("done"))
             holder.state.setText("Realizado");
+        else if (order.getState() != null && order.getState().contains("cancel"))
+            holder.state.setText("Cancelado");
         else if (order.getState() != null)
             holder.state.setText(order.getState());
         if (order.getPendingSynchronization() != null && order.getPendingSynchronization() == 1) {

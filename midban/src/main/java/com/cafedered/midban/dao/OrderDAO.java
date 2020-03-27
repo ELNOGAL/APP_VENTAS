@@ -34,9 +34,13 @@ import com.cafedered.cafedroidlitedao.annotations.Entity;
 import com.cafedered.cafedroidlitedao.exceptions.BadConfigurationException;
 import com.cafedered.cafedroidlitedao.exceptions.DatabaseException;
 import com.cafedered.cafedroidlitedao.extractor.JDBCQueryMaker;
+import com.cafedered.cafedroidlitedao.extractor.Restriction;
+import com.cafedered.midban.conf.ContextAttributes;
+import com.cafedered.midban.conf.MidbanApplication;
 import com.cafedered.midban.entities.BaseEntity;
 import com.cafedered.midban.entities.Order;
 import com.cafedered.midban.entities.OrderLine;
+import com.cafedered.midban.entities.Partner;
 import com.cafedered.midban.entities.PricelistPrices;
 import com.cafedered.midban.entities.Product;
 import com.cafedered.midban.entities.ProductCategory;
@@ -44,6 +48,8 @@ import com.cafedered.midban.entities.ProductTemplate;
 import com.cafedered.midban.entities.ProductUom;
 import com.cafedered.midban.entities.decorators.LastSaleCustomObject;
 import com.cafedered.midban.service.repositories.OrderRepository;
+import com.cafedered.midban.service.repositories.PartnerRepository;
+import com.cafedered.midban.service.repositories.PricelistPricesRepository;
 import com.cafedered.midban.service.repositories.ProductUomRepository;
 import com.cafedered.midban.utils.DateUtil;
 import com.cafedered.midban.utils.LoggerUtil;
@@ -61,7 +67,7 @@ public class OrderDAO extends BaseDAO<Order> {
             instance = new OrderDAO();
         return instance;
     }
-    public List<Product> getProductsOfPartnerWithDateFilters(Long idPartner, int datesBack) {
+    public List<Product> getProductsOfPartnerWithDateFilters(Long idPartner, Long idShop, int datesBack) {
         String query;
         List<Product> products = new ArrayList<Product>();
         try {
@@ -82,6 +88,10 @@ public class OrderDAO extends BaseDAO<Order> {
                     + " AND l.order_id = o.id"
                     + " AND l.product_id = p.id"
                     + " AND l.product_id = tpp.product_id";
+            if (idShop != null) {
+                query = query
+                        + " AND o.shop_id = " + idShop;
+            }
             if (datesBack != OrderRepository.DateFilters.LAST_ORDER
                     .getDatesBack()) {
                 Calendar date = Calendar.getInstance();
@@ -122,6 +132,31 @@ public class OrderDAO extends BaseDAO<Order> {
                 cursor.moveToFirst();
                 while (!cursor.isAfterLast()) {
                     Product aProduct = (Product)JDBCQueryMaker.getObjectFromCursor(cursor, new Product());
+                    try {
+                        Partner partner = PartnerRepository.getInstance().getById(idPartner);
+                        List<LastSaleCustomObject> result = OrderRepository.getInstance().getProductLastSalesForPartner(aProduct, partner);
+                        if (result.size() > 0) {
+                            // Precio última venta
+                            aProduct.setListPrice(Float.parseFloat(result.get(0).getPrice()));
+                        }
+                        String tarifaPorLaQueFiltrar = (String) MidbanApplication.getValueFromContext(ContextAttributes.ACTUAL_TARIFF);
+                        if (!"".equals(tarifaPorLaQueFiltrar) && tarifaPorLaQueFiltrar != null) {
+                            PricelistPrices pl = new PricelistPrices();
+                            pl.setPricelistId(Long.parseLong(tarifaPorLaQueFiltrar));
+                            pl.setProductId(aProduct.getId().longValue());
+                            List<PricelistPrices> list = PricelistPricesRepository.getInstance().getByExample(pl, Restriction.AND, true, 0, 1);
+                            if (list.size() == 1) {
+                                // Precio tarifa
+                                aProduct.setLstPrice(list.get(0).getPrice());
+                            }
+                        }
+                    } catch (ConfigurationException e) {
+                        e.printStackTrace();
+                    } catch (ServiceException e) {
+                        e.printStackTrace();
+                    } catch (NullPointerException e) {
+                        e.printStackTrace();
+                    }
                     productMap.put(aProduct.getId(), aProduct);
                     cursor.move(1);
                 }
@@ -219,7 +254,8 @@ public class OrderDAO extends BaseDAO<Order> {
                 + "WHERE o.partner_id = "
                 + partnerId
                 + " AND l.product_id = "
-                + productId + " AND l.order_id = o.id AND p.id = " + productId;
+                + productId + " AND l.order_id = o.id AND p.id = " + productId
+                + " ORDER BY o.date_order DESC";
         if (LoggerUtil.isDebugEnabled())
             System.out.println(query);
         Cursor cursor = getDaoHelper().getReadableDatabase().rawQuery(query,

@@ -110,9 +110,9 @@ public class OrderRepository extends BaseRepository<Order, OrderDAO> {
         currentOrder = null;
     }
 
-    public List<Product> getProductFavouritesForPartner(Long idPartner) {
+    public List<Product> getProductFavouritesForPartner(Long idPartner, Long idShop) {
         return dao.getProductsOfPartnerWithDateFilters(
-                idPartner, DateFilters.LAST_90_DAYS.getDatesBack());
+                idPartner, idShop, DateFilters.LAST_90_DAYS.getDatesBack());
     }
 
     @SuppressLint("DefaultLocale")
