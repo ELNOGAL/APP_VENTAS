@@ -136,7 +136,7 @@ public class OrderDAO extends BaseDAO<Order> {
                         Partner partner = PartnerRepository.getInstance().getById(idPartner);
                         List<LastSaleCustomObject> result = OrderRepository.getInstance().getProductLastSalesForPartner(aProduct, partner);
                         if (result.size() > 0) {
-                            // Precio última venta
+                            // Precio Ãºltima venta
                             aProduct.setListPrice(Float.parseFloat(result.get(0).getPrice()));
                         }
                         String tarifaPorLaQueFiltrar = (String) MidbanApplication.getValueFromContext(ContextAttributes.ACTUAL_TARIFF);
