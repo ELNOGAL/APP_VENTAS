@@ -100,8 +100,9 @@ public class OrderDAO extends BaseDAO<Order> {
                         + " AND o.date_order > '"
                         + DateUtil.toFormattedString(date.getTime(),
                         "yyyy-MM-dd") + "'";
-                query = query + " AND p.product_tmpl_id = t.id AND t.categ_id = c.id ";
-                query = query + " ORDER BY p.default_code ";
+                query = query + " AND p.product_tmpl_id = t.id AND t.categ_id = c.id";
+                query = query + " GROUP BY p.default_code";
+                query = query + " ORDER BY p.default_code";
             } else {
                 Long idOrder = null;
                 Cursor cursor = getDaoHelper()

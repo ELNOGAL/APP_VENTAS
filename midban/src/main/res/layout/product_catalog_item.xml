@@ -38,8 +38,7 @@
             android:id="@+id/product_catalog_item_code"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/h5"
-            android:textColor="@color/midban_secondary_text_color" />
+            android:textSize="@dimen/h5" />
 
         <TextView
             android:id="@+id/product_catalog_item_packaging"

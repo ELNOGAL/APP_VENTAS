@@ -371,7 +371,7 @@ public class OrderNewDispositionFragment extends BaseSupportFragment implements 
         reloadProducts =
                 (OrderRepository.getCurrentOrder() != null) &&
                 (OrderRepository.getCurrentOrder().getShopId() != null) &&
-                ((allProducts == null) ||((allProducts != null) && (allProducts.size() == 0)));
+                ((currentAllProducts == null) || ((currentAllProducts != null) && (currentAllProducts.size() == 0)));
         loadOnResume();
     }
 
