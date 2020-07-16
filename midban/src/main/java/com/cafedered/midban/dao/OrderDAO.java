@@ -71,6 +71,18 @@ public class OrderDAO extends BaseDAO<Order> {
         String query;
         List<Product> products = new ArrayList<Product>();
         try {
+            // Tenemos que buscar el commercial_partner_id, ya que las lineas de pedido no guardan la dirección de entrega
+            // y si el idPartner corresponde a una dirección nunca tendría resultados
+            Number commercialPartner = PartnerRepository.getInstance().getById(idPartner).getCommercialPartnerId();
+            idPartner = commercialPartner.longValue();
+        } catch (ConfigurationException e) {
+            e.printStackTrace();
+        } catch (ServiceException e) {
+            e.printStackTrace();
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+        try {
             query = "SELECT p.* FROM "
                     + ((BaseEntity) ReflectionUtils.createObject(Product.class))
                     .getClass().getAnnotation(Entity.class).tableName() + " p, "
