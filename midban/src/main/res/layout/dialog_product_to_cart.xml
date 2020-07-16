@@ -132,7 +132,7 @@
                 <org.droidparts.widget.ClearableEditText
                     android:drawableRight="@drawable/general_filtrar_borrar"
                     android:drawablePadding="12dp"
-                    android:id="@+id/dialog_product_to_cart_quantity_uom_et"
+                    android:id="@+id/dialog_product_to_cart_quantity_uos_et"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="@dimen/separator_margin"
@@ -141,10 +141,10 @@
                     android:paddingLeft="@dimen/separator_margin" />
 
                 <TextView
-                    android:id="@+id/dialog_product_to_cart_quantity_uom_name_label"
+                    android:id="@+id/dialog_product_to_cart_quantity_uos_name_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/dialog_product_to_cart_quantity_uom_et"
+                    android:layout_toRightOf="@+id/dialog_product_to_cart_quantity_uos_et"
                     android:textSize="@dimen/h4"
                     android:textStyle="italic" />
             </RelativeLayout>
@@ -182,8 +182,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="2" >
 
-                <org.droidparts.widget.ClearableEditText         android:drawableRight="@drawable/general_filtrar_borrar"         android:drawablePadding="12dp"
-                    android:id="@+id/dialog_product_to_cart_quantity_uos_et"
+                <org.droidparts.widget.ClearableEditText
+                    android:drawableRight="@drawable/general_filtrar_borrar"
+                    android:drawablePadding="12dp"
+                    android:id="@+id/dialog_product_to_cart_quantity_uom_et"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="@dimen/separator_margin"
@@ -192,15 +194,14 @@
                     android:paddingLeft="@dimen/separator_margin" />
 
                 <TextView
-                    android:id="@+id/dialog_product_to_cart_quantity_uos_name_label"
+                    android:id="@+id/dialog_product_to_cart_quantity_uom_name_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/dialog_product_to_cart_quantity_uos_et"
+                    android:layout_toRightOf="@+id/dialog_product_to_cart_quantity_uom_et"
                     android:textSize="@dimen/h4"
                     android:textStyle="italic" />
             </RelativeLayout>
         </LinearLayout>
-
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -230,7 +231,9 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="2" >
 
-                <org.droidparts.widget.ClearableEditText         android:drawableRight="@drawable/general_filtrar_borrar"         android:drawablePadding="12dp"
+                <org.droidparts.widget.ClearableEditText
+                    android:drawableRight="@drawable/general_filtrar_borrar"
+                    android:drawablePadding="12dp"
                     android:id="@+id/dialog_product_to_cart_price_et"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
@@ -240,20 +243,58 @@
                     android:paddingLeft="@dimen/separator_margin" />
 
                 <TextView
-                    android:id="@+id/dialog_product_to_cart_discount_label"
+                    android:id="@+id/dialog_product_to_cart_discount_type_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="@dimen/separator_margin"
                     android:layout_toRightOf="@+id/dialog_product_to_cart_price_et"
-                    android:text="@string/dialog_product_to_cart_discount_text" />
+                    android:text="@string/dialog_product_to_cart_discount_type_text" />
 
-                <org.droidparts.widget.ClearableEditText         android:drawableRight="@drawable/general_filtrar_borrar"         android:drawablePadding="12dp"
+                <org.droidparts.widget.ClearableEditText
+                    android:id="@+id/dialog_product_to_cart_discount_type_et"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/dialog_product_to_cart_discount_type_label"
+                    android:background="@color/midban_grey"
+                    android:drawableRight="@drawable/general_filtrar_borrar"
+                    android:drawablePadding="12dp"
+                    android:inputType="numberDecimal"
+                    android:paddingLeft="@dimen/separator_margin" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" >
+
+                <TextView
+                    android:id="@+id/dialog_product_to_cart_discount_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/dialog_product_to_cart_discount_text" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2" >
+
+                <org.droidparts.widget.ClearableEditText
                     android:id="@+id/dialog_product_to_cart_discount_et"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/dialog_product_to_cart_discount_label"
+                    android:layout_marginRight="@dimen/separator_margin"
                     android:background="@color/midban_grey"
-                    android:inputType="numberDecimal"
+                    android:drawableRight="@drawable/general_filtrar_borrar"
+                    android:drawablePadding="12dp"
+                    android:enabled="false"
+                    android:inputType="number"
                     android:paddingLeft="@dimen/separator_margin" />
             </RelativeLayout>
         </LinearLayout>

@@ -253,6 +253,21 @@ public class Product extends BaseRemoteEntity {
     @Property(columnName = "substitute_products")
     private String substituteProducts;
 
+    @Property(columnName = "discount")
+    private Number discount;
+
+    @Property(columnName = "discount1")
+    private Number discount1;
+
+    @Property(columnName = "discount2")
+    private Number discount2;
+
+    @Property(columnName = "discount3")
+    private Number discount3;
+
+    @Property(columnName = "favourite")
+    private Boolean favourite;
+
     public Long getId() {
         return id;
     }
@@ -623,6 +638,46 @@ public class Product extends BaseRemoteEntity {
         this.substituteProducts = substituteProducts;
     }
 
+    public Number getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(Number discount) {
+        this.discount = discount;
+    }
+
+    public Number getDiscount1() {
+        return discount1;
+    }
+
+    public void setDiscount1(Number discount1) {
+        this.discount1 = discount1;
+    }
+
+    public Number getDiscount2() {
+        return discount2;
+    }
+
+    public void setDiscount2(Number discount2) {
+        this.discount2 = discount2;
+    }
+
+    public Number getDiscount3() {
+        return discount3;
+    }
+
+    public void setDiscount3(Number discount3) {
+        this.discount3 = discount3;
+    }
+
+    public Boolean getFavourite() {
+        return favourite;
+    }
+
+    public void setFavourite(Boolean favourite) {
+        this.favourite = favourite;
+    }
+
     public Number getUl() {
         return ul;
     }
@@ -724,7 +779,7 @@ public class Product extends BaseRemoteEntity {
 
     // FIXME implement this when we know data of maxDiscount for product
     public Float getMaxDiscount() {
-        return 20F;
+        return 40F;
     }
 
     public Number getUosId() {

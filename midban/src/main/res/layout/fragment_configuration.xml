@@ -17,7 +17,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/field_bottom_margin"
-            android:text="Versión: 1.0.1 - 06/03/2020 - PGC" />
+            android:text="Versión: 1.0.2 - 16/07/2020 - PGC" />
 
         <TextView
             android:id="@+id/tv_configuration_field_protocol"
@@ -25,7 +25,9 @@
             android:layout_height="wrap_content"
             android:text="@string/fragment_configuration_protocol_openerp" />
 
-        <org.droidparts.widget.ClearableEditText         android:drawableRight="@drawable/general_filtrar_borrar"         android:drawablePadding="12dp"
+        <org.droidparts.widget.ClearableEditText
+            android:drawableRight="@drawable/general_filtrar_borrar"
+            android:drawablePadding="12dp"
             android:id="@+id/fragment_configuration_field_protocol"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -40,7 +42,9 @@
             android:layout_height="wrap_content"
             android:text="@string/fragment_configuration_url_openerp" />
 
-        <org.droidparts.widget.ClearableEditText         android:drawableRight="@drawable/general_filtrar_borrar"         android:drawablePadding="12dp"
+        <org.droidparts.widget.ClearableEditText
+            android:drawableRight="@drawable/general_filtrar_borrar"
+            android:drawablePadding="12dp"
             android:id="@+id/fragment_configuration_field_url"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -55,7 +59,9 @@
             android:layout_height="wrap_content"
             android:text="@string/fragment_configuration_port_openerp" />
 
-        <org.droidparts.widget.ClearableEditText         android:drawableRight="@drawable/general_filtrar_borrar"         android:drawablePadding="12dp"
+        <org.droidparts.widget.ClearableEditText
+            android:drawableRight="@drawable/general_filtrar_borrar"
+            android:drawablePadding="12dp"
             android:id="@+id/fragment_configuration_field_port"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -70,7 +76,9 @@
             android:layout_height="wrap_content"
             android:text="@string/fragment_configuration_db_openerp" />
 
-        <org.droidparts.widget.ClearableEditText         android:drawableRight="@drawable/general_filtrar_borrar"         android:drawablePadding="12dp"
+        <org.droidparts.widget.ClearableEditText
+            android:drawableRight="@drawable/general_filtrar_borrar"
+            android:drawablePadding="12dp"
             android:id="@+id/fragment_configuration_field_db"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -85,7 +93,9 @@
             android:layout_height="wrap_content"
             android:text="@string/fragment_configuration_configuration_username" />
 
-        <org.droidparts.widget.ClearableEditText         android:drawableRight="@drawable/general_filtrar_borrar"         android:drawablePadding="12dp"
+        <org.droidparts.widget.ClearableEditText
+            android:drawableRight="@drawable/general_filtrar_borrar"
+            android:drawablePadding="12dp"
             android:id="@+id/fragment_configuration_field_username"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"

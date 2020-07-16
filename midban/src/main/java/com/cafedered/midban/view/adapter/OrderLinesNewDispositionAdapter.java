@@ -82,6 +82,7 @@ public class OrderLinesNewDispositionAdapter extends BaseAdapter {
         public TextView quantityUos;
         public TextView unitUos;
         public TextView price;
+        public TextView priceNet;
         public TextView total;
         public EditText discount;
         public ImageView deleteIcon;
@@ -113,6 +114,8 @@ public class OrderLinesNewDispositionAdapter extends BaseAdapter {
                     .findViewById(R.id.order_line_list_item_new_disposition_unit_uos);
             holder.price = (TextView) vi
                     .findViewById(R.id.order_line_list_item_new_disposition_price);
+            holder.priceNet = (TextView) vi
+                    .findViewById(R.id.order_line_list_item_new_disposition_price_net);
             holder.total = (TextView) vi
                     .findViewById(R.id.order_line_list_item_new_disposition_total);
             holder.deleteIcon = (ImageView) vi
@@ -189,8 +192,37 @@ public class OrderLinesNewDispositionAdapter extends BaseAdapter {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
                     try {
                         float descuento = Float.parseFloat(v.getText().toString());
+                        float tipoDescuento = 0F;
                         if (descuento < 0 || descuento > line.getProduct().getMaxDiscount())
                             throw new Exception("Descuento incorrecto");
+                        if (descuento == 3) {
+                            tipoDescuento = descuento;
+                            descuento = line.getDiscount3().floatValue();
+                            if (descuento == 0.0) { // Si el descuento es 0 bajamos un nivel
+                                descuento = 2;
+                            }
+                        }
+                        if (descuento == 2) {
+                            tipoDescuento = descuento;
+                            descuento = line.getDiscount2().floatValue();
+                            if (descuento == 0.0) { // Si el descuento es 0 bajamos un nivel
+                                descuento = 1;
+                            }
+                        }
+                        if (descuento == 1) {
+                            tipoDescuento = descuento;
+                            descuento = line.getDiscount1().floatValue();
+                            if (descuento == 0.0) { // Si el descuento es 0 bajamos un nivel
+                                descuento = 0;
+                            }
+                        }
+                        if (descuento == 0) {
+                            tipoDescuento = descuento;
+                            descuento = 0;
+                        }
+                        if (line.getDiscountType() != -1) { // -1 significa que se ha modificado el precio
+                            line.setDiscountType((int) tipoDescuento);
+                        }
                         line.setDiscount(descuento);
                         OrderLinesNewDispositionAdapter.this.fragment.loadOnResume();
                     } catch (Exception e) {
@@ -201,13 +233,21 @@ public class OrderLinesNewDispositionAdapter extends BaseAdapter {
                 return false;
             }
         });
-        if (line.getPriceUnit() != null && line.getPriceUnit().floatValue() != 0.0000000001)
+        if (line.getPriceUnit() != null && line.getPriceUnit().floatValue() != 0.0000000001) {
             // DAVID - CAMBIÉ getPriceUdv por getPriceUnit
             // cambio a 3 decimales
             holder.price.setText(new BigDecimal(line.getPriceUnit()
                     .doubleValue()).setScale(3, RoundingMode.HALF_UP) + "");
-        else
+            holder.priceNet.setText(
+                    new BigDecimal(
+                            line.getPriceUnit().floatValue()
+                                - line.getPriceUnit().floatValue()
+                                * line.getDiscount().floatValue() / 100F)
+                            .setScale(3, RoundingMode.HALF_UP) + "");
+        } else {
             holder.price.setText("Cargando...");
+            holder.priceNet.setText("Cargando...");
+        }
         if (line.getPriceSubtotal() != null)
             holder.total.setText(new BigDecimal(line.getPriceSubtotal()
                     .doubleValue()).setScale(2, RoundingMode.HALF_UP) + "");
@@ -238,36 +278,36 @@ public class OrderLinesNewDispositionAdapter extends BaseAdapter {
             holder.lessIconUos.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (line.getProductUosQuantity().floatValue() >= 1.0){
-                    // de esta forma redondeo
-                    if (line.getProductUosQuantity().floatValue() == line.getProductUosQuantity().longValue()) {
-                        line.setProductUosQuantity(line.getProductUosQuantity().floatValue() - 1.0);
-                    } else {
-                        line.setProductUosQuantity(line.getProductUosQuantity().longValue());
+                    if (line.getProductUosQuantity().floatValue() >= 1.0) {
+                        // de esta forma redondeo
+                        if (line.getProductUosQuantity().floatValue() == line.getProductUosQuantity().longValue()) {
+                            line.setProductUosQuantity(line.getProductUosQuantity().floatValue() - 1.0);
+                        } else {
+                            line.setProductUosQuantity(line.getProductUosQuantity().longValue() - 1);
+                        }
+                        if (line.getProductUomQuantity() != null) {
+                            String quantityUom = line.getProductUomQuantity().toString();
+                            if (quantityUom != null && quantityUom.endsWith(".0"))
+                                quantityUom = quantityUom.replace(".0", "");
+                            holder.quantityUom.setText(quantityUom);
+                        }
+                        line.setPriceSubtotal(line.getProductUosQuantity().floatValue()
+                                * line.getPriceUdv().floatValue()
+                                - (line.getProductUosQuantity().floatValue()
+                                * line.getPriceUdv().floatValue()
+                                * line.getDiscount().floatValue() / 100F));
+                        if (line.getPriceSubtotal() != null)
+                            holder.total.setText(new BigDecimal(line.getPriceSubtotal()
+                                    .doubleValue()).setScale(2, RoundingMode.HALF_UP) + "");
+                        fragment.loadOnResume();
                     }
-                    if (line.getProductUomQuantity() != null) {
-                        String quantityUom = line.getProductUomQuantity().toString();
-                        if (quantityUom != null && quantityUom.endsWith(".0"))
-                            quantityUom = quantityUom.replace(".0", "");
-                        holder.quantityUom.setText(quantityUom);
-                    }
-                    line.setPriceSubtotal(line.getProductUosQuantity().floatValue()
-                            * line.getPriceUdv().floatValue()
-                            - (line.getProductUosQuantity().floatValue()
-                            * line.getPriceUdv().floatValue()
-                            * line.getDiscount().floatValue() / 100F));
-                    if (line.getPriceSubtotal() != null)
-                        holder.total.setText(new BigDecimal(line.getPriceSubtotal()
-                                .doubleValue()).setScale(2, RoundingMode.HALF_UP) + "");
-                    fragment.loadOnResume();
-                }
                 }
             });
             holder.plusIconUos.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     // de esta forma redondeo
-                    if (line.getProductUosQuantity().floatValue() == line.getProductUosQuantity().longValue()){
+                    if (line.getProductUosQuantity().floatValue() == line.getProductUosQuantity().longValue()) {
                         line.setProductUosQuantity(line.getProductUosQuantity().floatValue() + 1.0);
                     } else {
                         line.setProductUosQuantity(line.getProductUosQuantity().longValue() + 1);
@@ -327,7 +367,6 @@ public class OrderLinesNewDispositionAdapter extends BaseAdapter {
                             - (line.getProductUomQuantity().floatValue()
                             * line.getPriceUnit().floatValue()
                             * line.getDiscount().floatValue() / 100F));
-
                     if (line.getPriceSubtotal() != null)
                         holder.total.setText(new BigDecimal(line.getPriceSubtotal()
                                 .doubleValue()).setScale(2, RoundingMode.HALF_UP) + "");

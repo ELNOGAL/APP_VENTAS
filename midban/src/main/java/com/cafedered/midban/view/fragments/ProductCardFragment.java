@@ -123,14 +123,28 @@ public class ProductCardFragment extends BaseSupportFragment {
     @Wire(view = R.id.fragment_product_card_product_type_of_palet,
             field = "typeOfPallet")
     private TextView typeOfPallet;
-
     @Wire(view = R.id.fragment_product_card_product_ean13,
             field = "ean13")
     private TextView productEan13;
     @Wire(view = R.id.fragment_product_card_product_dun14,
             field = "dun14")
     private TextView productDun14;
+    @Wire(view = R.id.fragment_product_card_product_discount1,
+            field = "discount1")
+    private TextView productDiscount1;
+    @Wire(view = R.id.fragment_product_card_product_discount2,
+            field = "discount2")
+    private TextView productDiscount2;
+    @Wire(view = R.id.fragment_product_card_product_discount3,
+            field = "discount3")
+    private TextView productDiscount3;
 
+    @Wire(view = R.id.fragment_product_card_product_discount1_result)
+    private TextView productDiscount1Result;
+    @Wire(view = R.id.fragment_product_card_product_discount2_result)
+    private TextView productDiscount2Result;
+    @Wire(view = R.id.fragment_product_card_product_discount3_result)
+    private TextView productDiscount3Result;
 
 
     // TODO add productpackaging
@@ -213,7 +227,7 @@ public class ProductCardFragment extends BaseSupportFragment {
                 partner = (Partner) MidbanApplication
                         .getValueFromContext(ContextAttributes.PARTNER_TO_RESERVATION);
 
-            productPrice.setText(ProductRepository.getInstance().getCalculatedPrice(
+            BigDecimal productPriceUnit = ProductRepository.getInstance().getCalculatedPrice(
                     product,
                     partner,
                     (String) MidbanApplication.getValueFromContext(ContextAttributes.ACTUAL_TARIFF),
@@ -222,7 +236,11 @@ public class ProductCardFragment extends BaseSupportFragment {
                             .getLogin(),
                     ((User) MidbanApplication
                             .getValueFromContext(ContextAttributes.LOGGED_USER))
-                            .getPasswd()).toString());
+                            .getPasswd());
+            productPrice.setText(productPriceUnit.toString() + " " + getResources().getString(R.string.currency_symbol));
+            // Originalmente tenía el AsyncTask que hace lo mismo que lo anterior - Pedro Gómez (09/07/2020)
+            // Lo comento y lo dejo con lo anterior solo. Si se quiere hacer el asyntask hacerlo como está arriba, manteniendo el calculo en productPriceUnit
+            /*
             new AsyncTask<String, Void, String>() {
                 @Override
                 protected String doInBackground(String... params) {
@@ -254,7 +272,20 @@ public class ProductCardFragment extends BaseSupportFragment {
                     super.onPostExecute(result);
                     productPrice.setText(result);
                 }
-            }.execute(" " + getResources().getString(R.string.currency_symbol));
+            }.execute(" " + getResources().getString(R.string.currency_symbol)); */
+            BigDecimal productDiscount = new BigDecimal(
+                    productPriceUnit.floatValue() - productPriceUnit.floatValue() * product.getDiscount1().floatValue() / 100F)
+                    .setScale(3, RoundingMode.HALF_UP);
+            productDiscount1Result.setText(productDiscount.toString() + " " + getResources().getString(R.string.currency_symbol));
+            productDiscount = new BigDecimal(
+                    productPriceUnit.floatValue() - productPriceUnit.floatValue() * product.getDiscount2().floatValue() / 100F)
+                    .setScale(3, RoundingMode.HALF_UP);
+            productDiscount2Result.setText(productDiscount.toString() + " " + getResources().getString(R.string.currency_symbol));
+            productDiscount = new BigDecimal(
+                    productPriceUnit.floatValue() - productPriceUnit.floatValue() * product.getDiscount3().floatValue() / 100F)
+                    .setScale(3, RoundingMode.HALF_UP);
+            productDiscount3Result.setText(productDiscount.toString() + " " + getResources().getString(R.string.currency_symbol));
+
             if (!ImageCache.getInstance().exists(
                     Product.class.getName() + product.getId() + "" + 0))
                 ImageCache.getInstance().putInCache(

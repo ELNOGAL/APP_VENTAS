@@ -89,35 +89,6 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="vertical" >
-
-            <TextView
-                android:id="@+id/fragment_product_card_product_price_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/fragment_product_card_price_text"
-                android:textColor="@color/midban_secondary_text_color"
-                android:textSize="@dimen/h5" />
-
-            <TextView
-                android:id="@+id/fragment_product_card_product_price"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/loading"
-                android:textSize="@dimen/h4" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="1dp"
-            android:layout_height="@dimen/h5h4_pair"
-            android:layout_marginRight="@dimen/separator_margin"
-            android:layout_marginTop="@dimen/label_to_value_margin"
-            android:background="@color/midban_secondary_text_color" />
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
             android:visibility="gone"
             android:orientation="vertical" >
 
@@ -198,6 +169,162 @@
 
             <TextView
                 android:id="@+id/fragment_product_card_product_dun14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/h4" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/fragment_product_card_product_price_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/fragment_product_card_price_text"
+                android:textColor="@color/midban_secondary_text_color"
+                android:textSize="@dimen/h5" />
+
+            <TextView
+                android:id="@+id/fragment_product_card_product_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/loading"
+                android:textSize="@dimen/h4" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="@dimen/h5h4_pair"
+            android:layout_marginRight="@dimen/separator_margin"
+            android:layout_marginTop="@dimen/label_to_value_margin"
+            android:background="@color/midban_secondary_text_color" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/fragment_product_card_product_discount1_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/fragment_product_card_discount1"
+                    android:textColor="@color/midban_secondary_text_color"
+                    android:textSize="@dimen/h5" />
+
+                <TextView
+                    android:id="@+id/fragment_product_card_product_discount1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
+                    android:textSize="@dimen/h4" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/fragment_product_card_product_discount1_result"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/h4" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="@dimen/h5h4_pair"
+            android:layout_marginRight="@dimen/separator_margin"
+            android:layout_marginTop="@dimen/label_to_value_margin"
+            android:background="@color/midban_secondary_text_color" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/fragment_product_card_product_discount2_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/fragment_product_card_discount2"
+                    android:textColor="@color/midban_secondary_text_color"
+                    android:textSize="@dimen/h5" />
+
+                <TextView
+                    android:id="@+id/fragment_product_card_product_discount2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
+                    android:textSize="@dimen/h4" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/fragment_product_card_product_discount2_result"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/h4" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="@dimen/h5h4_pair"
+            android:layout_marginRight="@dimen/separator_margin"
+            android:layout_marginTop="@dimen/label_to_value_margin"
+            android:background="@color/midban_secondary_text_color" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/fragment_product_card_product_discount3_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/fragment_product_card_discount3"
+                    android:textColor="@color/midban_secondary_text_color"
+                    android:textSize="@dimen/h5" />
+
+                <TextView
+                    android:id="@+id/fragment_product_card_product_discount3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
+                    android:textSize="@dimen/h4" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/fragment_product_card_product_discount3_result"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/h4" />

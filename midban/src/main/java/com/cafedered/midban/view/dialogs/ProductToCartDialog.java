@@ -77,6 +77,8 @@ public class ProductToCartDialog extends Dialog   {
     private TextView productStock;
     @Wire(view = R.id.dialog_product_to_cart_discount_et)
     private EditText productDiscount;
+    @Wire(view = R.id.dialog_product_to_cart_discount_type_et)
+    private EditText productDiscountType;
     @Wire(view = R.id.dialog_product_to_cart_amount_content)
     private TextView amount;
     @Wire(view = R.id.dialog_product_to_cart_margin)
@@ -103,6 +105,7 @@ public class ProductToCartDialog extends Dialog   {
 //    SelectProductDialog selectProductDialog;
 
     OrderLine line;
+    private Integer discountType;
 
     private boolean synchronizinQuantities = false;
 
@@ -184,9 +187,11 @@ public class ProductToCartDialog extends Dialog   {
             protected void onPostExecute(String result) {
                 super.onPostExecute(result);
                 price.setText(result);
+                discountType = 0;
             }
         }.execute("");
-        productDiscount.setText("0"); // initialization
+        productDiscount.setText("0.0"); // initialization
+        productDiscountType.setText("0"); // initialization
         uomName.setText(product.getUom().getName());
         uosName.setText(product.getUos().getName());
         if (this.line != null) {
@@ -202,33 +207,32 @@ public class ProductToCartDialog extends Dialog   {
             productPackaging.setText(product.getProductUl().getName());
     }
 
-    @TextChanged(views = { R.id.dialog_product_to_cart_quantity_uom_et,
+    @TextChanged(views = {
+            R.id.dialog_product_to_cart_quantity_uom_et,
             R.id.dialog_product_to_cart_quantity_uos_et,
-            R.id.dialog_product_to_cart_discount_et,
+            //R.id.dialog_product_to_cart_discount_et,
+            R.id.dialog_product_to_cart_discount_type_et,
             R.id.dialog_product_to_cart_price_et })
     public void calculateTotals(View changedText) {
-        if (!synchronizinQuantities){
+        if (!synchronizinQuantities) {
             synchronizinQuantities = true;
-            try{
+            try {
                 // lo primero va a ser coordinar los edits de cantidad
-                if (changedText == productQuantityUom){
-                    if (productQuantityUom.getText().toString().equals("")){
+                if (changedText == productQuantityUom) {
+                    if (productQuantityUom.getText().toString().equals("")) {
                       productQuantityUos.setText("");
-                    }
-                    else {
+                    } else {
                         // tengo que actualizar el valor de productQuantityUos
                         float newUomQuantity = Float.parseFloat(productQuantityUom.getText().toString());
                         ProductUom puos = product.getUos();
                         Number newUosQuantity = new BigDecimal(newUomQuantity * puos.getFactor().floatValue()).setScale(2, BigDecimal.ROUND_HALF_UP);
                         productQuantityUos.setText(String.valueOf(newUosQuantity));
                     }
-                }
-                else{
-                    if (changedText == productQuantityUos){
-                        if (productQuantityUos.getText().toString().equals("")){
+                } else {
+                    if (changedText == productQuantityUos) {
+                        if (productQuantityUos.getText().toString().equals("")) {
                             productQuantityUom.setText("");
-                        }
-                        else {
+                        } else {
                             // tengo que actualizar el valor de productQuantityUom
                             float newUosQuantity = Float.parseFloat(productQuantityUos.getText().toString());
                             ProductUom puos = product.getUos();
@@ -237,22 +241,54 @@ public class ProductToCartDialog extends Dialog   {
                         }
                     }
                 }
+                float descuento = Float.parseFloat(productDiscount.getText().toString());
+                if (changedText == price) {
+                    discountType = -1;
+                }
+                if (changedText == productDiscountType) {
+                    float tipoDescuento = 0;
+                    if (!productDiscountType.getText().toString().isEmpty()) {
+                        tipoDescuento = Float.parseFloat(productDiscountType.getText().toString());
+                    }
+                    descuento = tipoDescuento;
+                    if (tipoDescuento == 3) {
+                        descuento = product.getDiscount3().floatValue();
+                        if (descuento == 0.0) { // Si el descuento es 0 bajamos un nivel
+                            tipoDescuento = 2;
+                        }
+                    }
+                    if (tipoDescuento == 2) {
+                        descuento = product.getDiscount2().floatValue();
+                        if (descuento == 0.0) { // Si el descuento es 0 bajamos un nivel
+                            tipoDescuento = 1;
+                        }
+                    }
+                    if (tipoDescuento == 1) {
+                        descuento = product.getDiscount1().floatValue();
+                        if (descuento == 0.0) { // Si el descuento es 0 bajamos un nivel
+                            tipoDescuento = 0;
+                        }
+                    }
+                    if (tipoDescuento == 0) {
+                        descuento = 0;
+                    }
+                    if (discountType != -1) { // -1 significa que se ha modificado el precio
+                        discountType = (int) tipoDescuento;
+                    }
+                    productDiscount.setText(Float.toString(descuento));
+                    //productDiscount.setText(String.valueOf(descuento));
+                }
 
                 String errors = validateData();
                 if (errors.isEmpty()) {
                     Float calculatedPrice = Float.parseFloat(price.getText().toString());
-                    Float amountToShow = (Float.parseFloat(productQuantityUom.getText()
-                            .toString()) * calculatedPrice - (Float
-                            .parseFloat(productQuantityUom.getText().toString())
-                            * calculatedPrice
-                            * Float.parseFloat(productDiscount.getText().toString()) / 100F));
+                    Float calculatedPriceNet = calculatedPrice
+                            - (calculatedPrice * descuento / 100F);
+                    Float amountToShow = Float.parseFloat(productQuantityUom.getText().toString()) * calculatedPriceNet;
                     BigDecimal decimal = new BigDecimal(amountToShow).setScale(2,
                             RoundingMode.HALF_UP);
                     amount.setText("" + decimal.doubleValue());
-                    Float marginValue = ((Float.parseFloat(price.getText().toString()) - product
-                            .getStandardPrice().floatValue()) * 100 / (Float
-                            .parseFloat(price
-                                    .getText().toString())));
+                    Float marginValue = (calculatedPriceNet - product.getStandardPrice().floatValue()) * 100 / calculatedPriceNet;
                     margin.setText(new BigDecimal(marginValue.doubleValue()).setScale(
                             2, RoundingMode.HALF_UP) + "%");
                 }
@@ -281,8 +317,13 @@ public class ProductToCartDialog extends Dialog   {
                                 .indexOf(this.line));
             else
                 line = new OrderLine();
-            line.setDiscount(Float.parseFloat(productDiscount.getText()
-                    .toString()));
+
+            line.setDiscount(Float.parseFloat(productDiscount.getText().toString()));
+            //line.setDiscount(Integer.valueOf(productDiscount.getText().toString()));
+            line.setDiscount1(product.getDiscount1());
+            line.setDiscount2(product.getDiscount2());
+            line.setDiscount3(product.getDiscount3());
+            line.setDiscountType(discountType);
             line.setOrderPartnerId(OrderRepository.getCurrentOrder()
                     .getPartnerId());
             line.setPriceUnit(Float.parseFloat(price.getText().toString()));
@@ -341,7 +382,7 @@ public class ProductToCartDialog extends Dialog   {
                         .getColor(R.color.red));
                 productQuantityUos.setBackgroundColor(getContext().getResources()
                         .getColor(R.color.red));
-            } else{
+            } else {
                 productQuantityUom.setBackgroundColor(getContext().getResources()
                         .getColor(R.color.midban_grey));
                 productQuantityUos.setBackgroundColor(getContext().getResources()

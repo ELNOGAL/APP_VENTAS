@@ -63,6 +63,16 @@
         android:orientation="vertical" >
 
         <TextView
+            android:id="@+id/partner_favourite_item_product_uom_qty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/separator_margin"
+            android:textSize="@dimen/h5"
+            android:gravity="center_horizontal"
+            android:background="@color/midgan_light_grey"
+            android:textStyle="bold" />
+
+        <TextView
             android:id="@+id/partner_favourite_item_price_unit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -73,7 +83,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/partner_favourite_item_product_uom_qty"
+            android:id="@+id/partner_favourite_item_discount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="@dimen/h5"

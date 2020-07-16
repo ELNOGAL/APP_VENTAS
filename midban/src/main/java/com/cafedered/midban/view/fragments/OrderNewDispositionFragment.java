@@ -477,12 +477,12 @@ public class OrderNewDispositionFragment extends BaseSupportFragment implements 
                             // - En primer lugar busca la tarifa de indirectos en el campo del cliente "property_product_pricelist_indirect_invoicing" (si fuese una direccion lo buscaría en su "parent_id")
                             if ((parent != null) && (parent.getPricelistIndirectId() != null)) {
                                 loaded = true;
-                                info = "Es dirección de entrega. Carga indirecta del cliente " + parent.getName();
+                                info = "Dirección de entrega. Carga indirecta. \nCliente " + parent.getName();
                                 setTarifaActual(parent.getPricelistIndirectId().toString());
                             } else {
                                 if (p.getPricelistIndirectId() != null) {
                                     loaded = true;
-                                    info = "No es dirección de entrega. Carga indirecta del cliente " + p.getName();
+                                    info = "Dirección principal. Carga indirecta. \nCliente " + p.getName();
                                     setTarifaActual(p.getPricelistIndirectId().toString());
                                 }
                             }
@@ -499,7 +499,7 @@ public class OrderNewDispositionFragment extends BaseSupportFragment implements 
                         if (!loaded) {
                             if ((parent != null) && (parent.getPricelistId() != null)) {
                                 loaded = true;
-                                info = "Es dirección de entrega. Carga directa cliente " + parent.getName();
+                                info = "Dirección de entrega. Carga directa. \nCliente " + parent.getName();
                                 setTarifaActual(parent.getPricelistId().toString());
                             }
                         }
@@ -507,7 +507,7 @@ public class OrderNewDispositionFragment extends BaseSupportFragment implements 
                         // - Si el partner seleccionado no es una dirección carga su tarifa (productos y precios)
                         if (!loaded) {
                             if ((p != null) && (p.getPricelistId() != null)) {
-                                info = "No es dirección de entrega. Carga directa cliente " + p.getName();
+                                info = "Dirección principal. Carga directa. \nCliente " + p.getName();
                                 setTarifaActual(p.getPricelistId().toString());
                             }
                         }
@@ -519,7 +519,7 @@ public class OrderNewDispositionFragment extends BaseSupportFragment implements 
                 }
             }
 
-            info = info + " Tarifa: " + _tarifaActual;
+            info = info + "\nTarifa: " + _tarifaActual;
             Toast.makeText(getContext(), info, Toast.LENGTH_LONG).show();
 
             currentAllProducts.addAll(allProducts);
@@ -625,6 +625,10 @@ public class OrderNewDispositionFragment extends BaseSupportFragment implements 
                 line.setProductUomQuantity(1.0);
                 line.setProductUosQuantity(1);
                 line.setDiscount(0.0F);
+                line.setDiscount1(0.0F);
+                line.setDiscount2(0.0F);
+                line.setDiscount3(0.0F);
+                line.setDiscountType(0);
                 Number taxId = product.getProductTemplate().getTaxesId();
                 if (taxId == null) {
                     MessagesForUser.showMessage(getView(), getResources().getString(R.string.error_al_anadir_producto), Toast.LENGTH_SHORT, Level.SEVERE);
@@ -650,6 +654,10 @@ public class OrderNewDispositionFragment extends BaseSupportFragment implements 
 
                     line.setProductId(product.getId());
                     line.setDiscount(0);
+                    line.setDiscount1(product.getDiscount1());
+                    line.setDiscount2(product.getDiscount2());
+                    line.setDiscount3(product.getDiscount3());
+                    line.setDiscountType(0);
                     line.setOrderPartnerId(partner.getId());
                     line.setPriceUnit(0.0000000001);
                     ProductUom uom = product.getUom();
@@ -697,17 +705,7 @@ public class OrderNewDispositionFragment extends BaseSupportFragment implements 
                         }
                     }
                     line.setPriceUnit(result.floatValue());
-                    /* DAVID - MODIFICACION */
-                    //line.setProductUomQuantity(line.getProductUomQuantity());
                     line.setPriceSubtotal(line.getPriceUnit().floatValue() * line.getProductUomQuantity().floatValue());
-                    /* FIN MODIFICACION */
-                    //line.setProductId(product.getId());
-                    //Number taxId = product.getProductTemplate().getTaxesId();
-                   // if (taxId == null) {
-                    //    MessagesForUser.showMessage(getView(), getResources().getString(R.string.error_al_anadir_producto), Toast.LENGTH_SHORT, Level.SEVERE);
-                    //    return;
-                    //}
-                    //line.setTaxesId(new Number[]{taxId});
                     reloadProducts = false;
                     loadOnResume();
                     numberOfFooterViewOpened--;
@@ -906,9 +904,8 @@ public class OrderNewDispositionFragment extends BaseSupportFragment implements 
             // DAVID - por petición del integrador campo "delay" con valor a 5 en cabecera
             //orderOdoo.put("delay", 5);
             orderOdoo.put("client_order_ref", confirmOrder.getClientOrderRef());
-            if (confirmOrder.getShopId() != null) {
+            if (confirmOrder.getShopId() != null)
                 orderOdoo.put("shop_id", confirmOrder.getShopId().intValue());
-            }
             orderOdoo.put("partner_id", confirmOrder.getPartnerId().intValue());
             orderOdoo.put("order_line", linesOrderOdoo.toArray());
             orderOdoo.put("warehouse_id", ConfigurationRepository.getInstance().getConfiguration().getWarehouseId().intValue());
@@ -940,7 +937,7 @@ public class OrderNewDispositionFragment extends BaseSupportFragment implements 
             if (confirmOrder.getRequestedDate() != null)
                 orderOdoo.put("requested_date", confirmOrder.getRequestedDate());
         } else {
-            //Estamos guardando la edición del pedido
+            // Estamos guardando la edición del pedido
             List<Object> linesOrderOdoo = new ArrayList<Object>();
             if (sendLines) {
                 fillLineParamsWithOrderLines(linesOrderOdoo, confirmOrder.getLines(), true);
@@ -948,9 +945,8 @@ public class OrderNewDispositionFragment extends BaseSupportFragment implements 
             }
             // DAVID - por petición del integrador campo "delay" con valor a 5 en cabecera
             orderOdoo.put("delay", 5);
-            if (confirmOrder.getShopId() != null) {
+            if (confirmOrder.getShopId() != null)
                 orderOdoo.put("shop_id", confirmOrder.getShopId().intValue());
-            }
             orderOdoo.put("client_order_ref", confirmOrder.getClientOrderRef());
             orderOdoo.put("id", confirmOrder.getId().intValue());
             orderOdoo.put("partner_id", confirmOrder.getPartnerId().intValue());
@@ -1206,6 +1202,7 @@ public class OrderNewDispositionFragment extends BaseSupportFragment implements 
             }
             lineValues.put("tax_id", new Object[]{new Object[]{6,0,new Number[]{taxId}}});
             lineValues.put("discount", lines.get(i).getDiscount().doubleValue());
+            lineValues.put("discount_type", lines.get(i).getDiscountType().toString());
             dictionary[2] = lineValues;
             params.add(dictionary);
         }
@@ -1531,10 +1528,12 @@ public class OrderNewDispositionFragment extends BaseSupportFragment implements 
                                         OrderNewDispositionFragment.this.getView(),
                                         LastSalesActivity.class), 0);
                     } else if (choice == 1) {
+                        line.getProduct().setDiscount1(line.getDiscount1());
+                        line.getProduct().setDiscount2(line.getDiscount2());
+                        line.getProduct().setDiscount3(line.getDiscount3());
                         MidbanApplication.putValueInContext(
                                 ContextAttributes.PRODUCT_TO_DETAIL,
                                 line.getProduct());
-
                         startActivityForResult(
                                 getNextIntent(new Bundle(),
                                         OrderNewDispositionFragment.this.getView(),

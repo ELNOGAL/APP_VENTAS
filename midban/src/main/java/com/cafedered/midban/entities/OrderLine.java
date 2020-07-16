@@ -109,6 +109,11 @@ public class OrderLine extends BaseRemoteEntity {
 
     private Product product;
 
+    private Number discount1;
+    private Number discount2;
+    private Number discount3;
+    private Integer discountType;
+
     FilterCollection filters = new FilterCollection();
 
     public Product getProduct() {
@@ -214,7 +219,6 @@ public class OrderLine extends BaseRemoteEntity {
                 e.printStackTrace();
                 this.productUosQuantity = null;
             }
-
         }
     }
 
@@ -339,5 +343,37 @@ public class OrderLine extends BaseRemoteEntity {
 
     public void setProductUom(Number productUom) {
         this.productUom = productUom;
+    }
+
+    public Number getDiscount1() {
+        return discount1;
+    }
+
+    public void setDiscount1(Number discount1) {
+        this.discount1 = discount1;
+    }
+
+    public Number getDiscount2() {
+        return discount2;
+    }
+
+    public void setDiscount2(Number discount2) {
+        this.discount2 = discount2;
+    }
+
+    public Number getDiscount3() {
+        return discount3;
+    }
+
+    public void setDiscount3(Number discount3) {
+        this.discount3 = discount3;
+    }
+
+    public Integer getDiscountType() {
+        return discountType;
+    }
+
+    public void setDiscountType(Integer discountType) {
+        this.discountType = discountType;
     }
 }

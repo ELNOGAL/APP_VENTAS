@@ -104,6 +104,10 @@ public class ProductDAO extends BaseDAO<Product> {
                             if (list.size() == 1) {
                                 p.setLstPrice(list.get(0).getPrice());
                                 p.setListPrice(list.get(0).getPrice());
+                                p.setDiscount(0.0F);
+                                p.setDiscount1(list.get(0).getDiscount1());
+                                p.setDiscount2(list.get(0).getDiscount2());
+                                p.setDiscount3(list.get(0).getDiscount3());
                             }
                         } catch (ServiceException e1) {
                             e1.printStackTrace();

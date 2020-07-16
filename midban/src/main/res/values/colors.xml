@@ -4,8 +4,8 @@
     <color name="midban_background">#ffffff</color>
     <color name="midban_text_color">#333333</color>
     <color name="midban_secondary_text_color">#cccccc</color>
-    <color name="midban_nogal_text_color">#47203C</color>
-    <color name="midban_nogal_text_colorOriginal">#3f5e48</color>
+    <color name="midban_nogal_text_color">#3f5e48</color>
+    <color name="midban_nogal_text_color_alternativa">#47203C</color>
 
     <!-- action bar -->
     <color name="midban_actionbar_background">#222222</color>
@@ -14,12 +14,12 @@
     <!-- buttons -->
     <color name="button_text_color">#111111</color>
     <color name="button_inactive_bg">#cccccc</color>
-    <color name="button_active_bgOriginal">#2e7d32</color>
-    <color name="button_active_bg">#9C27B0</color>
+    <color name="button_active_bg">#82BC00</color>
+    <color name="button_active_bg_alternativa">#9C27B0</color>
 
     <!-- Toasts -->
-    <color name="ok_backgroundOriginal">#0B610B</color>
-    <color name="ok_background">#9C27B0</color>
+    <color name="ok_background">#82BC00</color>
+    <color name="ok_background_alternativa">#9C27B0</color>
     <color name="ok_background_light">#CFEFEF</color>
     <color name="warn_background">#FFBF00</color>
     <color name="warn_background_light">#FFEF55</color>
@@ -30,6 +30,8 @@
     <!-- by name -->
     <color name="white">#FFFFFF</color>
     <color name="red">#FF0000</color>
+    <color name="blue">#0000FF</color>
+    <color name="green">#009900</color>
     <color name="midban_lighter_grey">#FAFAFA</color>
     <color name="midgan_light_grey">#EEEEEE</color>
     <color name="midban_grey">#CCCCCC</color>
@@ -50,8 +52,7 @@
     <!-- transparent -->
     <color name="transparent">#FFFFFFFF</color>
 
-
-    <color name="gradienteOriginal">#dcedc8</color>
-    <color name="gradiente">#FFC9FA</color>
+    <color name="gradiente">#dcedc8</color>
+    <color name="gradiente_alternativa">#FFC9FA</color>
 
 </resources>

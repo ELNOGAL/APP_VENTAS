@@ -87,6 +87,7 @@ public class PartnerFavouriteItemAdapter extends BaseAdapter {
         public TextView code;
         public TextView packaging;
         public TextView priceUnit;
+        public TextView priceDiscount;
         public TextView uomQty;
         public TextView category;
         public TextView subcategory;
@@ -105,7 +106,6 @@ public class PartnerFavouriteItemAdapter extends BaseAdapter {
                     .findViewById(R.id.partner_favourite_item_check);
             holder.check
                     .setOnCheckedChangeListener(new CheckBox.OnCheckedChangeListener() {
-
                         @Override
                         public void onCheckedChanged(CompoundButton buttonView,
                                 boolean isChecked) {
@@ -146,6 +146,8 @@ public class PartnerFavouriteItemAdapter extends BaseAdapter {
                     .findViewById(R.id.partner_favourite_item_packaging);
             holder.priceUnit = (TextView) convertView
                     .findViewById(R.id.partner_favourite_item_price_unit);
+            holder.priceDiscount = (TextView) convertView
+                    .findViewById(R.id.partner_favourite_item_discount);
             holder.uomQty = (TextView) convertView
                     .findViewById(R.id.partner_favourite_item_product_uom_qty);
             holder.category = (TextView) convertView
@@ -201,12 +203,13 @@ public class PartnerFavouriteItemAdapter extends BaseAdapter {
         // }
         // }.execute(MidbanApplication.getContext().getResources()
         // .getString(R.string.currency_symbol));
-        holder.priceUnit.setText(OrderLineRepository
+        OrderLine orderline = OrderLineRepository
                 .getInstance()
                 .getLastOrderLineForProductAndPartner(
-                        product.getProduct().getId(), partnerId).getPriceUnit()
-                + " " + MidbanApplication.getContext().getString(
+                        product.getProduct().getId(), partnerId);
+        holder.priceUnit.setText(orderline.getPriceUnit() + " " + MidbanApplication.getContext().getString(
                 R.string.currency_symbol));
+        holder.priceDiscount.setText(orderline.getDiscount() + " %");
         holder.uomQty.setText("" + product.getUomQty());
         if (product.getProductPackaging() != null && product.getProductPackaging().equals("unit"))
             holder.uomQty.setCompoundDrawablesWithIntrinsicBounds(

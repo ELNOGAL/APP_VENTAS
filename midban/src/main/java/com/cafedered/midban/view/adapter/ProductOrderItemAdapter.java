@@ -105,8 +105,6 @@ public class ProductOrderItemAdapter extends BaseAdapter {
                     .findViewById(R.id.product_catalog_order_item_code);
             holder.packaging = (TextView) vi
                     .findViewById(R.id.product_catalog_order_item_packaging);
-            holder.category = (TextView) vi
-                    .findViewById(R.id.product_catalog_order_item_category);
             holder.stock = (TextView) vi
                     .findViewById(R.id.product_catalog_order_item_stock);
             holder.eurKg = (TextView) vi
@@ -118,25 +116,27 @@ public class ProductOrderItemAdapter extends BaseAdapter {
             holder = (ViewHolder) vi.getTag();
         if (position < products.size()) {
             final Product product = products.get(position);
-            holder.iconInfo.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    MidbanApplication.putValueInContext(
-                            ContextAttributes.PRODUCT_TO_DETAIL, product);
-                    Intent intent = new Intent(v.getContext(),
-                            ProductCardActivity.class);
-                    intent.putExtras(new Bundle());
-                    if (fragment instanceof OrderNewDispositionFragment)
-                        ((OrderNewDispositionFragment) fragment).cancelAllAsyncs();
-                    v.getContext().startActivity(intent);
-                }
-            });
-            vi.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    fragment.onSelect(product);
-                }
-            });
+            if (product.getLstPrice().floatValue() != -1) { // -1 es cuando el producto no esta en tarifa y no se puede vender
+                holder.iconInfo.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        MidbanApplication.putValueInContext(
+                                ContextAttributes.PRODUCT_TO_DETAIL, product);
+                        Intent intent = new Intent(v.getContext(),
+                                ProductCardActivity.class);
+                        intent.putExtras(new Bundle());
+                        if (fragment instanceof OrderNewDispositionFragment)
+                            ((OrderNewDispositionFragment) fragment).cancelAllAsyncs();
+                        v.getContext().startActivity(intent);
+                    }
+                });
+                vi.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        fragment.onSelect(product);
+                    }
+                });
+            };
             if (!ImageCache.getInstance().exists(
                     Product.class.getName() + product.getId() + "0"))
                 ImageCache.getInstance().putInCache(
@@ -166,30 +166,39 @@ public class ProductOrderItemAdapter extends BaseAdapter {
             if (product.getWeight() != null && product.getWeight().floatValue() != 0.0F)
                 holder.eurKg.setText("€/Kg: " + new BigDecimal(product.getLstPrice().floatValue() / product.getWeight().floatValue()).setScale(2, BigDecimal.ROUND_HALF_UP));
             */
+            Float unit_price = product.getLstPrice().floatValue();
+            Float last_price = product.getListPrice().floatValue(); // Precio bruto
+            Float last_price_net = ( // Precio neto
+                    last_price - last_price
+                    * product.getDiscount().floatValue() / 100F);
             holder.eurKg.setText(
                     "P. Und.: "
-                    + new BigDecimal(product.getLstPrice().floatValue()).setScale(3, BigDecimal.ROUND_HALF_UP)
+                    + new BigDecimal(unit_price).setScale(3, BigDecimal.ROUND_HALF_UP)
                     + " €");
-            if (product.getLstPrice().floatValue() != product.getListPrice().floatValue()) {
+            holder.eurKg.setTextColor(MidbanApplication.getContext().getResources().getColor(R.color.green));
+            if (product.getFavourite()) {
                 holder.eurKg.setText(
                         holder.eurKg.getText() + "\n"
                         + "P. Ant.: "
-                        +  new BigDecimal(product.getListPrice().floatValue()).setScale(3, BigDecimal.ROUND_HALF_UP)
-                        + " €");
+                        + new BigDecimal(last_price_net).setScale(3, BigDecimal.ROUND_HALF_UP)
+                        + " €" + "\n"
+                        + "(" + product.getDiscount() + "%)");
+                if (product.getLstPrice().floatValue() != product.getListPrice().floatValue()) {
+                    holder.eurKg.setTextColor(MidbanApplication.getContext().getResources().getColor(R.color.blue));
+                }
+                if (product.getLstPrice().floatValue() == -1) { // Si el precio es -1 es que ya no está en tarifa
+                    holder.eurKg.setText(
+                            "P. Und.: No en tarifa" + "\n"
+                            + "P. Ant.: "
+                            + new BigDecimal(last_price_net).setScale(3, BigDecimal.ROUND_HALF_UP)
+                            + " €"  + "\n"
+                            +  "(" + product.getDiscount() + "%)");
+                    holder.eurKg.setTextColor(MidbanApplication.getContext().getResources().getColor(R.color.red));
+                }
             }
+
             if (null != product.getProductUl() && (Long) product.getUl() != 0) {
                 holder.packaging.setText(product.getProductUl().getName());
-            }
-            if (product.getProductTemplate() != null) {
-                if (product.getProductTemplate().getProductCategory() != null && product.getProductTemplate().getProductCategory().getCompleteName() != null) {
-                    String[] categories = product.getProductTemplate().getProductCategory()
-                            .getCompleteName().split("/");
-                    int arrayLength = categories.length;
-                    if (arrayLength > 0)
-                        holder.category.setText(categories[arrayLength - 1].trim());
-                    } else {
-                        holder.category.setText("");
-                    }
             }
         }
         return vi;

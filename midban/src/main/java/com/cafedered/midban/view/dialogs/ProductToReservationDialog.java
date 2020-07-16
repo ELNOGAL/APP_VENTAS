@@ -133,7 +133,7 @@ public class ProductToReservationDialog extends Dialog {
                 price.setText(result);
             }
         }.execute("");
-        productDiscount.setText("0"); // initialization
+        productDiscount.setText("0.0"); // initialization
         // TODO remove hardcoding
         // TODO where should we put sample checkbox?
         unitsPackaging.setText("(Mínimo una Caja)");

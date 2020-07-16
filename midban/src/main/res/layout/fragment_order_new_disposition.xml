@@ -215,16 +215,17 @@
             android:orientation="vertical"
             android:layout_weight="5"
             android:layout_margin="@dimen/separator_margin">
+
             <org.droidparts.widget.ClearableEditText
-                android:drawableRight="@drawable/general_filtrar_borrar"
-                android:drawablePadding="12dp"
-                android:padding="@dimen/button_vertical_padding"
                 android:id="@+id/fragment_order_new_disposition_product_search_field"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/midban_button_search"
-                android:textSize="@dimen/h5"
-                android:hint="@string/fragment_product_catalog_search_field_hint" />
+                android:drawableRight="@drawable/general_filtrar_borrar"
+                android:drawablePadding="12dp"
+                android:hint="@string/fragment_product_catalog_search_field_hint"
+                android:padding="@dimen/button_vertical_padding"
+                android:textSize="@dimen/h5" />
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

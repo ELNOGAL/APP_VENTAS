@@ -1126,6 +1126,7 @@ public class SynchronizationAsyncTask extends AsyncTask<User, String, Boolean> {
                 e.printStackTrace();
             }
             lineValues.put("discount", lines.get(i).getDiscount().doubleValue());
+            lineValues.put("discount_type", lines.get(i).getDiscountType().toString());
             dictionary[2] = lineValues;
             params.add(dictionary);
         }

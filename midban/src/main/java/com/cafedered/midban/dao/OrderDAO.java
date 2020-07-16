@@ -133,12 +133,18 @@ public class OrderDAO extends BaseDAO<Order> {
                 cursor.moveToFirst();
                 while (!cursor.isAfterLast()) {
                     Product aProduct = (Product)JDBCQueryMaker.getObjectFromCursor(cursor, new Product());
+                    aProduct.setFavourite(true);
                     try {
                         Partner partner = PartnerRepository.getInstance().getById(idPartner);
                         List<LastSaleCustomObject> result = OrderRepository.getInstance().getProductLastSalesForPartner(aProduct, partner);
                         if (result.size() > 0) {
                             // Precio última venta
                             aProduct.setListPrice(Float.parseFloat(result.get(0).getPrice()));
+                            // Descuento última venta
+                            aProduct.setDiscount(Float.parseFloat(result.get(0).getDiscount()));
+                        } else {
+                            aProduct.setListPrice(0.0F);
+                            aProduct.setDiscount(0.0F);
                         }
                         String tarifaPorLaQueFiltrar = (String) MidbanApplication.getValueFromContext(ContextAttributes.ACTUAL_TARIFF);
                         if (!"".equals(tarifaPorLaQueFiltrar) && tarifaPorLaQueFiltrar != null) {
@@ -149,6 +155,15 @@ public class OrderDAO extends BaseDAO<Order> {
                             if (list.size() == 1) {
                                 // Precio tarifa
                                 aProduct.setLstPrice(list.get(0).getPrice());
+                                aProduct.setDiscount1(list.get(0).getDiscount1());
+                                aProduct.setDiscount2(list.get(0).getDiscount2());
+                                aProduct.setDiscount3(list.get(0).getDiscount3());
+                            } else {
+                                // No está en tarifa. Ponemos precio -1 para marcar el producto como que ha sido comprado pero no se puede vender por no estar en tarifa actual
+                                aProduct.setLstPrice(-1);
+                                aProduct.setDiscount1(0.0F);
+                                aProduct.setDiscount2(0.0F);
+                                aProduct.setDiscount3(0.0F);
                             }
                         }
                     } catch (ConfigurationException e) {

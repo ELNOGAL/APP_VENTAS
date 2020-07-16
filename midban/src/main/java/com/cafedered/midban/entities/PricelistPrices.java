@@ -29,6 +29,18 @@ public class PricelistPrices extends BaseRemoteEntity {
     @RemoteProperty(name = "price")
     private Number price;
 
+    @Property(columnName = "discount1")
+    @RemoteProperty(name = "discount1")
+    private Number discount1;
+
+    @Property(columnName = "discount2")
+    @RemoteProperty(name = "discount2")
+    private Number discount2;
+
+    @Property(columnName = "discount3")
+    @RemoteProperty(name = "discount3")
+    private Number discount3;
+
     @Property(columnName = "company_id")
     @RemoteProperty(name = "company_id")
     private Number companyId;
@@ -85,6 +97,30 @@ public class PricelistPrices extends BaseRemoteEntity {
 
     public void setPrice(Number price) {
         this.price = price;
+    }
+
+    public Number getDiscount1() {
+        return discount1;
+    }
+
+    public void setDiscount1(Number discount1) {
+        this.discount1 = discount1;
+    }
+
+    public Number getDiscount2() {
+        return discount2;
+    }
+
+    public void setDiscount2(Number discount2) {
+        this.discount2 = discount2;
+    }
+
+    public Number getDiscount3() {
+        return discount3;
+    }
+
+    public void setDiscount3(Number discount3) {
+        this.discount3 = discount3;
     }
 
     public Number getCompanyId() {
