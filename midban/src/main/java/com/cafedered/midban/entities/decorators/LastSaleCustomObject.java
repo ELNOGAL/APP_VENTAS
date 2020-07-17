@@ -24,6 +24,7 @@ public class LastSaleCustomObject {
     private String lines;
     private String price;
     private String discount;
+    private String discountType;
     private String total;
 
     public String getDate() {
@@ -72,6 +73,14 @@ public class LastSaleCustomObject {
 
     public void setDiscount(String discount) {
         this.discount = discount;
+    }
+
+    public String getDiscountType() {
+        return discountType;
+    }
+
+    public void setDiscountType(String discountType) {
+        this.discountType = discountType;
     }
 
     public String getTotal() {

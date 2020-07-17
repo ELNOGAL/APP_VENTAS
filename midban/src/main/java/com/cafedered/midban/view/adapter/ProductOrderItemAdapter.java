@@ -167,23 +167,23 @@ public class ProductOrderItemAdapter extends BaseAdapter {
                 holder.eurKg.setText("€/Kg: " + new BigDecimal(product.getLstPrice().floatValue() / product.getWeight().floatValue()).setScale(2, BigDecimal.ROUND_HALF_UP));
             */
             Float unit_price = product.getLstPrice().floatValue();
-            Float last_price = product.getListPrice().floatValue(); // Precio bruto
+            Float last_price = product.getLastPrice().floatValue(); // Precio bruto
             Float last_price_net = ( // Precio neto
                     last_price - last_price
-                    * product.getDiscount().floatValue() / 100F);
+                    * product.getLastDiscount().floatValue() / 100F);
             holder.eurKg.setText(
                     "P. Und.: "
                     + new BigDecimal(unit_price).setScale(3, BigDecimal.ROUND_HALF_UP)
                     + " €");
             holder.eurKg.setTextColor(MidbanApplication.getContext().getResources().getColor(R.color.green));
-            if (product.getFavourite()) {
+            if (product.getIsFavourite()) {
                 holder.eurKg.setText(
                         holder.eurKg.getText() + "\n"
                         + "P. Ant.: "
                         + new BigDecimal(last_price_net).setScale(3, BigDecimal.ROUND_HALF_UP)
                         + " €" + "\n"
-                        + "(" + product.getDiscount() + "%)");
-                if (product.getLstPrice().floatValue() != product.getListPrice().floatValue()) {
+                        + "[" + product.getLastDiscountType() + "] " + "(" + product.getLastDiscount() + "%)");
+                if (product.getLstPrice().floatValue() != product.getLastPrice().floatValue()) {
                     holder.eurKg.setTextColor(MidbanApplication.getContext().getResources().getColor(R.color.blue));
                 }
                 if (product.getLstPrice().floatValue() == -1) { // Si el precio es -1 es que ya no está en tarifa
@@ -192,7 +192,7 @@ public class ProductOrderItemAdapter extends BaseAdapter {
                             + "P. Ant.: "
                             + new BigDecimal(last_price_net).setScale(3, BigDecimal.ROUND_HALF_UP)
                             + " €"  + "\n"
-                            +  "(" + product.getDiscount() + "%)");
+                            + "[" + product.getLastDiscountType() + "] " + "(" + product.getLastDiscount() + "%)");
                     holder.eurKg.setTextColor(MidbanApplication.getContext().getResources().getColor(R.color.red));
                 }
             }

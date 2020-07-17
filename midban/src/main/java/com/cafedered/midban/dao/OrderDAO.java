@@ -145,18 +145,24 @@ public class OrderDAO extends BaseDAO<Order> {
                 cursor.moveToFirst();
                 while (!cursor.isAfterLast()) {
                     Product aProduct = (Product)JDBCQueryMaker.getObjectFromCursor(cursor, new Product());
-                    aProduct.setFavourite(true);
+                    aProduct.setIsFavourite(true);
                     try {
                         Partner partner = PartnerRepository.getInstance().getById(idPartner);
-                        List<LastSaleCustomObject> result = OrderRepository.getInstance().getProductLastSalesForPartner(aProduct, partner);
+                        List<LastSaleCustomObject> result = OrderRepository.getInstance().getProductLastSalesForPartner(aProduct.getId(), idPartner);
                         if (result.size() > 0) {
                             // Precio última venta
-                            aProduct.setListPrice(Float.parseFloat(result.get(0).getPrice()));
+                            aProduct.setLastPrice(Float.parseFloat(result.get(0).getPrice()));
                             // Descuento última venta
-                            aProduct.setDiscount(Float.parseFloat(result.get(0).getDiscount()));
+                            aProduct.setLastDiscount(Float.parseFloat(result.get(0).getDiscount()));
+                            if (result.get(0).getDiscountType().equals("")) {
+                                aProduct.setLastDiscountType("?");
+                            } else {
+                                aProduct.setLastDiscountType(result.get(0).getDiscountType());
+                            }
                         } else {
-                            aProduct.setListPrice(0.0F);
-                            aProduct.setDiscount(0.0F);
+                            aProduct.setLastPrice(0.0F);
+                            aProduct.setLastDiscount(0.0F);
+                            aProduct.setLastDiscountType("0");
                         }
                         String tarifaPorLaQueFiltrar = (String) MidbanApplication.getValueFromContext(ContextAttributes.ACTUAL_TARIFF);
                         if (!"".equals(tarifaPorLaQueFiltrar) && tarifaPorLaQueFiltrar != null) {
@@ -277,7 +283,7 @@ public class OrderDAO extends BaseDAO<Order> {
 
     public List<LastSaleCustomObject> getProductLastSalesForPartner(
             Long partnerId, Long productId) {
-        String query = "SELECT o.date_order, l.price_unit, l.price_subtotal, l.product_uom_qty, l.discount, l.product_uos, o.id "
+        String query = "SELECT o.date_order, l.price_unit, l.price_subtotal, l.product_uom_qty, l.discount, l.app_discount_type, l.product_uos, o.id "
                 + "FROM sale_order o, sale_order_line l, product_product p  "
                 + "WHERE o.partner_id = "
                 + partnerId
@@ -302,8 +308,13 @@ public class OrderDAO extends BaseDAO<Order> {
                         e.printStackTrace();
                 }
                 lastSaleCO.setDiscount("" + cursor.getDouble(4));
+                if (cursor.getString(5) != null) {
+                    lastSaleCO.setDiscountType("" + cursor.getString(5));
+                } else {
+                    lastSaleCO.setDiscountType("");
+                }
                 try {
-                    ProductUom uom = ProductUomRepository.getInstance().getById(Long.parseLong("" + cursor.getInt(5)));
+                    ProductUom uom = ProductUomRepository.getInstance().getById(Long.parseLong("" + cursor.getInt(6)));
                     lastSaleCO.setPackaging(uom.getName());
                 } catch (ConfigurationException e) {
                     e.printStackTrace();
@@ -316,7 +327,7 @@ public class OrderDAO extends BaseDAO<Order> {
                 lastSaleCO.setQuantity("" + cursor.getDouble(3));
                 lastSaleCO.setTotal("" + cursor.getDouble(2));
                 String queryCount = "SELECT COUNT(*) FROM sale_order_line WHERE order_id = "
-                        + cursor.getInt(6);
+                        + cursor.getInt(7);
                 if (LoggerUtil.isDebugEnabled())
                     System.out.println(queryCount);
                 Cursor countCursor = getDaoHelper().getReadableDatabase()

@@ -105,7 +105,7 @@ public class ProductToCartDialog extends Dialog   {
 //    SelectProductDialog selectProductDialog;
 
     OrderLine line;
-    private Integer discountType;
+    private String discountType;
 
     private boolean synchronizinQuantities = false;
 
@@ -187,7 +187,7 @@ public class ProductToCartDialog extends Dialog   {
             protected void onPostExecute(String result) {
                 super.onPostExecute(result);
                 price.setText(result);
-                discountType = 0;
+                discountType = "0";
             }
         }.execute("");
         productDiscount.setText("0.0"); // initialization
@@ -243,12 +243,12 @@ public class ProductToCartDialog extends Dialog   {
                 }
                 float descuento = Float.parseFloat(productDiscount.getText().toString());
                 if (changedText == price) {
-                    discountType = -1;
+                    discountType = "-1";
                 }
                 if (changedText == productDiscountType) {
-                    float tipoDescuento = 0;
+                    Integer tipoDescuento = 0;
                     if (!productDiscountType.getText().toString().isEmpty()) {
-                        tipoDescuento = Float.parseFloat(productDiscountType.getText().toString());
+                        tipoDescuento = Integer.parseInt(productDiscountType.getText().toString());
                     }
                     descuento = tipoDescuento;
                     if (tipoDescuento == 3) {
@@ -272,8 +272,8 @@ public class ProductToCartDialog extends Dialog   {
                     if (tipoDescuento == 0) {
                         descuento = 0;
                     }
-                    if (discountType != -1) { // -1 significa que se ha modificado el precio
-                        discountType = (int) tipoDescuento;
+                    if (discountType != "-1") { // -1 significa que se ha modificado el precio
+                        discountType = Integer.toString(tipoDescuento);
                     }
                     productDiscount.setText(Float.toString(descuento));
                     //productDiscount.setText(String.valueOf(descuento));

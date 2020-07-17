@@ -85,6 +85,7 @@ public class OrderLinesNewDispositionAdapter extends BaseAdapter {
         public TextView priceNet;
         public TextView total;
         public EditText discount;
+        public TextView discountType;
         public ImageView deleteIcon;
         public ImageView lessIconUom;
         public ImageView plusIconUom;
@@ -116,6 +117,8 @@ public class OrderLinesNewDispositionAdapter extends BaseAdapter {
                     .findViewById(R.id.order_line_list_item_new_disposition_price);
             holder.priceNet = (TextView) vi
                     .findViewById(R.id.order_line_list_item_new_disposition_price_net);
+            holder.discountType = (TextView) vi
+                    .findViewById(R.id.order_line_list_item_new_disposition_discount_type);
             holder.total = (TextView) vi
                     .findViewById(R.id.order_line_list_item_new_disposition_total);
             holder.deleteIcon = (ImageView) vi
@@ -185,6 +188,15 @@ public class OrderLinesNewDispositionAdapter extends BaseAdapter {
         }
         if (line.getDiscount() != null) {
             holder.discount.setText("" + line.getDiscount());
+            if (line.getDiscountType() != null) {
+                if (line.getDiscountType() == "0" && line.getDiscount().floatValue() > 0) {
+                    holder.discountType.setText("[D]");
+                } else if (line.getDiscountType() == "-1") {
+                    holder.discountType.setText("[P]");
+                } else {
+                    holder.discountType.setText("[" + line.getDiscountType() + "]");
+                }
+            }
         }
         holder.discount.setOnEditorActionListener(new EditText.OnEditorActionListener() {
             @Override
@@ -192,36 +204,36 @@ public class OrderLinesNewDispositionAdapter extends BaseAdapter {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
                     try {
                         float descuento = Float.parseFloat(v.getText().toString());
-                        float tipoDescuento = 0F;
+                        String tipoDescuento = "0";
                         if (descuento < 0 || descuento > line.getProduct().getMaxDiscount())
                             throw new Exception("Descuento incorrecto");
                         if (descuento == 3) {
-                            tipoDescuento = descuento;
+                            tipoDescuento = Integer.toString((int) descuento);
                             descuento = line.getDiscount3().floatValue();
                             if (descuento == 0.0) { // Si el descuento es 0 bajamos un nivel
                                 descuento = 2;
                             }
                         }
                         if (descuento == 2) {
-                            tipoDescuento = descuento;
+                            tipoDescuento = Integer.toString((int) descuento);
                             descuento = line.getDiscount2().floatValue();
                             if (descuento == 0.0) { // Si el descuento es 0 bajamos un nivel
                                 descuento = 1;
                             }
                         }
                         if (descuento == 1) {
-                            tipoDescuento = descuento;
+                            tipoDescuento = Integer.toString((int) descuento);
                             descuento = line.getDiscount1().floatValue();
                             if (descuento == 0.0) { // Si el descuento es 0 bajamos un nivel
                                 descuento = 0;
                             }
                         }
                         if (descuento == 0) {
-                            tipoDescuento = descuento;
+                            tipoDescuento = Integer.toString((int) descuento);
                             descuento = 0;
                         }
-                        if (line.getDiscountType() != -1) { // -1 significa que se ha modificado el precio
-                            line.setDiscountType((int) tipoDescuento);
+                        if (line.getDiscountType() != "-1") { // -1 significa que se ha modificado el precio
+                            line.setDiscountType(tipoDescuento);
                         }
                         line.setDiscount(descuento);
                         OrderLinesNewDispositionAdapter.this.fragment.loadOnResume();

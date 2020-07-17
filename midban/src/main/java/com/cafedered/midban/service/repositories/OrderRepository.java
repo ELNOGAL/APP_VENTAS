@@ -154,9 +154,9 @@ public class OrderRepository extends BaseRepository<Order, OrderDAO> {
     }
 
     public List<LastSaleCustomObject> getProductLastSalesForPartner(
-            Product product, Partner partner) {
-        return dao.getProductLastSalesForPartner(partner.getId(),
-                product.getId());
+            Long productId, Long partnerId) {
+        return dao.getProductLastSalesForPartner(partnerId,
+                productId);
     }
 
     public List<Order> getOrdersWithFilters(String state, String dateFrom,

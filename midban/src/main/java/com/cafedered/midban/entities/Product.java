@@ -253,8 +253,14 @@ public class Product extends BaseRemoteEntity {
     @Property(columnName = "substitute_products")
     private String substituteProducts;
 
-    @Property(columnName = "discount")
-    private Number discount;
+    @Property(columnName = "last_price")
+    private Number lastPrice;
+
+    @Property(columnName = "last_discount")
+    private Number lastDiscount;
+
+    @Property(columnName = "last_discount_type")
+    private String lastDiscountType;
 
     @Property(columnName = "discount1")
     private Number discount1;
@@ -265,8 +271,8 @@ public class Product extends BaseRemoteEntity {
     @Property(columnName = "discount3")
     private Number discount3;
 
-    @Property(columnName = "favourite")
-    private Boolean favourite;
+    @Property(columnName = "is_favourite")
+    private Boolean isFavourite;
 
     public Long getId() {
         return id;
@@ -638,12 +644,28 @@ public class Product extends BaseRemoteEntity {
         this.substituteProducts = substituteProducts;
     }
 
-    public Number getDiscount() {
-        return discount;
+    public Number getLastPrice() {
+        return lastPrice;
     }
 
-    public void setDiscount(Number discount) {
-        this.discount = discount;
+    public void setLastPrice(Number lastPrice) {
+        this.lastPrice = lastPrice;
+    }
+
+    public Number getLastDiscount() {
+        return lastDiscount;
+    }
+
+    public void setLastDiscount(Number lastDiscount) {
+        this.lastDiscount = lastDiscount;
+    }
+
+    public String getLastDiscountType() {
+        return lastDiscountType;
+    }
+
+    public void setLastDiscountType(String lastDiscountType) {
+        this.lastDiscountType = lastDiscountType;
     }
 
     public Number getDiscount1() {
@@ -670,12 +692,12 @@ public class Product extends BaseRemoteEntity {
         this.discount3 = discount3;
     }
 
-    public Boolean getFavourite() {
-        return favourite;
+    public Boolean getIsFavourite() {
+        return isFavourite;
     }
 
-    public void setFavourite(Boolean favourite) {
-        this.favourite = favourite;
+    public void setIsFavourite(Boolean isFavourite) {
+        this.isFavourite = isFavourite;
     }
 
     public Number getUl() {

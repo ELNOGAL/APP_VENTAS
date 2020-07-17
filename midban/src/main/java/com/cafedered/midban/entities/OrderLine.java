@@ -107,12 +107,15 @@ public class OrderLine extends BaseRemoteEntity {
     @Property(columnName = "state")
     private String state;
 
+    @RemoteProperty(name = "app_discount_type")
+    @Property(columnName = "app_discount_type")
+    private String discountType;
+
     private Product product;
 
     private Number discount1;
     private Number discount2;
     private Number discount3;
-    private Integer discountType;
 
     FilterCollection filters = new FilterCollection();
 
@@ -283,6 +286,14 @@ public class OrderLine extends BaseRemoteEntity {
         this.discount = discount;
     }
 
+    public String getDiscountType() {
+        return discountType;
+    }
+
+    public void setDiscountType(String discountType) {
+        this.discountType = discountType;
+    }
+
     public Number getOrderPartnerId() {
         return orderPartnerId;
     }
@@ -369,11 +380,4 @@ public class OrderLine extends BaseRemoteEntity {
         this.discount3 = discount3;
     }
 
-    public Integer getDiscountType() {
-        return discountType;
-    }
-
-    public void setDiscountType(Integer discountType) {
-        this.discountType = discountType;
-    }
 }

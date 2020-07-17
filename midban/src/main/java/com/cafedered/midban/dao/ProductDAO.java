@@ -103,8 +103,9 @@ public class ProductDAO extends BaseDAO<Product> {
                             List<PricelistPrices> list = PricelistPricesRepository.getInstance().getByExample(pl, Restriction.AND, true, 0, 1);
                             if (list.size() == 1) {
                                 p.setLstPrice(list.get(0).getPrice());
-                                p.setListPrice(list.get(0).getPrice());
-                                p.setDiscount(0.0F);
+                                p.setLastPrice(list.get(0).getPrice());
+                                p.setLastDiscount(0.0F);
+                                p.setLastDiscountType("0");
                                 p.setDiscount1(list.get(0).getDiscount1());
                                 p.setDiscount2(list.get(0).getDiscount2());
                                 p.setDiscount3(list.get(0).getDiscount3());

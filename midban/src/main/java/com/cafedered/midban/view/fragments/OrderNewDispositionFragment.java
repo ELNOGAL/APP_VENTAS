@@ -628,7 +628,7 @@ public class OrderNewDispositionFragment extends BaseSupportFragment implements 
                 line.setDiscount1(0.0F);
                 line.setDiscount2(0.0F);
                 line.setDiscount3(0.0F);
-                line.setDiscountType(0);
+                line.setDiscountType("0");
                 Number taxId = product.getProductTemplate().getTaxesId();
                 if (taxId == null) {
                     MessagesForUser.showMessage(getView(), getResources().getString(R.string.error_al_anadir_producto), Toast.LENGTH_SHORT, Level.SEVERE);
@@ -657,7 +657,7 @@ public class OrderNewDispositionFragment extends BaseSupportFragment implements 
                     line.setDiscount1(product.getDiscount1());
                     line.setDiscount2(product.getDiscount2());
                     line.setDiscount3(product.getDiscount3());
-                    line.setDiscountType(0);
+                    line.setDiscountType("0");
                     line.setOrderPartnerId(partner.getId());
                     line.setPriceUnit(0.0000000001);
                     ProductUom uom = product.getUom();
