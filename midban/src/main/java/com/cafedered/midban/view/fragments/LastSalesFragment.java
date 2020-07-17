@@ -88,7 +88,7 @@ public class LastSalesFragment extends BaseSupportFragment {
             @Override
             protected List<LastSaleCustomObject> doInBackground(Void... params) {
                 return OrderRepository.getInstance()
-                        .getProductLastSalesForPartner(product, partner);
+                        .getProductLastSalesForPartner(product.getId(), partner.getId());
             }
 
             @Override
