@@ -24,6 +24,8 @@ import com.cafedered.midban.annotations.Remote;
 import com.cafedered.midban.annotations.RemoteProperty;
 import com.cafedered.midban.conf.ContextAttributes;
 import com.cafedered.midban.conf.MidbanApplication;
+import com.cafedered.midban.service.repositories.OrderLineRepository;
+import com.cafedered.midban.service.repositories.OrderRepository;
 import com.cafedered.midban.service.repositories.PartnerRepository;
 import com.cafedered.midban.service.repositories.ProductRepository;
 import com.cafedered.midban.service.repositories.ProductUomRepository;
@@ -36,6 +38,7 @@ import com.debortoliwines.openerp.api.OpeneERPApiException;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.List;
 
 @Entity(tableName = "sale_order_line")
 @Remote(object = "sale.order.line")
@@ -168,12 +171,7 @@ public class OrderLine extends BaseRemoteEntity {
     }
 
     public Number getProductUos() {
-        // DAVID - introduzco este valor por defecto ante la multitud de fallos si se devuelve un null
- /*       if (productUos == null) {
-            return 0F;
-        }
-        else
-*/            return productUos;
+        return productUos;
     }
 
     public void setProductUos(Number productUos) {
@@ -186,39 +184,44 @@ public class OrderLine extends BaseRemoteEntity {
 
     public void setProductUosQuantity(Number productUosQuantity) {
         this.productUosQuantity = productUosQuantity;
-        if ((getProductUos() != null) && (getProductUom() != null) && (getProductUos().longValue() == getProductUom().longValue())){
+        if ((getProductUos() != null) && (getProductUom() != null) && (getProductUos().longValue() == getProductUom().longValue())) {
             this.productUomQuantity = productUosQuantity;
-        }
-        else{
+        } else {
             try {
-                ProductUom puom = ProductUomRepository.getInstance().getById(this.productUos.longValue());
-                this.productUomQuantity = new BigDecimal(getProductUosQuantity().longValue() * puom.getFactor_inv().floatValue()).setScale(2, BigDecimal.ROUND_HALF_UP);
+                if (this.productUos != null) {
+                    ProductUom puom = ProductUomRepository.getInstance().getById(this.productUos.longValue());
+                    this.productUomQuantity = new BigDecimal(getProductUosQuantity().longValue() * puom.getFactor_inv().floatValue()).setScale(2, BigDecimal.ROUND_HALF_UP);
+                } else {
+                    this.productUomQuantity = null;
+                }
             } catch (ConfigurationException e) {
                 e.printStackTrace();
             } catch (ServiceException e) {
                 e.printStackTrace();
-            } catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
                 this.productUomQuantity = null;
             }
-
         }
     }
 
     public void setProductUomQuantity(Number productUomQuantity) {
         this.productUomQuantity = productUomQuantity;
-        if ((getProductUos() != null) && (getProductUom() != null) && (getProductUos().longValue() == getProductUom().longValue())){
+        if ((getProductUos() != null) && (getProductUom() != null) && (getProductUos().longValue() == getProductUom().longValue())) {
             this.productUosQuantity = productUomQuantity;
-        }
-        else{
+        } else {
             try {
-                ProductUom puom = ProductUomRepository.getInstance().getById(this.productUos.longValue());
-                this.productUosQuantity = new BigDecimal(getProductUomQuantity().longValue() * puom.getFactor().floatValue()).setScale(2, BigDecimal.ROUND_HALF_UP);
+                if (this.productUos != null) {
+                    ProductUom puom = ProductUomRepository.getInstance().getById(this.productUos.longValue());
+                    this.productUosQuantity = new BigDecimal(getProductUomQuantity().longValue() * puom.getFactor().floatValue()).setScale(2, BigDecimal.ROUND_HALF_UP);
+                } else {
+                    this.productUosQuantity = null;
+                }
             } catch (ConfigurationException e) {
                 e.printStackTrace();
             } catch (ServiceException e) {
                 e.printStackTrace();
-            } catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
                 this.productUosQuantity = null;
             }
@@ -320,6 +323,18 @@ public class OrderLine extends BaseRemoteEntity {
 
     @Override
     public FilterCollection getRemoteFilters() {
+        FilterCollection filters = new FilterCollection();
+        try {
+            List<Integer> orderIds = OrderRepository.getInstance().getAllIds();
+            if (orderIds.size() > 0) {
+                filters.add("order_id", "in", orderIds.toArray(new Integer[]{}));
+            } else {
+                filters.add("id", "=", 0);
+            }
+            filters.add("state", "<>", "cancel");
+        } catch (OpeneERPApiException e) {
+            e.printStackTrace();
+        }
         return filters;
     }
 

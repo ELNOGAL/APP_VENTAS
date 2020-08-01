@@ -17,10 +17,12 @@
  *******************************************************************************/
 package com.cafedered.midban.view.adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.KeyEvent;
+import android.content.DialogInterface;
+import android.text.InputType;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,18 +31,12 @@ import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.cafedered.midban.R;
-import com.cafedered.midban.conf.MidbanApplication;
 import com.cafedered.midban.entities.OrderLine;
-import com.cafedered.midban.entities.Product;
-import com.cafedered.midban.entities.ProductUom;
 import com.cafedered.midban.service.repositories.OrderRepository;
 import com.cafedered.midban.service.repositories.ProductUomRepository;
 import com.cafedered.midban.utils.MessagesForUser;
-import com.cafedered.midban.utils.exceptions.ConfigurationException;
-import com.cafedered.midban.utils.exceptions.ServiceException;
 import com.cafedered.midban.view.fragments.OrderNewDispositionFragment;
 
 import java.math.BigDecimal;
@@ -84,13 +80,9 @@ public class OrderLinesNewDispositionAdapter extends BaseAdapter {
         public TextView price;
         public TextView priceNet;
         public TextView total;
-        public EditText discount;
+        public TextView discount;
         public TextView discountType;
         public ImageView deleteIcon;
-        public ImageView lessIconUom;
-        public ImageView plusIconUom;
-        public ImageView lessIconUos;
-        public ImageView plusIconUos;
     }
 
     public View getView(int position, final View convertView, ViewGroup parent) {
@@ -123,11 +115,7 @@ public class OrderLinesNewDispositionAdapter extends BaseAdapter {
                     .findViewById(R.id.order_line_list_item_new_disposition_total);
             holder.deleteIcon = (ImageView) vi
                     .findViewById(R.id.order_line_list_item_new_disposition_delete_icon);
-            holder.lessIconUom = (ImageView) vi.findViewById(R.id.order_line_list_item_new_disposition_less_icon_uom);
-            holder.plusIconUom = (ImageView) vi.findViewById(R.id.order_line_list_item_new_disposition_plus_icon_uom);
-            holder.lessIconUos = (ImageView) vi.findViewById(R.id.order_line_list_item_new_disposition_less_icon_uos);
-            holder.plusIconUos = (ImageView) vi.findViewById(R.id.order_line_list_item_new_disposition_plus_icon_uos);
-            holder.discount = (EditText) vi.findViewById(R.id.order_line_list_item_new_disposition_discount);
+            holder.discount = (TextView) vi.findViewById(R.id.order_line_list_item_new_disposition_discount);
             vi.setTag(holder);
         } else
             holder = (ViewHolder) vi.getTag();
@@ -155,12 +143,16 @@ public class OrderLinesNewDispositionAdapter extends BaseAdapter {
         try {
             if (line.getProductUosQuantity() != null) {
                 String quantityUos = line.getProductUosQuantity().toString();
+                if (quantityUos != null && quantityUos.endsWith(".00"))
+                    quantityUos = quantityUos.replace(".00", "");
                 if (quantityUos != null && quantityUos.endsWith(".0"))
                     quantityUos = quantityUos.replace(".0", "");
                 holder.quantityUos.setText(quantityUos);
             }
             if (line.getProductUomQuantity() != null) {
                 String quantityUom = line.getProductUomQuantity().toString();
+                if (quantityUom != null && quantityUom.endsWith(".00"))
+                    quantityUom = quantityUom.replace(".00", "");
                 if (quantityUom != null && quantityUom.endsWith(".0"))
                     quantityUom = quantityUom.replace(".0", "");
                 holder.quantityUom.setText(quantityUom);
@@ -169,20 +161,6 @@ public class OrderLinesNewDispositionAdapter extends BaseAdapter {
                 holder.unitUos.setText(ProductUomRepository.getInstance().getById(line.getProductUos().longValue()).getName());
             if (line.getProductUom() != null)
                 holder.unitUom.setText(ProductUomRepository.getInstance().getById(line.getProductUom().longValue()).getName());
-            /*  DAVID - NADA DE CAMBIAR DE UNIDAD DE MEDIDA
-            try {
-                holder.unit.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        fragment.onUnitChanged(line);
-                        notifyDataSetChanged();
-                        fragment.loadOnResume();
-                    }
-                });
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            */
         } catch (Exception e) {
             //do nothing
         }
@@ -197,54 +175,15 @@ public class OrderLinesNewDispositionAdapter extends BaseAdapter {
                     holder.discountType.setText("[" + line.getDiscountType() + "]");
                 }
             }
-        }
-        holder.discount.setOnEditorActionListener(new EditText.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    try {
-                        float descuento = Float.parseFloat(v.getText().toString());
-                        String tipoDescuento = "0";
-                        if (descuento < 0 || descuento > line.getProduct().getMaxDiscount())
-                            throw new Exception("Descuento incorrecto");
-                        if (descuento == 3) {
-                            tipoDescuento = Integer.toString((int) descuento);
-                            descuento = line.getDiscount3().floatValue();
-                            if (descuento == 0.0) { // Si el descuento es 0 bajamos un nivel
-                                descuento = 2;
-                            }
-                        }
-                        if (descuento == 2) {
-                            tipoDescuento = Integer.toString((int) descuento);
-                            descuento = line.getDiscount2().floatValue();
-                            if (descuento == 0.0) { // Si el descuento es 0 bajamos un nivel
-                                descuento = 1;
-                            }
-                        }
-                        if (descuento == 1) {
-                            tipoDescuento = Integer.toString((int) descuento);
-                            descuento = line.getDiscount1().floatValue();
-                            if (descuento == 0.0) { // Si el descuento es 0 bajamos un nivel
-                                descuento = 0;
-                            }
-                        }
-                        if (descuento == 0) {
-                            tipoDescuento = Integer.toString((int) descuento);
-                            descuento = 0;
-                        }
-                        if (line.getDiscountType() != "-1") { // -1 significa que se ha modificado el precio
-                            line.setDiscountType(tipoDescuento);
-                        }
-                        line.setDiscount(descuento);
-                        OrderLinesNewDispositionAdapter.this.fragment.loadOnResume();
-                    } catch (Exception e) {
-                        MessagesForUser.showMessage(OrderLinesNewDispositionAdapter.this.fragment.getView(), "Descuento ha de ser un valor entre 0.0 y " + line.getProduct().getMaxDiscount().toString(), 3000, Level.SEVERE);
-                    }
-                    return true;
-                }
-                return false;
+            if (line.getDiscount() != null) {
+                String discount = line.getDiscount().toString();
+                if (discount != null && discount.endsWith(".00"))
+                    discount = discount.replace(".00", "");
+                if (discount != null && discount.endsWith(".0"))
+                    discount = discount.replace(".0", "");
+                holder.discount.setText(discount);
             }
-        });
+        }
         if (line.getPriceUnit() != null && line.getPriceUnit().floatValue() != 0.0000000001) {
             // DAVID - CAMBIÉ getPriceUdv por getPriceUnit
             // cambio a 3 decimales
@@ -274,118 +213,192 @@ public class OrderLinesNewDispositionAdapter extends BaseAdapter {
                     fragment.loadOnResume();
                 }
             });
-        }
-        else
-            holder.deleteIcon.setVisibility(View.GONE);
-        if (fragment == null || !showDeleteIcon) {
-            holder.lessIconUos.setVisibility(View.GONE);
-            holder.plusIconUos.setVisibility(View.GONE);
-            holder.lessIconUom.setVisibility(View.GONE);
-            holder.plusIconUom.setVisibility(View.GONE);
         } else {
-            holder.lessIconUos.setVisibility(View.VISIBLE);
-            holder.plusIconUos.setVisibility(View.VISIBLE);
-            holder.lessIconUom.setVisibility(View.VISIBLE);
-            holder.plusIconUom.setVisibility(View.VISIBLE);
-            holder.lessIconUos.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (line.getProductUosQuantity().floatValue() >= 1.0) {
-                        // de esta forma redondeo
-                        if (line.getProductUosQuantity().floatValue() == line.getProductUosQuantity().longValue()) {
-                            line.setProductUosQuantity(line.getProductUosQuantity().floatValue() - 1.0);
-                        } else {
-                            line.setProductUosQuantity(line.getProductUosQuantity().longValue() - 1);
-                        }
-                        if (line.getProductUomQuantity() != null) {
-                            String quantityUom = line.getProductUomQuantity().toString();
-                            if (quantityUom != null && quantityUom.endsWith(".0"))
-                                quantityUom = quantityUom.replace(".0", "");
-                            holder.quantityUom.setText(quantityUom);
-                        }
-                        line.setPriceSubtotal(line.getProductUosQuantity().floatValue()
-                                * line.getPriceUdv().floatValue()
-                                - (line.getProductUosQuantity().floatValue()
-                                * line.getPriceUdv().floatValue()
-                                * line.getDiscount().floatValue() / 100F));
-                        if (line.getPriceSubtotal() != null)
-                            holder.total.setText(new BigDecimal(line.getPriceSubtotal()
-                                    .doubleValue()).setScale(2, RoundingMode.HALF_UP) + "");
-                        fragment.loadOnResume();
-                    }
-                }
-            });
-            holder.plusIconUos.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // de esta forma redondeo
-                    if (line.getProductUosQuantity().floatValue() == line.getProductUosQuantity().longValue()) {
-                        line.setProductUosQuantity(line.getProductUosQuantity().floatValue() + 1.0);
-                    } else {
-                        line.setProductUosQuantity(line.getProductUosQuantity().longValue() + 1);
-                    }
-                    if (line.getProductUomQuantity() != null) {
-                        String quantityUom = line.getProductUomQuantity().toString();
-                        if (quantityUom != null && quantityUom.endsWith(".0"))
-                            quantityUom = quantityUom.replace(".0", "");
-                        holder.quantityUom.setText(quantityUom);
-                    }
-                    line.setPriceSubtotal(line.getProductUosQuantity().floatValue()
-                            * line.getPriceUdv().floatValue()
-                            - (line.getProductUosQuantity().floatValue()
-                            * line.getPriceUdv().floatValue()
-                            * line.getDiscount().floatValue() / 100F));
-                    if (line.getPriceSubtotal() != null)
-                        holder.total.setText(new BigDecimal(line.getPriceSubtotal()
-                                .doubleValue()).setScale(2, RoundingMode.HALF_UP) + "");
-                    fragment.loadOnResume();
-                }
-            });
-            holder.lessIconUom.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (line.getProductUomQuantity().floatValue() >= 1.0) {
-                        line.setProductUomQuantity(line.getProductUomQuantity().floatValue() - 1.0);
-                        if (line.getProductUosQuantity() != null) {
-                            String quantityUos = line.getProductUosQuantity().toString();
-                            if (quantityUos != null && quantityUos.endsWith(".0"))
-                                quantityUos = quantityUos.replace(".0", "");
-                            holder.quantityUos.setText(quantityUos);
-                        }
-                        line.setPriceSubtotal(line.getProductUomQuantity().floatValue()
-                                * line.getPriceUnit().floatValue()
-                                - (line.getProductUomQuantity().floatValue()
-                                * line.getPriceUnit().floatValue()
-                                * line.getDiscount().floatValue() / 100F));
-                        if (line.getPriceSubtotal() != null)
-                            holder.total.setText(new BigDecimal(line.getPriceSubtotal()
-                                    .doubleValue()).setScale(2, RoundingMode.HALF_UP) + "");
-                        fragment.loadOnResume();
-                    }
-                }
-            });
-            holder.plusIconUom.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    line.setProductUomQuantity(line.getProductUomQuantity().floatValue() + 1.0);
-                    if (line.getProductUosQuantity() != null) {
-                        String quantityUos = line.getProductUosQuantity().toString();
-                        if (quantityUos != null && quantityUos.endsWith(".0"))
-                            quantityUos = quantityUos.replace(".0", "");
-                        holder.quantityUos.setText(quantityUos);
-                    }
-                    line.setPriceSubtotal(line.getProductUomQuantity().floatValue()
-                            * line.getPriceUnit().floatValue()
-                            - (line.getProductUomQuantity().floatValue()
-                            * line.getPriceUnit().floatValue()
-                            * line.getDiscount().floatValue() / 100F));
-                    if (line.getPriceSubtotal() != null)
-                        holder.total.setText(new BigDecimal(line.getPriceSubtotal()
-                                .doubleValue()).setScale(2, RoundingMode.HALF_UP) + "");
-                    fragment.loadOnResume();
-                }
-            });
+            holder.deleteIcon.setVisibility(View.GONE);
         }
+
+        if (fragment != null && showDeleteIcon) {
+            View.OnClickListener dialogDiscount = new View.OnClickListener () {
+                @Override
+                public void onClick(View v) {
+                    AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext());
+                    alert.setTitle("DESCUENTO:");
+                    String mensaje =
+                              "Tipo 1-> " + line.getDiscount1().toString() + "%, "
+                            + "Tipo 2-> " + line.getDiscount2().toString() + "%, "
+                            + "Tipo 3-> " + line.getDiscount3().toString() + "%";
+                    alert.setMessage(mensaje);
+                    final EditText input = new EditText(v.getContext());
+                    input.setInputType(InputType.TYPE_CLASS_NUMBER);
+                    input.setText(holder.discount.getText());
+                    input.setImeOptions(EditorInfo.IME_ACTION_NONE);
+                    input.setGravity(Gravity.CENTER);
+                    input.setTextSize(TypedValue.COMPLEX_UNIT_SP, 50);
+                    input.selectAll();
+                    alert.setView(input);
+                    alert.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            String value = input.getText().toString();
+                            try {
+                                float descuento = Float.parseFloat(value);
+                                String tipoDescuento = "0";
+                                if (descuento < 0 || descuento > line.getProduct().getMaxDiscount())
+                                    throw new Exception("Descuento incorrecto");
+                                if (descuento == 3) {
+                                    tipoDescuento = Integer.toString((int) descuento);
+                                    descuento = line.getDiscount3().floatValue();
+                                    if (descuento == 0.0) { // Si el descuento es 0 bajamos un nivel
+                                        descuento = 2;
+                                    }
+                                }
+                                if (descuento == 2) {
+                                    tipoDescuento = Integer.toString((int) descuento);
+                                    descuento = line.getDiscount2().floatValue();
+                                    if (descuento == 0.0) { // Si el descuento es 0 bajamos un nivel
+                                        descuento = 1;
+                                    }
+                                }
+                                if (descuento == 1) {
+                                    tipoDescuento = Integer.toString((int) descuento);
+                                    descuento = line.getDiscount1().floatValue();
+                                    if (descuento == 0.0) { // Si el descuento es 0 bajamos un nivel
+                                        descuento = 0;
+                                    }
+                                }
+                                if (descuento == 0) {
+                                    tipoDescuento = Integer.toString((int) descuento);
+                                    descuento = 0;
+                                }
+                                if (line.getDiscountType() != "-1") { // -1 significa que se ha modificado el precio
+                                    line.setDiscountType(tipoDescuento);
+                                }
+                                line.setDiscount(descuento);
+                                fragment.loadOnResume();
+                            } catch (Exception e) {
+                                MessagesForUser.showMessage(OrderLinesNewDispositionAdapter.this.fragment.getView(), "Descuento ha de ser un valor entre 0.0 y " + line.getProduct().getMaxDiscount().toString(), 3000, Level.SEVERE);
+                            }
+                        }
+                    });
+                    alert.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            dialog.cancel();
+                        }
+                    });
+                    alert.show();
+                }
+            };
+            View.OnClickListener dialogQuantityUom = new View.OnClickListener () {
+                @Override
+                public void onClick(View v) {
+                    AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext());
+                    alert.setTitle("CANTIDAD:");
+                    alert.setMessage(holder.unitUom.getText());
+                    final EditText input = new EditText(v.getContext());
+                    input.setInputType(InputType.TYPE_CLASS_NUMBER);
+                    input.setText(holder.quantityUom.getText());
+                    input.setImeOptions(EditorInfo.IME_ACTION_NONE);
+                    input.setGravity(Gravity.CENTER);
+                    input.setTextSize(TypedValue.COMPLEX_UNIT_SP, 50);
+                    input.selectAll();
+                    alert.setView(input);
+                    alert.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            String value = input.getText().toString();
+                            try {
+                                Float qty = Float.parseFloat(value);
+                                if (qty < 1) {
+                                    qty = 1F;
+                                }
+                                line.setProductUomQuantity(qty);
+                            } catch (Exception e) {
+                                dialog.cancel();
+                            }
+                            if (line.getProductUosQuantity() != null) {
+                                String quantityUos = line.getProductUosQuantity().toString();
+                                if (quantityUos != null && quantityUos.endsWith(".00"))
+                                    quantityUos = quantityUos.replace(".00", "");
+                                if (quantityUos != null && quantityUos.endsWith(".0"))
+                                    quantityUos = quantityUos.replace(".0", "");
+                                holder.quantityUos.setText(quantityUos);
+                            }
+                            line.setPriceSubtotal(line.getProductUomQuantity().floatValue()
+                                    * line.getPriceUnit().floatValue()
+                                    - (line.getProductUomQuantity().floatValue()
+                                    * line.getPriceUnit().floatValue()
+                                    * line.getDiscount().floatValue() / 100F));
+                            if (line.getPriceSubtotal() != null)
+                                holder.total.setText(new BigDecimal(line.getPriceSubtotal()
+                                        .doubleValue()).setScale(2, RoundingMode.HALF_UP) + "");
+                            fragment.loadOnResume();
+                        }
+                    });
+                    alert.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            dialog.cancel();
+                        }
+                    });
+                    alert.show();
+                }
+            };
+            View.OnClickListener dialogQuantityUos = new View.OnClickListener () {
+                @Override
+                public void onClick(View v) {
+                    AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext());
+                    alert.setTitle("CANTIDAD:");
+                    alert.setMessage(holder.unitUos.getText());
+                    final EditText input = new EditText(v.getContext());
+                    input.setInputType(InputType.TYPE_CLASS_NUMBER);
+                    input.setText(holder.quantityUos.getText());
+                    input.setImeOptions(EditorInfo.IME_ACTION_NONE);
+                    input.setGravity(Gravity.CENTER);
+                    input.setTextSize(TypedValue.COMPLEX_UNIT_SP, 50);
+                    input.selectAll();
+                    alert.setView(input);
+                    alert.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            String value = input.getText().toString();
+                            try {
+                                Float qty = Float.parseFloat(value);
+                                if (qty < 1) {
+                                    qty = 1F;
+                                }
+                                line.setProductUosQuantity(qty);
+                            } catch (Exception e) {
+                                dialog.cancel();
+                            }
+                            if (line.getProductUomQuantity() != null) {
+                                String quantityUom = line.getProductUomQuantity().toString();
+                                if (quantityUom != null && quantityUom.endsWith(".00"))
+                                    quantityUom = quantityUom.replace(".00", "");
+                                if (quantityUom != null && quantityUom.endsWith(".0"))
+                                    quantityUom = quantityUom.replace(".0", "");
+                                holder.quantityUom.setText(quantityUom);
+                            }
+                            line.setPriceSubtotal(line.getProductUomQuantity().floatValue()
+                                    * line.getPriceUnit().floatValue()
+                                    - (line.getProductUomQuantity().floatValue()
+                                    * line.getPriceUnit().floatValue()
+                                    * line.getDiscount().floatValue() / 100F));
+                            if (line.getPriceSubtotal() != null)
+                                holder.total.setText(new BigDecimal(line.getPriceSubtotal()
+                                        .doubleValue()).setScale(2, RoundingMode.HALF_UP) + "");
+                            fragment.loadOnResume();
+                        }
+                    });
+                    alert.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            dialog.cancel();
+                        }
+                    });
+                    alert.show();
+                }
+            };
+            holder.discount.setOnClickListener(dialogDiscount);
+            holder.unitUom.setOnClickListener(dialogQuantityUom);
+            holder.unitUos.setOnClickListener(dialogQuantityUos);
+            holder.quantityUom.setOnClickListener(dialogQuantityUom);
+            holder.quantityUos.setOnClickListener(dialogQuantityUos);
+            }
         return vi;
     }
 

@@ -1,8 +1,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:baselineAligned="false"
-    android:orientation="horizontal" android:gravity="center_vertical" >
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
 
     <ImageView
         android:id="@+id/order_line_list_item_new_disposition_product_image"
@@ -13,108 +14,59 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="3"
         android:layout_marginLeft="@dimen/separator_margin"
         android:layout_marginRight="@dimen/separator_margin"
-        android:orientation="vertical" >
+        android:layout_weight="3"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/order_line_list_item_new_disposition_product_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
             android:textSize="@dimen/h6"
-            />
+            android:textStyle="bold" />
+
         <TextView
             android:id="@+id/order_line_list_item_new_disposition_product_code"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/h6"/>
-        <TextView
-            android:id="@+id/order_line_list_item_new_disposition_price_net"
+            android:textSize="@dimen/h6" />
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/green"
-            android:textSize="@dimen/h6" />
-        <TextView
-            android:id="@+id/order_line_list_item_new_disposition_discount_type"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/green"
-            android:textSize="@dimen/h6" />
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/order_line_list_item_new_disposition_discount_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/green"
+                android:textSize="@dimen/h6" />
+
+            <TextView
+                android:id="@+id/order_line_list_item_new_disposition_price_net"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/separator_margin"
+                android:textColor="@color/green"
+                android:textSize="@dimen/h6" />
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:layout_gravity="top"
+        android:layout_weight="1"
         android:orientation="vertical">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical">
-            <ImageView
-                android:id="@+id/order_line_list_item_new_disposition_plus_icon_uom"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:padding="5dp"
-                android:src="@drawable/general_flecha_arriba"/>
-            <TextView
-                android:id="@+id/order_line_list_item_new_disposition_quantity_uom"
-                android:layout_width="wrap_content"
-                android:gravity="center"
-                android:textSize="@dimen/h6"
-                android:layout_height="wrap_content" />
-            <ImageView
-                android:id="@+id/order_line_list_item_new_disposition_less_icon_uom"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:padding="5dp"
-                android:src="@drawable/general_flecha_abajo"/>
-        </LinearLayout>
 
         <TextView
-            android:id="@+id/order_line_list_item_new_disposition_unit_uom"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:textColor="@color/abc_search_url_text"
-            android:textSize="@dimen/h6" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:layout_gravity="top"
-        android:orientation="vertical">
-        <LinearLayout
+            android:id="@+id/order_line_list_item_new_disposition_quantity_uos"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:orientation="vertical">
-            <ImageView
-                android:id="@+id/order_line_list_item_new_disposition_plus_icon_uos"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:padding="5dp"
-                android:src="@drawable/general_flecha_arriba"/>
-            <TextView
-                android:id="@+id/order_line_list_item_new_disposition_quantity_uos"
-                android:layout_width="wrap_content"
-                android:gravity="center"
-                android:textSize="@dimen/h6"
-                android:layout_height="wrap_content" />
-            <ImageView
-                android:id="@+id/order_line_list_item_new_disposition_less_icon_uos"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:padding="5dp"
-                android:src="@drawable/general_flecha_abajo"/>
-        </LinearLayout>
+            android:textSize="@dimen/h6" />
 
         <TextView
             android:id="@+id/order_line_list_item_new_disposition_unit_uos"
@@ -126,45 +78,65 @@
 
     </LinearLayout>
 
-    
-    <TextView
-            android:id="@+id/order_line_list_item_new_disposition_price"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:textStyle="bold"
-            android:textSize="@dimen/h6"
-            android:visibility="gone"
-            android:layout_height="wrap_content" />
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:layout_weight="1"
+        android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/order_line_list_item_new_disposition_discount"
+        <TextView
+            android:id="@+id/order_line_list_item_new_disposition_quantity_uom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="@dimen/h6" />
+
+        <TextView
+            android:id="@+id/order_line_list_item_new_disposition_unit_uom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:textColor="@color/abc_search_url_text"
+            android:textSize="@dimen/h6" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/order_line_list_item_new_disposition_price"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:gravity="right|center_horizontal"
-        android:imeOptions="actionDone"
-        android:inputType="numberDecimal"
-        android:selectAllOnFocus="true"
+        android:textSize="@dimen/h6"
+        android:textStyle="bold"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/order_line_list_item_new_disposition_discount"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
         android:textSize="@dimen/h6" />
 
     <TextView
         android:id="@+id/order_line_list_item_new_disposition_total"
         android:layout_width="0dp"
-        android:gravity="right"
         android:layout_height="wrap_content"
         android:layout_weight="1.5"
+        android:gravity="right"
         android:textSize="@dimen/h6" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=""/>
+        android:text="" />
 
     <ImageView
-            android:id="@+id/order_line_list_item_new_disposition_delete_icon"
-            android:layout_width="0dp"
-            android:layout_weight="0.5"
-            android:layout_height="wrap_content"
-            android:src="@drawable/general_eliminar" />
+        android:id="@+id/order_line_list_item_new_disposition_delete_icon"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.5"
+        android:src="@drawable/general_eliminar" />
 
 </LinearLayout>

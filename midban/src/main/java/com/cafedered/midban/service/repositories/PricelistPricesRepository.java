@@ -69,4 +69,7 @@ public class PricelistPricesRepository extends BaseRepository<PricelistPrices, P
         return new ArrayList<Product>();
     }
 
+    public List<Integer> getDiferentProductIds() {
+        return dao.getDiferentProductIds();
+    }
 }

@@ -231,8 +231,8 @@ public class PartnerFavouriteItemAdapter extends BaseAdapter {
         }
 
         String[] categories;
-        if (product.getProduct().getProductTemplate()
-                .getProductCategory() != null) {
+        if (product.getProduct().getProductTemplate().getProductCategory() != null &&
+                product.getProduct().getProductTemplate().getProductCategory().getCompleteName() != null) {
             categories = product.getProduct().getProductTemplate()
                 .getProductCategory().getCompleteName().split("/");
             if (categories.length > 1)

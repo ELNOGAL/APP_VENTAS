@@ -96,6 +96,10 @@ public class BaseRepository<E extends BaseEntity, D extends BaseDAO<E>> {
         }
     }
 
+    public List<Integer> getAllIds() {
+        return dao.getAllIds();
+    }
+
     public List<Object> getAllSomeProperty(String field)
             throws ServiceException {
         try {
@@ -185,7 +189,11 @@ public class BaseRepository<E extends BaseEntity, D extends BaseDAO<E>> {
             Long timeInit = new Date().getTime();
             adapter = openERPSession.getObjectAdapter(annotation.object());
             FilterCollection filters = entity.getRemoteFilters();
+            if (filters == null) {
+                filters = new FilterCollection();
+            }
             RowCollection entities;
+            List<Integer> serverIdsListToRecover = new ArrayList<>();
             Map<String, String> remoteFields = getRemoteFields(entity);
             String[] fieldsRemote = new String[remoteFields.size()];
             fieldsRemote = remoteFields.keySet().toArray(fieldsRemote);
@@ -205,49 +213,34 @@ public class BaseRepository<E extends BaseEntity, D extends BaseDAO<E>> {
                         filters, fieldId, null);
                 try {
                         // obtengo todos los ids en local
-                        List<E> localIds = dao.getAll(0, 1000000);
+                        List<Integer> localIds = dao.getAllIds();
                         // Probamos este nuevo método para eliminar lo que sobra - Pedro Gómez - 05/03/2020
                         List<Long> serverIdsList = new ArrayList<>();
                         for (Row row : serverIds) {
                             serverIdsList.add(((Integer) row.get("id")).longValue());
                         }
                         for (int i = 0; i < localIds.size(); i++) {
-                            Long id = localIds.get(i).getId();
+                            Long id = localIds.get(i).longValue();
                             if (!serverIdsList.contains(id)) {
                                 try {
                                     dao.delete(id);
                                 } catch (ReflectionException e) {
                                     e.printStackTrace();
                                 }
+                            } else {
+                                serverIdsList.remove(id);
                             }
                         }
-                        // Hasta aquí - Pedro Gómez - 05/03/2020
-                        /* Este era el anterior - Pedro Gómez - 05/03/2020
-                        // para cada id en local ...
-                        for (int i = 0; i < localIds.size(); i++) {
-                            boolean exists = false;
-                            Long id = localIds.get(i).getId();
-                            // ... lo busco en la lista que me llegó de servidor
-                            for (Row row : serverIds) {
-                                // si lo encuentro dejo una marca como que sigue existiendo
-                                if (id == ((Integer) row.get("id")).longValue()) {
-                                    exists = true;
-                                    break;
-                                }
-                            }
-                            // si no lo ha encontrado lo elimino de local
-                            if (!exists) {
-                                try {
-                                    dao.delete(id);
-                                } catch (ReflectionException e) {
-                                    e.printStackTrace();
-                                }
-                            }
+                        for (int i = 0; i < serverIdsList.size(); i++) {
+                            serverIdsListToRecover.add(serverIdsList.get(i).intValue());
                         }
-                        */
                 } catch (DatabaseException e) {
                     e.printStackTrace();
                 }
+            }
+            if (serverIdsListToRecover.size() > 0 && utcDate != null) {
+                filters.add(FilterCollection.FilterOperator.OR);
+                filters.add("id", "in", serverIdsListToRecover.toArray(new Integer[]{}));
             }
             entities = adapter.searchAndReadObject(
                     filters, fieldsRemote, utcDate);

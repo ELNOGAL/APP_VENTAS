@@ -33,9 +33,6 @@ public class StockMoveRepository extends
 
     private static StockMoveRepository instance = null;
 
-    private static Map<Number, List<StockMove>> cacheByStockPickingOut = new HashMap<Number, List<StockMove>>(
-            100);
-
     public static StockMoveRepository getInstance() {
         if (instance == null)
             instance = new StockMoveRepository();
@@ -47,24 +44,16 @@ public class StockMoveRepository extends
     }
 
     public List<StockMove> getByStockPickingOutId(Long id) {
-        if (!cacheByStockPickingOut.containsKey(id)) {
-            StockMove line = new StockMove();
-            line.setPickingId(id);
-            try {
-                List<StockMove> result = dao.getByExample(line,
-                        Restriction.AND, true, 0, 100000);
-                if (cacheByStockPickingOut.size() == 99)
-                    cacheByStockPickingOut.remove(cacheByStockPickingOut
-                            .keySet().iterator().next());
-                cacheByStockPickingOut.put(id, result);
-                return result;
-            } catch (DatabaseException e) {
-                if (LoggerUtil.isDebugEnabled())
-                    e.printStackTrace();
-                return new ArrayList<StockMove>();
-            }
-        } else {
-            return cacheByStockPickingOut.get(id);
+        StockMove line = new StockMove();
+        line.setPickingId(id);
+        try {
+            List<StockMove> result = dao.getByExample(line,
+                    Restriction.AND, true, 0, 100000);
+            return result;
+        } catch (DatabaseException e) {
+            if (LoggerUtil.isDebugEnabled())
+                e.printStackTrace();
+            return new ArrayList<StockMove>();
         }
     }
 }

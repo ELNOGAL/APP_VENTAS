@@ -55,7 +55,6 @@ public class CommercialRouteDAO extends BaseDAO<CommercialRoute> {
             cursor = getDaoHelper().getReadableDatabase().rawQuery(query, (String[])null);
             if (cursor.getCount() > 0) {
                 cursor.moveToFirst();
-
                 while(!cursor.isAfterLast()) {
                     result.add((CommercialRoute)JDBCQueryMaker.getObjectFromCursor(cursor, obj));
                     cursor.move(1);
@@ -89,7 +88,6 @@ public class CommercialRouteDAO extends BaseDAO<CommercialRoute> {
             if (cursor != null) {
                 cursor.close();
             }
-
         }
         return result;
     }

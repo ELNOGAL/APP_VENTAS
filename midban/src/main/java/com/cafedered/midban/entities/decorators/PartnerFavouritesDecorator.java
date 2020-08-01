@@ -64,15 +64,16 @@ public class PartnerFavouritesDecorator implements Comparable<PartnerFavouritesD
 
     @Override
     public int compareTo(PartnerFavouritesDecorator another) {
-        if (this.product != null &&
+        if (this.product != null && another.product != null &&
                 this.product.getProductTemplate() != null &&
                 this.product.getProductTemplate().getProductCategory() != null &&
-                another.product != null &&
+                this.product.getProductTemplate().getProductCategory().getCompleteName() != null &&
                 another.product.getProductTemplate() != null &&
-                another.product.getProductTemplate().getProductCategory() != null) {
+                another.product.getProductTemplate().getProductCategory() != null &&
+                another.product.getProductTemplate().getProductCategory().getCompleteName() != null) {
             String[] categories = this.product.getProductTemplate()
                     .getProductCategory().getCompleteName().split("/");
-            String[] anotherCategories = another.getProduct().getProductTemplate()
+            String[] anotherCategories = another.product.getProductTemplate()
                     .getProductCategory().getCompleteName().split("/");
             if (categories.length > 1 && anotherCategories.length > 1)
                 return categories[categories.length-2].compareTo(anotherCategories[anotherCategories.length - 2]);

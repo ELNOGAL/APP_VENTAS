@@ -117,6 +117,7 @@ public class ProductOrderItemAdapter extends BaseAdapter {
         if (position < products.size()) {
             final Product product = products.get(position);
             if (product.getLstPrice().floatValue() != -1) { // -1 es cuando el producto no esta en tarifa y no se puede vender
+                holder.iconInfo.setVisibility(View.VISIBLE);
                 holder.iconInfo.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -136,6 +137,10 @@ public class ProductOrderItemAdapter extends BaseAdapter {
                         fragment.onSelect(product);
                     }
                 });
+            } else {
+                holder.iconInfo.setVisibility(View.INVISIBLE);
+                holder.iconInfo.setOnClickListener(null);
+                vi.setOnClickListener(null);
             };
             if (!ImageCache.getInstance().exists(
                     Product.class.getName() + product.getId() + "0"))

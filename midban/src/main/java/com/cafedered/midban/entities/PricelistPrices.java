@@ -17,10 +17,6 @@ public class PricelistPrices extends BaseRemoteEntity {
     @RemoteProperty(name = "id")
     private Long id;
 
-   // @Property(columnName = "display_name")
-   // @RemoteProperty(name = "display_name")
-    private String displayName;
-
     @Property(columnName = "product_id")
     @RemoteProperty(name = "product_id")
     private Number productId;
@@ -73,14 +69,6 @@ public class PricelistPrices extends BaseRemoteEntity {
     @Override
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getDisplayName() {
-        return displayName;
-    }
-
-    public void setDisplayName(String displayName) {
-        this.displayName = displayName;
     }
 
     public Number getProductId() {

@@ -99,10 +99,10 @@ public class ConfigurationFragment extends BaseSupportFragment {
             else {
                 // FIXME delete this hardcoded test data
                 protocol.setText("http");
-                openErpServer.setText("100.0.29.80");
+                openErpServer.setText("ip/hostname");
                 openErpPort.setText("80");
-                openErpDatabase.setText("odoo_elnogal_0306-1");
-                defaultUser.setText("cmnt");
+                openErpDatabase.setText("database_name");
+                defaultUser.setText("user_name");
             }
 
             version.setOnClickListener(new View.OnClickListener() {

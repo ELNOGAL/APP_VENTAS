@@ -88,14 +88,13 @@ public class LastSalesFragment extends BaseSupportFragment {
             @Override
             protected List<LastSaleCustomObject> doInBackground(Void... params) {
                 return OrderRepository.getInstance()
-                        .getProductLastSalesForPartner(product.getId(), partner.getId());
+                        .getProductLastSalesForPartner(product.getId(), partner.getId(), partner.getId());
             }
 
             @Override
             protected void onPostExecute(List<LastSaleCustomObject> result) {
                 super.onPostExecute(result);
-                lastSalesLines.setAdapter(new LastSalesListItemAdapter(
-rootView
+                lastSalesLines.setAdapter(new LastSalesListItemAdapter(rootView
                         .getContext(), result));
             }
         }.execute();

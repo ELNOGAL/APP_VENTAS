@@ -130,7 +130,7 @@ public class PartnerHistoryFragment extends BaseSupportFragment {
                         }
                     }
                     List<Order> orders = OrderRepository.getInstance()
-                            .getByExample(order, Restriction.AND, false, 0, 10);
+                            .getByExample(order, Restriction.AND, false, 0, 50);
                     return orders;
                 } catch (ServiceException e) {
                     if (LoggerUtil.isDebugEnabled())
@@ -196,14 +196,21 @@ public class PartnerHistoryFragment extends BaseSupportFragment {
                 int lastInScreen = firstVisibleItem + visibleItemCount;
                 if (lastInScreen == totalItemCount) {
                     try {
-                        currentValues.addAll(OrderRepository.getInstance()
+                        List<Order> orders = OrderRepository.getInstance()
                                 .getByExample(order, Restriction.AND, false,
-                                        totalItemCount, 5));
+                                        totalItemCount, 25);
+                        if (orders.size() > 0) {
+                            currentValues.addAll(orders);
+                            adapter.notifyDataSetChanged();
+                        }
+                        /*currentValues.addAll(OrderRepository.getInstance()
+                                .getByExample(order, Restriction.AND, false,
+                                        totalItemCount, 5));*/
 
                     } catch (ServiceException e) {
                         e.printStackTrace();
                     }
-                    adapter.notifyDataSetChanged();
+                    //adapter.notifyDataSetChanged();
                 }
             }
         }

@@ -19,7 +19,6 @@ package com.cafedered.midban.dao;
 
 import java.lang.reflect.InvocationTargetException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -40,7 +39,6 @@ import com.cafedered.midban.conf.MidbanApplication;
 import com.cafedered.midban.entities.BaseEntity;
 import com.cafedered.midban.entities.Order;
 import com.cafedered.midban.entities.OrderLine;
-import com.cafedered.midban.entities.Partner;
 import com.cafedered.midban.entities.PricelistPrices;
 import com.cafedered.midban.entities.Product;
 import com.cafedered.midban.entities.ProductCategory;
@@ -83,37 +81,31 @@ public class OrderDAO extends BaseDAO<Order> {
             e.printStackTrace();
         }
         try {
-            query = "SELECT p.* FROM "
+            query = "SELECT p.*, "
+                    + "l.price_unit as l_price_unit, l.discount as l_discount, "
+                    + "l.app_discount_type as l_app_discount_type, MAX(o.date_order) as o_date_order "
+                    + "FROM "
                     + ((BaseEntity) ReflectionUtils.createObject(Product.class))
                     .getClass().getAnnotation(Entity.class).tableName() + " p, "
                     + ((BaseEntity) ReflectionUtils.createObject(OrderLine.class))
                     .getClass().getAnnotation(Entity.class).tableName() + " l, "
-                    + ((BaseEntity) ReflectionUtils.createObject(ProductTemplate.class))
-                    .getClass().getAnnotation(Entity.class).tableName() + " t, "
-                    + ((BaseEntity) ReflectionUtils.createObject(ProductCategory.class))
-                    .getClass().getAnnotation(Entity.class).tableName() + " c, "
                     + ((BaseEntity) ReflectionUtils.createObject(Order.class))
-                    .getClass().getAnnotation(Entity.class).tableName() + " o, "
-                    + ((BaseEntity) ReflectionUtils.createObject(PricelistPrices.class))
-                    .getClass().getAnnotation(Entity.class).tableName() + " tpp "
-                    + "WHERE l.order_partner_id = " + idPartner
+                    .getClass().getAnnotation(Entity.class).tableName() + " o"
+                    + " WHERE l.order_partner_id = " + idPartner
                     + " AND l.order_id = o.id"
-                    + " AND l.product_id = p.id"
-                    + " AND l.product_id = tpp.product_id";
+                    + " AND l.product_id = p.id";
             if (idShop != null) {
                 query = query
-                        + " AND o.shop_id = " + idShop;
+                    + " AND o.shop_id = " + idShop;
             }
-            if (datesBack != OrderRepository.DateFilters.LAST_ORDER
-                    .getDatesBack()) {
+            if (datesBack != OrderRepository.DateFilters.LAST_ORDER.getDatesBack()) {
                 Calendar date = Calendar.getInstance();
                 date.add(Calendar.DATE, datesBack);
                 query = query
-                        + " AND o.date_order > '"
-                        + DateUtil.toFormattedString(date.getTime(),
-                        "yyyy-MM-dd") + "'";
-                query = query + " AND p.product_tmpl_id = t.id AND t.categ_id = c.id";
-                query = query + " GROUP BY p.default_code";
+                    + " AND o.date_order > '"
+                    + DateUtil.toFormattedString(date.getTime(),
+                    "yyyy-MM-dd") + "'";
+                query = query + " GROUP BY p.id";
                 query = query + " ORDER BY p.default_code";
             } else {
                 Long idOrder = null;
@@ -146,50 +138,37 @@ public class OrderDAO extends BaseDAO<Order> {
                 while (!cursor.isAfterLast()) {
                     Product aProduct = (Product)JDBCQueryMaker.getObjectFromCursor(cursor, new Product());
                     aProduct.setIsFavourite(true);
-                    try {
-                        Partner partner = PartnerRepository.getInstance().getById(idPartner);
-                        List<LastSaleCustomObject> result = OrderRepository.getInstance().getProductLastSalesForPartner(aProduct.getId(), idPartner);
-                        if (result.size() > 0) {
-                            // Precio última venta
-                            aProduct.setLastPrice(Float.parseFloat(result.get(0).getPrice()));
-                            // Descuento última venta
-                            aProduct.setLastDiscount(Float.parseFloat(result.get(0).getDiscount()));
-                            if (result.get(0).getDiscountType().equals("")) {
-                                aProduct.setLastDiscountType("?");
-                            } else {
-                                aProduct.setLastDiscountType(result.get(0).getDiscountType());
-                            }
+                    // Precio última venta
+                    aProduct.setLastPrice(cursor.getFloat(cursor.getColumnIndex("l_price_unit")));
+                    // Descuento última venta
+                    aProduct.setLastDiscount(cursor.getFloat(cursor.getColumnIndex("l_discount")));
+                    // Tipo descuento última venta
+                    String appDiscountType = cursor.getString(cursor.getColumnIndex("l_app_discount_type"));
+                    if (appDiscountType == null || appDiscountType.equals("")) {
+                        aProduct.setLastDiscountType("?");
+                    } else {
+                        aProduct.setLastDiscountType(appDiscountType);
+                    }
+                    String tarifaPorLaQueFiltrar = (String) MidbanApplication.getValueFromContext(ContextAttributes.ACTUAL_TARIFF);
+                    if (!"".equals(tarifaPorLaQueFiltrar) && tarifaPorLaQueFiltrar != null) {
+                        PricelistPrices pl = new PricelistPrices();
+                        pl.setPricelistId(Long.parseLong(tarifaPorLaQueFiltrar));
+                        pl.setProductId(aProduct.getId().longValue());
+                        List<PricelistPrices> list = PricelistPricesRepository.getInstance().getByExample(pl, Restriction.AND, true, 0, 1);
+                        if (list.size() == 1) {
+                            // Precio tarifa
+                            aProduct.setLstPrice(list.get(0).getPrice());
+                            aProduct.setDiscount1(list.get(0).getDiscount1());
+                            aProduct.setDiscount2(list.get(0).getDiscount2());
+                            aProduct.setDiscount3(list.get(0).getDiscount3());
                         } else {
-                            aProduct.setLastPrice(0.0F);
-                            aProduct.setLastDiscount(0.0F);
-                            aProduct.setLastDiscountType("0");
+                            // No está en tarifa.
+                            // Ponemos precio -1 para marcar el producto como que ha sido comprado pero no se puede vender por no estar en tarifa actual
+                            aProduct.setLstPrice(-1);
+                            aProduct.setDiscount1(0.0F);
+                            aProduct.setDiscount2(0.0F);
+                            aProduct.setDiscount3(0.0F);
                         }
-                        String tarifaPorLaQueFiltrar = (String) MidbanApplication.getValueFromContext(ContextAttributes.ACTUAL_TARIFF);
-                        if (!"".equals(tarifaPorLaQueFiltrar) && tarifaPorLaQueFiltrar != null) {
-                            PricelistPrices pl = new PricelistPrices();
-                            pl.setPricelistId(Long.parseLong(tarifaPorLaQueFiltrar));
-                            pl.setProductId(aProduct.getId().longValue());
-                            List<PricelistPrices> list = PricelistPricesRepository.getInstance().getByExample(pl, Restriction.AND, true, 0, 1);
-                            if (list.size() == 1) {
-                                // Precio tarifa
-                                aProduct.setLstPrice(list.get(0).getPrice());
-                                aProduct.setDiscount1(list.get(0).getDiscount1());
-                                aProduct.setDiscount2(list.get(0).getDiscount2());
-                                aProduct.setDiscount3(list.get(0).getDiscount3());
-                            } else {
-                                // No está en tarifa. Ponemos precio -1 para marcar el producto como que ha sido comprado pero no se puede vender por no estar en tarifa actual
-                                aProduct.setLstPrice(-1);
-                                aProduct.setDiscount1(0.0F);
-                                aProduct.setDiscount2(0.0F);
-                                aProduct.setDiscount3(0.0F);
-                            }
-                        }
-                    } catch (ConfigurationException e) {
-                        e.printStackTrace();
-                    } catch (ServiceException e) {
-                        e.printStackTrace();
-                    } catch (NullPointerException e) {
-                        e.printStackTrace();
                     }
                     productMap.put(aProduct.getId(), aProduct);
                     cursor.move(1);
@@ -210,6 +189,8 @@ public class OrderDAO extends BaseDAO<Order> {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
             e.printStackTrace();
+        } catch (ServiceException e) {
+            e.printStackTrace();
         }
         return products;
     }
@@ -226,7 +207,7 @@ public class OrderDAO extends BaseDAO<Order> {
                     + " l, "
                     + ((BaseEntity) ReflectionUtils.createObject(Order.class))
                             .getClass().getAnnotation(Entity.class).tableName()
-                    + " o WHERE l.order_partner_id = "
+                    + " o WHERE o.partner_shipping_id = "
                     + id
                     + " AND l.order_id = o.id";
 
@@ -248,7 +229,7 @@ public class OrderDAO extends BaseDAO<Order> {
                                                 .getClass()
                                                 .getAnnotation(Entity.class)
                                                 .tableName()
-                                        + " WHERE partner_id = " + id, null);
+                                        + " WHERE partner_shipping_id = " + id, null);
                 if (!cursor.isAfterLast()) {
                     cursor.moveToFirst();
                     idOrder = cursor.getLong(0);
@@ -282,13 +263,20 @@ public class OrderDAO extends BaseDAO<Order> {
     }
 
     public List<LastSaleCustomObject> getProductLastSalesForPartner(
-            Long partnerId, Long productId) {
-        String query = "SELECT o.date_order, l.price_unit, l.price_subtotal, l.product_uom_qty, l.discount, l.app_discount_type, l.product_uos, o.id "
-                + "FROM sale_order o, sale_order_line l, product_product p  "
-                + "WHERE o.partner_id = "
-                + partnerId
-                + " AND l.product_id = "
-                + productId + " AND l.order_id = o.id AND p.id = " + productId
+            Long productId, Long partnerId, Long partnerShippingId) {
+        String query = "SELECT o.date_order, l.price_unit, l.price_subtotal, l.product_uom_qty, l.discount, l.app_discount_type, l.product_uos, o.id"
+                + " FROM sale_order o, sale_order_line l"
+                + " WHERE 1=1";
+        if (partnerShippingId != null) {
+            query = query
+                + " AND o.partner_shipping_id = " + partnerShippingId;
+        } else {
+            query = query
+                + " AND o.partner_id = " + partnerId;
+        }
+        query = query
+                + " AND l.product_id = " + productId
+                + " AND l.order_id = o.id"
                 + " ORDER BY o.date_order DESC";
         if (LoggerUtil.isDebugEnabled())
             System.out.println(query);
@@ -334,7 +322,6 @@ public class OrderDAO extends BaseDAO<Order> {
                         .rawQuery(queryCount, null);
                 if (!countCursor.isAfterLast()) {
                     countCursor.moveToFirst();
-                    System.out.println(countCursor.getInt(0));
                     lastSaleCO.setLines("" + countCursor.getInt(0));
                 }
                 countCursor.close();

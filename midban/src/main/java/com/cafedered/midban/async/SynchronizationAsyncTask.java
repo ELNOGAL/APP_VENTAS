@@ -25,14 +25,11 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.logging.Level;
 
 import android.annotation.SuppressLint;
@@ -52,75 +49,51 @@ import com.cafedered.midban.entities.AccountMoveLine;
 import com.cafedered.midban.entities.AccountPaymentTerm;
 import com.cafedered.midban.entities.CommercialRoute;
 import com.cafedered.midban.entities.Company;
-import com.cafedered.midban.entities.Contact;
-import com.cafedered.midban.entities.Invoice;
-import com.cafedered.midban.entities.InvoiceLine;
 import com.cafedered.midban.entities.Order;
 import com.cafedered.midban.entities.OrderLine;
 import com.cafedered.midban.entities.Partner;
 import com.cafedered.midban.entities.PartnerCategory;
-import com.cafedered.midban.entities.PartnerProduct;
 import com.cafedered.midban.entities.PaymentMode;
 import com.cafedered.midban.entities.PricelistPrices;
 import com.cafedered.midban.entities.Product;
 import com.cafedered.midban.entities.ProductCategory;
 import com.cafedered.midban.entities.ProductPackaging;
-import com.cafedered.midban.entities.ProductPartnerPrice;
 import com.cafedered.midban.entities.ProductTemplate;
 import com.cafedered.midban.entities.ProductUl;
 import com.cafedered.midban.entities.ProductUom;
 import com.cafedered.midban.entities.ProductUomCateg;
-import com.cafedered.midban.entities.RouteDetail;
 import com.cafedered.midban.entities.Shop;
-import com.cafedered.midban.entities.StockMove;
-import com.cafedered.midban.entities.StockPickingOut;
 import com.cafedered.midban.entities.Synchronization;
 import com.cafedered.midban.entities.SynchronizationSummary;
 import com.cafedered.midban.entities.Tax;
 import com.cafedered.midban.entities.User;
-import com.cafedered.midban.entities.Voucher;
-import com.cafedered.midban.entities.VoucherLine;
-import com.cafedered.midban.entities.WeekDay;
 import com.cafedered.midban.entities.Warehouse;
-import com.cafedered.midban.service.repositories.AccountJournalRepository;
 import com.cafedered.midban.service.repositories.AccountMoveLineRepository;
 import com.cafedered.midban.service.repositories.AccountPaymentTermRepository;
 import com.cafedered.midban.service.repositories.AccountRepository;
 import com.cafedered.midban.service.repositories.CommercialRouteRepository;
 import com.cafedered.midban.service.repositories.CompanyRepository;
 import com.cafedered.midban.service.repositories.ConfigurationRepository;
-import com.cafedered.midban.service.repositories.ContactRepository;
-import com.cafedered.midban.service.repositories.InvoiceLineRepository;
-import com.cafedered.midban.service.repositories.InvoiceRepository;
 import com.cafedered.midban.service.repositories.OrderLineRepository;
 import com.cafedered.midban.service.repositories.OrderRepository;
 import com.cafedered.midban.service.repositories.PartnerCategoryRepository;
-import com.cafedered.midban.service.repositories.PartnerProductRepository;
 import com.cafedered.midban.service.repositories.PartnerRepository;
 import com.cafedered.midban.service.repositories.PaymentModeRepository;
 import com.cafedered.midban.service.repositories.PaymentTypeRepository;
 import com.cafedered.midban.service.repositories.PricelistPricesRepository;
 import com.cafedered.midban.service.repositories.ProductCategoryRepository;
 import com.cafedered.midban.service.repositories.ProductPackagingRepository;
-import com.cafedered.midban.service.repositories.ProductPartnerPriceRepository;
 import com.cafedered.midban.service.repositories.ProductRepository;
 import com.cafedered.midban.service.repositories.ProductTemplateRepository;
 import com.cafedered.midban.service.repositories.ProductUlRepository;
 import com.cafedered.midban.service.repositories.ProductUomCategRepository;
 import com.cafedered.midban.service.repositories.ProductUomRepository;
-import com.cafedered.midban.service.repositories.RouteDetailRepository;
-import com.cafedered.midban.service.repositories.RouteRepository;
 import com.cafedered.midban.service.repositories.ShopRepository;
-import com.cafedered.midban.service.repositories.StockMoveRepository;
-import com.cafedered.midban.service.repositories.StockPickingOutRepository;
 import com.cafedered.midban.service.repositories.SynchronizationRepository;
 import com.cafedered.midban.service.repositories.SynchronizationSummaryRepository;
 import com.cafedered.midban.service.repositories.TaxRepository;
 import com.cafedered.midban.service.repositories.UserRepository;
-import com.cafedered.midban.service.repositories.VoucherLineRepository;
-import com.cafedered.midban.service.repositories.VoucherRepository;
 import com.cafedered.midban.service.repositories.WarehouseRepository;
-import com.cafedered.midban.service.repositories.WeekDayRepository;
 import com.cafedered.midban.utils.DateUtil;
 import com.cafedered.midban.utils.GMailSender;
 import com.cafedered.midban.utils.LoggerUtil;
@@ -132,7 +105,6 @@ import com.cafedered.midban.utils.exceptions.SynchronizationErrorException;
 import com.debortoliwines.openerp.api.FilterCollection;
 import com.debortoliwines.openerp.api.ObjectAdapter;
 import com.debortoliwines.openerp.api.OpenERPCommand;
-import com.debortoliwines.openerp.api.OpeneERPApiException;
 import com.debortoliwines.openerp.api.Row;
 import com.debortoliwines.openerp.api.RowCollection;
 import com.debortoliwines.openerp.api.Session;
@@ -143,7 +115,7 @@ public class SynchronizationAsyncTask extends AsyncTask<User, String, Boolean> {
     private TextView messagesArea;
     private Context context;
     private Integer currentProgress;
-    public static int MAX_PROGRESS = 28;
+    public static int MAX_PROGRESS = 24;
     private String[] lastPublishedProgress;
 
     private static SynchronizationAsyncTask instance;
@@ -193,32 +165,6 @@ public class SynchronizationAsyncTask extends AsyncTask<User, String, Boolean> {
             lastPublishedProgress = new String[] { "Sincronización en curso...",
                     "" + currentProgress++ };
             publishProgress(lastPublishedProgress);
-            // try {
-            // publishProgress(new String[] {
-            // "Sincronizando Clientes (Provincias)...",
-            // "" + currentProgress++ });
-            // StateRepository.getInstance().getRemoteObjects(new State(),
-            // user.getLogin(), user.getPasswd());
-            //
-            // } catch (ConfigurationException e) {
-            // throw new SynchronizationErrorException(e,
-            // "Error al sincronizar provincias de cliente.");
-            // }
-
-/* debug sincro de clientes
-            try {
-                lastPublishedProgress =new String[] { "Sincronizando Clientes...",
-                        "" + currentProgress++ };
-                publishProgress(lastPublishedProgress);
-                PartnerRepository.getInstance().getRemoteObjects(new Partner(),
-                        user.getLogin(), user.getPasswd(), true);
-
-            } catch (ConfigurationException e) {
-                throw new SynchronizationErrorException(e,
-                        "Error al sincronizar Clientes.");
-            }
-*/
-
             try {
                 lastPublishedProgress =new String[] { "Sincronizando tiendas...",
                         "" + currentProgress++ };
@@ -237,7 +183,6 @@ public class SynchronizationAsyncTask extends AsyncTask<User, String, Boolean> {
                 publishProgress(lastPublishedProgress);
                 PricelistPricesRepository.getInstance().getRemoteObjects(new PricelistPrices(),
                         user.getLogin(), user.getPasswd(), true);
-
             } catch (ConfigurationException e) {
                 throw new SynchronizationErrorException(e,
                         "Error al sincronizar precios.");
@@ -249,7 +194,6 @@ public class SynchronizationAsyncTask extends AsyncTask<User, String, Boolean> {
                 publishProgress(lastPublishedProgress);
                 PaymentModeRepository.getInstance().getRemoteObjects(new PaymentMode(),
                         user.getLogin(), user.getPasswd(), true);
-
             } catch (ConfigurationException e) {
                 throw new SynchronizationErrorException(e,
                         "Error al sincronizar métodos de pago.");
@@ -261,7 +205,6 @@ public class SynchronizationAsyncTask extends AsyncTask<User, String, Boolean> {
                 publishProgress(lastPublishedProgress);
                 AccountPaymentTermRepository.getInstance().getRemoteObjects(new AccountPaymentTerm(),
                         user.getLogin(), user.getPasswd(), true);
-
             } catch (ConfigurationException e) {
                 throw new SynchronizationErrorException(e,
                         "Error al sincronizar plazos de pago.");
@@ -273,25 +216,10 @@ public class SynchronizationAsyncTask extends AsyncTask<User, String, Boolean> {
                 publishProgress(lastPublishedProgress);
                 WarehouseRepository.getInstance().getRemoteObjects(new Warehouse(),
                         user.getLogin(), user.getPasswd(), true);
-
             } catch (ConfigurationException e) {
                 throw new SynchronizationErrorException(e,
                         "Error al sincronizar almacenes.");
             }
-            /* DAVID - NO SINCRONIZA POR FALLO
-            try {
-                lastPublishedProgress = new String[] {
-                        "Sincronizando Weekdays (weekday)...",
-                        "" + currentProgress++ };
-                publishProgress(lastPublishedProgress);
-                WeekDayRepository.getInstance().getRemoteObjects(new WeekDay(),
-                        user.getLogin(), user.getPasswd());
-
-            } catch (ConfigurationException e) {
-                throw new SynchronizationErrorException(e,
-                        "Error al sincronizar Weekdays.");
-            }
-            */
 
             try {
                 lastPublishedProgress = new String[] { "Sincronizando impuestos...",
@@ -299,7 +227,6 @@ public class SynchronizationAsyncTask extends AsyncTask<User, String, Boolean> {
                 publishProgress(lastPublishedProgress);
                 TaxRepository.getInstance().getRemoteObjects(new Tax(),
                         user.getLogin(), user.getPasswd(), true);
-
             } catch (ConfigurationException e) {
                 throw new SynchronizationErrorException(e,
                         "Error al sincronizar impuestos.");
@@ -311,7 +238,6 @@ public class SynchronizationAsyncTask extends AsyncTask<User, String, Boolean> {
                 publishProgress(lastPublishedProgress);
                 PartnerCategoryRepository.getInstance().getRemoteObjects(new PartnerCategory(),
                         user.getLogin(), user.getPasswd(), true);
-
             } catch (ConfigurationException e) {
                 throw new SynchronizationErrorException(e,
                         "Error al sincronizar categorías de cliente.");
@@ -323,7 +249,6 @@ public class SynchronizationAsyncTask extends AsyncTask<User, String, Boolean> {
                 publishProgress(lastPublishedProgress);
                 CommercialRouteRepository.getInstance().getRemoteObjects(new CommercialRoute(),
                         user.getLogin(), user.getPasswd(), true);
-
             } catch (ConfigurationException e) {
                 throw new SynchronizationErrorException(e,
                         "Error al sincronizar rutas comerciales.");
@@ -345,7 +270,6 @@ public class SynchronizationAsyncTask extends AsyncTask<User, String, Boolean> {
                 publishProgress(lastPublishedProgress);
                 PartnerRepository.getInstance().getRemoteObjects(new Partner(),
                         user.getLogin(), user.getPasswd(), true);
-
             } catch (ConfigurationException e) {
                 throw new SynchronizationErrorException(e,
                         "Error al sincronizar clientes.");
@@ -357,7 +281,6 @@ public class SynchronizationAsyncTask extends AsyncTask<User, String, Boolean> {
                 publishProgress(lastPublishedProgress);
                 PaymentTypeRepository.getInstance().getRemoteObjects(new AccountJournal(),
                         user.getLogin(), user.getPasswd(), true);
-
             } catch (ConfigurationException e) {
                 throw new SynchronizationErrorException(e,
                         "Error al sincronizar métodos de pago.");
@@ -369,7 +292,6 @@ public class SynchronizationAsyncTask extends AsyncTask<User, String, Boolean> {
                 publishProgress(lastPublishedProgress);
                 AccountRepository.getInstance().getRemoteObjects(new Account(),
                         user.getLogin(), user.getPasswd(), true);
-
             } catch (ConfigurationException e) {
                 throw new SynchronizationErrorException(e,
                         "Error al sincronizar cuentas contables.");
@@ -378,395 +300,133 @@ public class SynchronizationAsyncTask extends AsyncTask<User, String, Boolean> {
                 lastPublishedProgress =new String[] { "Sincronizando cobros cliente...",
                         "" + currentProgress++ };
                 publishProgress(lastPublishedProgress);
-                AccountMoveLine line = new AccountMoveLine();
-                Account example = new Account();
-                example.setType("receivable");
-                List<Integer> accountIds = new ArrayList<Integer>();
-                for (Account anAccount : AccountRepository.getInstance().getByExample(example, Restriction.AND, true, 0, 10000000))
-                    accountIds.add(anAccount.getId().intValue());
-                Set idsPartners = PartnerRepository.getInstance().getAllDistinctSomeProperty("id");
-                List<Integer> idsQuery = new ArrayList<Integer>();
-                for (Object idPartner : idsPartners) {
-                    idsQuery.add(((Long) idPartner).intValue());
-                }
-                System.out.println("Account id: " + example.getId());
-                line.getFilters().add("account_id", "in", accountIds.toArray());
-                line.getFilters().add("partner_id", "in", idsQuery.toArray());
-                AccountMoveLineRepository.getInstance().getRemoteObjects(line,
+                AccountMoveLineRepository.getInstance().getRemoteObjects(new AccountMoveLine(),
                         user.getLogin(), user.getPasswd(), true);
-
             } catch (ConfigurationException e) {
                 throw new SynchronizationErrorException(e,
                         "Error al sincronizar cobros cliente...");
             }
 
-//            try {
-            lastPublishedProgress = new String[] { "Sincronizando productos de cliente...",
-                    "" + currentProgress++ };
-            publishProgress(lastPublishedProgress);
-//                for (Partner aPartner : PartnerRepository.getInstance().getAll(0, 100000000)) {
-//                    OpenERPCommand command = new OpenERPCommand(SessionFactory
-//                            .getInstance(user.getLogin(), user.getPasswd())
-//                            .getSession());
-//                    Object[] productIds = (Object[]) command.callObjectFunction(
-//                            "res.partner",
-//                            "search_products_to_sell", new Object[] { aPartner.getId().intValue() });
-//                    List<Product> result = new ArrayList<Product>();
-//                    for (Object aProductId : productIds) {
-//                        PartnerProduct partnerProduct = new PartnerProduct();
-//                        partnerProduct.setPartnerId(aPartner.getId());
-//                        for (PartnerProduct existing : PartnerProductRepository.getInstance().getByExample(partnerProduct, Restriction.AND, true, 0, 10000000)) {
-//                            PartnerProductRepository.getInstance().delete(existing.getId());
-//                        }
-//                        partnerProduct.setProductId(((Integer) aProductId).longValue());
-//                        PartnerProductRepository.getInstance().saveOrUpdate(partnerProduct);
-//                    }
-//                }
-
-//            } catch (ConfigurationException e) {
-//                throw new SynchronizationErrorException(e,
-//                        "Error al sincronizar Productos de Cliente.");
-//            }
-//            try {
-//                publishProgress(new String[] { "Sincronizando Días de entrega (Clientes)...",
-//                        "" + currentProgress++ });
-//                PartnerRepository.getInstance().synchronizeDeliveryDays(user.getLogin(), user.getPasswd());
-//            } catch (ConfigurationException e) {
-//                throw new SynchronizationErrorException(e,
-//                        "Error al sincronizar Días de entrega.");
-//            } catch (ServiceException e) {
-//                throw new SynchronizationErrorException(e,
-//                        "Error al sincronizar Días de entrega.");
-//            }
             try {
                 lastPublishedProgress = new String[] { "Sincronizando usuarios...",
                         "" + currentProgress++ };
                 publishProgress(lastPublishedProgress);
-                UserRepository.getInstance().synchronizeUsers(user.getLogin(), user.getPasswd());
-
+                UserRepository.getInstance().synchronizeUsers(
+                        user.getLogin(), user.getPasswd());
             } catch (ConfigurationException e) {
                 throw new SynchronizationErrorException(e,
                         "Error al sincronizar usuarios.");
             }
 
-            /* DAVID - NO SINCRONIZA POR FALLO
-            try {
-                lastPublishedProgress = new String[] { "Sincronizando Contactos...",
-                        "" + currentProgress++ };
-                publishProgress(lastPublishedProgress);
-                ContactRepository.getInstance().getRemoteObjects(new Contact(),
-                        user.getLogin(), user.getPasswd());
-
-            } catch (ConfigurationException e) {
-                throw new SynchronizationErrorException(e,
-                        "Error al sincronizar Contactos.");
-            }
-            */
-            try {
-                lastPublishedProgress = new String[] { "Sincronizando productos...",
-                        "" + currentProgress++ };
-                publishProgress(lastPublishedProgress);
-                ProductRepository.getInstance().getRemoteObjects(new Product(),
-                        user.getLogin(), user.getPasswd(), true);
-
-            } catch (ConfigurationException e) {
-                throw new SynchronizationErrorException(e,
-                        "Error al sincronizar productos.");
-            }
-            try {
-                lastPublishedProgress = new String[] { "Sincronizando productos sustitutivos...",
-                        "" + currentProgress++ };
-                publishProgress(lastPublishedProgress);
-                ProductRepository.getInstance().synchronizeSubstitutes(
-                        user.getLogin(), user.getPasswd());
-
-            } catch (Exception e) {
-                throw new SynchronizationErrorException(e,
-                        "Error al sincronizar productos sustitutivos.");
-            }
-            try {
-                lastPublishedProgress = new String[] { "Sincronizando productos (product_ul)...",
-                        "" + currentProgress++ };
-                publishProgress(lastPublishedProgress);
-                ProductUlRepository.getInstance().getRemoteObjects(new ProductUl(),
-                        user.getLogin(), user.getPasswd(), true);
-
-            } catch (ConfigurationException e) {
-                throw new SynchronizationErrorException(e,
-                        "Error al sincronizar productos (product_ul).");
-            }
-            try {
-                lastPublishedProgress = new String[] { "Sincronizando productos (product_uom_categ)...",
-                        "" + currentProgress++ };
-                publishProgress(lastPublishedProgress);
-                ProductUomCategRepository.getInstance().getRemoteObjects(new ProductUomCateg(),
-                        user.getLogin(), user.getPasswd(), true);
-
-            } catch (ConfigurationException e) {
-                throw new SynchronizationErrorException(e,
-                        "Error al sincronizar productos (product_uom_categ.");
-            }
-            try {
-                lastPublishedProgress = new String[] { "Sincronizando productos (product_uom)...",
-                        "" + currentProgress++ };
-                publishProgress(lastPublishedProgress);
-                ProductUomRepository.getInstance().getRemoteObjects(new ProductUom(),
-                        user.getLogin(), user.getPasswd(), true);
-
-            } catch (ConfigurationException e) {
-                throw new SynchronizationErrorException(e,
-                        "Error al sincronizar productos (product_uom).");
-            }
-            try {
-                lastPublishedProgress = new String[] { "Sincronizando productos (product_template)...",
-                        "" + currentProgress++ };
-                publishProgress(lastPublishedProgress);
-                ProductTemplateRepository.getInstance().getRemoteObjects(new ProductTemplate(),
-                        user.getLogin(), user.getPasswd(), true);
-
-            } catch (ConfigurationException e) {
-                throw new SynchronizationErrorException(e,
-                        "Error al sincronizar productos (product_template).");
-            }
-            try {
-                lastPublishedProgress = new String[] { "Sincronizando productos (product_category)...",
-                        "" + currentProgress++ };
-                publishProgress(lastPublishedProgress);
-                ProductCategoryRepository.getInstance().getRemoteObjects(new ProductCategory(),
-                        user.getLogin(), user.getPasswd(), true);
-
-            } catch (ConfigurationException e) {
-                throw new SynchronizationErrorException(e,
-                        "Error al sincronizar productos (product_category).");
-            }
-            try {
-                lastPublishedProgress = new String[] { "Sincronizando productos (product_packaging)...",
-                        "" + currentProgress++ };
-                publishProgress(lastPublishedProgress);
-                ProductPackagingRepository.getInstance().getRemoteObjects(new ProductPackaging(),
-                        user.getLogin(), user.getPasswd(), true);
-
-            } catch (ConfigurationException e) {
-                throw new SynchronizationErrorException(e,
-                        "Error al sincronizar productos (product_packaging).");
-            }
-
-
-            /* DAVID - NO SINCRONIZA POR FALLO Y ADEMAS NO ES NECESARIO AHORA
-            try {
-                lastPublishedProgress = new String[] { "Sincronizando Pagos (Voucher)...",
-                        "" + currentProgress++ };
-                publishProgress(lastPublishedProgress);
-                VoucherRepository.getInstance().getRemoteObjects(new Voucher(),
-                        user.getLogin(), user.getPasswd());
-
-            } catch (ConfigurationException e) {
-                throw new SynchronizationErrorException(e,
-                        "Error al sincronizar Pagos (Voucher).");
-            }
-            try {
-                lastPublishedProgress = new String[] { "Sincronizando Pagos (VoucherLine)...",
-                        "" + currentProgress++ };
-                publishProgress(lastPublishedProgress);
-                VoucherLineRepository.getInstance().getRemoteObjects(
-                        new VoucherLine(), user.getLogin(), user.getPasswd());
-
-            } catch (ConfigurationException e) {
-                throw new SynchronizationErrorException(e,
-                        "Error al sincronizar Pagos (VoucherLine).");
-            }
-            */
-            lastPublishedProgress = new String[] { "Sincronizando pedidos pendientes...",
-                    "" + currentProgress++ };
-            publishProgress(lastPublishedProgress);
-//            Order order = new Order();
-//            order.setPendingSynchronization(1);
-//            for (Order o : OrderRepository.getInstance().getByExample(order,
-//                    Restriction.AND, true, 0, 100000)) {
-//                confirmarPedido(user, o);
-//            }
             try {
                 lastPublishedProgress = new String[] { "Sincronizando pedidos...",
                         "" + currentProgress++ };
                 publishProgress(lastPublishedProgress);
                 OrderRepository.getInstance().getRemoteObjects(new Order(),
                         user.getLogin(), user.getPasswd(), true);
-
             } catch (ConfigurationException e) {
                 throw new SynchronizationErrorException(e,
                         "Error al sincronizar pedidos.");
             }
+
             try {
                 lastPublishedProgress = new String[] { "Sincronizando pedidos (líneas)...",
                         "" + currentProgress++};
                 publishProgress(lastPublishedProgress);
-                List<Integer> orderIds = new ArrayList<Integer>();
-                Calendar calendar = Calendar.getInstance();
-                calendar.add(Calendar.DATE, -180); // últimos seis meses
-                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                for (Order o : OrderRepository.getInstance().getOrdersWithFilters(null, formatter.format(calendar.getTime()), null, null, null, null, true)) {
-                    orderIds.add(o.getId().intValue());
-                }
-                OrderLine orderLine = new OrderLine();
-                orderLine.getRemoteFilters().add("order_id", "in", orderIds.toArray(new Integer[]{}));
-                // no voy a hacer deletes porque aquí está modificando el filtro que se envía a servidor para obtener
-                // datos y me está dejando sin los ids de todas las líneas de pedidos que no ha tenido cambios desde
-                // la última sincronización, entonces el algoritmo de búsqueda de eliminaciones piensa que esas líneas
-                // de pedidos fueron borradas y las quita de local
-				// cambié un poco el método y ahora voy a hacer deletes para probar unos días - Pedro Gómez - 06/03/2020
-                OrderLineRepository.getInstance().getRemoteObjects(orderLine,
+                OrderLineRepository.getInstance().getRemoteObjects(new OrderLine(),
                         user.getLogin(), user.getPasswd(), true);
-
             } catch (ConfigurationException e) {
                 throw new SynchronizationErrorException(e,
                         "Error al sincronizar pedidos (líneas).");
             }
 
-            /* DAVID - NO SINCRONIZA POR FALLO Y ADEMAS NO ES NECESARIO AHORA
             try {
-                lastPublishedProgress = new String[] { "Sincronizando Facturas (Invoice)...",
+                lastPublishedProgress = new String[] { "Sincronizando productos...",
                         "" + currentProgress++ };
                 publishProgress(lastPublishedProgress);
-                InvoiceRepository.getInstance().getRemoteObjects(new Invoice(),
-                        user.getLogin(), user.getPasswd());
-
+                ProductRepository.getInstance().getRemoteObjects(new Product(),
+                        user.getLogin(), user.getPasswd(), true);
             } catch (ConfigurationException e) {
                 throw new SynchronizationErrorException(e,
-                        "Error al sincronizar Facturas (Invoice Line).");
+                        "Error al sincronizar productos.");
             }
+
             try {
-                lastPublishedProgress = new String[] { "Sincronizando Facturas (Invoice Line)...",
+                lastPublishedProgress = new String[] { "Sincronizando productos (product_ul)...",
                         "" + currentProgress++ };
                 publishProgress(lastPublishedProgress);
-                List<Integer> invoiceIds = new ArrayList<Integer>();
-                Calendar calendar = Calendar.getInstance();
-                calendar.add(Calendar.DATE, -90);
-                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                for (Invoice o : InvoiceRepository.getInstance().getInvoicesWithFilters(null, formatter.format(calendar.getTime()), null, null, null, null)) {
-                    invoiceIds.add(o.getId().intValue());
-                }
-                InvoiceLine invoiceLine = new InvoiceLine();
-                invoiceLine.getRemoteFilters().add("invoice_id", "in", invoiceIds.toArray(new Integer[]{}));
-                InvoiceLineRepository.getInstance().getRemoteObjects(
-                        invoiceLine, user.getLogin(), user.getPasswd());
-
+                ProductUlRepository.getInstance().getRemoteObjects(new ProductUl(),
+                        user.getLogin(), user.getPasswd(), true);
             } catch (ConfigurationException e) {
                 throw new SynchronizationErrorException(e,
-                        "Error al sincronizar Facturas (Invoice Line).");
+                        "Error al sincronizar productos (product_ul).");
             }
-*/
+
+            try {
+                lastPublishedProgress = new String[] { "Sincronizando productos (product_uom_categ)...",
+                        "" + currentProgress++ };
+                publishProgress(lastPublishedProgress);
+                ProductUomCategRepository.getInstance().getRemoteObjects(new ProductUomCateg(),
+                        user.getLogin(), user.getPasswd(), true);
+            } catch (ConfigurationException e) {
+                throw new SynchronizationErrorException(e,
+                        "Error al sincronizar productos (product_uom_categ.");
+            }
+
+            try {
+                lastPublishedProgress = new String[] { "Sincronizando productos (product_uom)...",
+                        "" + currentProgress++ };
+                publishProgress(lastPublishedProgress);
+                ProductUomRepository.getInstance().getRemoteObjects(new ProductUom(),
+                        user.getLogin(), user.getPasswd(), true);
+            } catch (ConfigurationException e) {
+                throw new SynchronizationErrorException(e,
+                        "Error al sincronizar productos (product_uom).");
+            }
+
+            try {
+                lastPublishedProgress = new String[] { "Sincronizando productos (product_template)...",
+                        "" + currentProgress++ };
+                publishProgress(lastPublishedProgress);
+                ProductTemplateRepository.getInstance().getRemoteObjects(new ProductTemplate(),
+                        user.getLogin(), user.getPasswd(), true);
+            } catch (ConfigurationException e) {
+                throw new SynchronizationErrorException(e,
+                        "Error al sincronizar productos (product_template).");
+            }
+
+            try {
+                lastPublishedProgress = new String[] { "Sincronizando productos (product_category)...",
+                        "" + currentProgress++ };
+                publishProgress(lastPublishedProgress);
+                ProductCategoryRepository.getInstance().getRemoteObjects(new ProductCategory(),
+                        user.getLogin(), user.getPasswd(), true);
+            } catch (ConfigurationException e) {
+                throw new SynchronizationErrorException(e,
+                        "Error al sincronizar productos (product_category).");
+            }
+
+            try {
+                lastPublishedProgress = new String[] { "Sincronizando productos (product_packaging)...",
+                        "" + currentProgress++ };
+                publishProgress(lastPublishedProgress);
+                ProductPackagingRepository.getInstance().getRemoteObjects(new ProductPackaging(),
+                        user.getLogin(), user.getPasswd(), true);
+            } catch (ConfigurationException e) {
+                throw new SynchronizationErrorException(e,
+                        "Error al sincronizar productos (product_packaging).");
+            }
+
             try {
                 lastPublishedProgress = new String[] { "Sincronizando empresas...",
                         "" + currentProgress++ };
                 publishProgress(lastPublishedProgress);
                 CompanyRepository.getInstance().getRemoteObjects(new Company(),
                         user.getLogin(), user.getPasswd(), true);
-
             } catch (ConfigurationException e) {
-                throw new SynchronizationErrorException(e,
-                        "Error al sincronizar empresas.");
-            }
-
-            /* DAVID - TARDA MUCHISIMO EN SINCRONIZAR ADEMÁS AHORA NO ES NECESARIO
-            try {
-                lastPublishedProgress = new String[] { "Sincronizando Albaranes...",
-                        "" + currentProgress++ };
-                publishProgress(lastPublishedProgress);
-                StockPickingOutRepository.getInstance().getRemoteObjects(
-                        new StockPickingOut(), user.getLogin(),
-                        user.getPasswd());
-            } catch (ConfigurationException e) {
-                throw new SynchronizationErrorException(e,
-                        "Error al sincronizar Albaranes.");
-            }
-            try {
-                lastPublishedProgress = new String[] { "Sincronizando Albaranes (Stock Move)...",
-                        "" + currentProgress++ };
-                publishProgress(lastPublishedProgress);
-                StockMoveRepository.getInstance().getRemoteObjects(
-                        new StockMove(), user.getLogin(), user.getPasswd());
-            } catch (ConfigurationException e) {
-                throw new SynchronizationErrorException(e,
-                        "Error al sincronizar Albaranes  (Stock Move).");
-            }
-            */
-
-            /* DAVID - AHORA NO ES NECESARIO
-
-            try {
-                lastPublishedProgress = new String[] { "Sincronizando Rutas (Route detail)...",
-                        "" + currentProgress++ };
-                publishProgress(lastPublishedProgress);
-                RouteDetailRepository.getInstance().synchronizeRoutes(user.getLogin(), user.getPasswd());
-
-            } catch (ConfigurationException e) {
-                throw new SynchronizationErrorException(e,
-                        "Error al sincronizar Rutas (Route detail).");
-            }
-            try {
-                lastPublishedProgress = new String[] { "Sincronizando Rutas (Route)...",
-                        "" + currentProgress++ };
-                publishProgress(lastPublishedProgress);
-                RouteRepository.getInstance().synchronizeRoutes(user.getLogin(), user.getPasswd());
-                lastPublishedProgress = new String[] { "Sincronización Completa.",
-                        "" + currentProgress };
-                publishProgress(lastPublishedProgress);
-            } catch (ConfigurationException e) {
-//                currentProgress = MAX_PROGRESS;
-                throw new SynchronizationErrorException(e,
-                        "Error al sincronizar Rutas (Route).");
-            }
-            */
-            try {
-                lastPublishedProgress = new String[] { "Sincronizando precios...",
-                        "" + currentProgress++ };
-                publishProgress(lastPublishedProgress);
-                // Esta sincronicación no tengo claro que sirva para algo. Revisar cuando tenga tiempo - Pedro Gómez - 06/03/2020
-                Long initDate = new Date().getTime();
-                Session openERPSession = null;
-                openERPSession = SessionFactory.getInstance(user.getLogin(), user.getPasswd())
-                        .getSession();
-
-                ObjectAdapter adapterPrices = openERPSession
-                        .getObjectAdapter("table.pricelist.prices");
-                FilterCollection filters = new FilterCollection();
-                RowCollection prices;
-                String[] fieldsRemote = {"product_id", "pricelist_id", "price"};
-                String maxDateOld = DateUtil.convertToUTC(SynchronizationRepository.getInstance().getMaxDateFor(ProductPartnerPrice.class));
-                prices = adapterPrices.searchAndReadObject(
-                        filters, fieldsRemote, maxDateOld);
-                int numItems = 0;
-
-                // DAVID - https://bitbucket.org/noroestesoluciones/odoo-app/issues/7/pantalla-de-b-squeda-la-columna-de-la
-                for (Row aPrice : prices) {
-                    // cambio a 3 decimales
-                    BigDecimal result = BigDecimal.valueOf((Double) aPrice.get("price")).setScale(3, RoundingMode.HALF_UP);
-                    if (result != null) {
-                        ProductPartnerPrice toSave = new ProductPartnerPrice();
-                        if (aPrice.get("pricelist_id") != null)
-                            toSave.setPartnerId((Integer) ((Object[]) aPrice.get("pricelist_id"))[0]);
-                        if (aPrice.get("product_id") != null) {
-                            toSave.setProductId((Integer) ((Object[]) aPrice.get("product_id"))[0]);
-                            toSave.setPrice(result.doubleValue());
-                            ProductPartnerPriceRepository.getInstance().saveOrUpdate(toSave);
-                        }
-                        numItems++;
-                    }
-                }
-                try {
-                    Date endDataSynchro = new Date();
-                    Long duration = endDataSynchro.getTime() - initDate;
-                    SynchronizationRepository.getInstance().saveOrUpdate(
-                            Synchronization.create(ProductPartnerPrice.class.getName(),
-                                    DateUtil.toFormattedString(endDataSynchro), numItems,
-                                    duration, error));
-                } catch (ServiceException e) {
-                    throw new ConfigurationException(e);
-                }
-            } catch (Exception e) {
                 currentProgress = MAX_PROGRESS;
                 throw new SynchronizationErrorException(e,
-                        "Error al sincronizar precios.");
+                        "Error al sincronizar empresas.");
             }
         } catch (SynchronizationErrorException e) {
             error = e.getDescriptiveErrorMessage();

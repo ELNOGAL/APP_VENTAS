@@ -6,7 +6,6 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.res.Configuration;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -15,9 +14,8 @@ import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
-import android.util.Log;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -28,14 +26,11 @@ import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsListView;
-import android.widget.Adapter;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,9 +39,6 @@ import com.cafedered.cafedroidlitedao.extractor.Restriction;
 import com.cafedered.midban.R;
 import com.cafedered.midban.annotations.Click;
 import com.cafedered.midban.annotations.Fragment;
-import com.cafedered.midban.annotations.ItemClicked;
-import com.cafedered.midban.annotations.Remote;
-import com.cafedered.midban.annotations.TextChanged;
 import com.cafedered.midban.annotations.Wire;
 import com.cafedered.midban.async.CancelAsyncTaskListener;
 import com.cafedered.midban.async.OrderSynchronizationService;
@@ -57,20 +49,17 @@ import com.cafedered.midban.entities.Order;
 import com.cafedered.midban.entities.OrderLine;
 import com.cafedered.midban.entities.Partner;
 import com.cafedered.midban.entities.PaymentMode;
-import com.cafedered.midban.entities.PricelistPrices;
 import com.cafedered.midban.entities.Product;
 import com.cafedered.midban.entities.ProductUom;
 import com.cafedered.midban.entities.Shop;
 import com.cafedered.midban.entities.Tax;
 import com.cafedered.midban.entities.User;
-import com.cafedered.midban.pdf.pdfwriter.Array;
 import com.cafedered.midban.service.repositories.AccountPaymentTermRepository;
 import com.cafedered.midban.service.repositories.ConfigurationRepository;
 import com.cafedered.midban.service.repositories.OrderLineRepository;
 import com.cafedered.midban.service.repositories.OrderRepository;
 import com.cafedered.midban.service.repositories.PartnerRepository;
 import com.cafedered.midban.service.repositories.PaymentModeRepository;
-import com.cafedered.midban.service.repositories.PricelistPricesRepository;
 import com.cafedered.midban.service.repositories.ProductRepository;
 import com.cafedered.midban.service.repositories.ProductUomRepository;
 import com.cafedered.midban.service.repositories.ShopRepository;
@@ -84,16 +73,11 @@ import com.cafedered.midban.utils.exceptions.ServiceException;
 import com.cafedered.midban.view.activities.LastSalesActivity;
 import com.cafedered.midban.view.activities.PortadaActivity;
 import com.cafedered.midban.view.activities.ProductCardActivity;
-import com.cafedered.midban.view.adapter.OrderLinesAdapter;
 import com.cafedered.midban.view.adapter.OrderLinesNewDispositionAdapter;
-import com.cafedered.midban.view.adapter.ProductAutocompleteAdapter;
-import com.cafedered.midban.view.adapter.ProductCatalogItemAdapter;
 import com.cafedered.midban.view.adapter.ProductOrderItemAdapter;
 import com.cafedered.midban.view.base.BaseSupportActivity;
 import com.cafedered.midban.view.base.BaseSupportFragment;
-import com.cafedered.midban.view.base.BaseSupportFragment;
 import com.cafedered.midban.view.dialogs.OneFieldEditionDialog;
-import com.cafedered.midban.view.dialogs.ProductToCartDialog;
 import com.debortoliwines.openerp.api.FilterCollection;
 import com.debortoliwines.openerp.api.ObjectAdapter;
 import com.debortoliwines.openerp.api.OpenERPCommand;
@@ -102,7 +86,6 @@ import com.debortoliwines.openerp.api.RowCollection;
 import com.debortoliwines.openerp.api.Session;
 
 import org.droidparts.widget.ClearableEditText;
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedWriter;
@@ -118,9 +101,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.Executor;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 
 /**
@@ -200,6 +181,8 @@ public class OrderNewDispositionFragment extends BaseSupportFragment implements 
 
     String _tarifaActual = "";
 
+    static boolean flag = false;
+
     void setTarifaActual(String t){
         _tarifaActual = t;
         OrderRepository.getCurrentOrder().setPricelistId(Long.parseLong(_tarifaActual));
@@ -223,6 +206,32 @@ public class OrderNewDispositionFragment extends BaseSupportFragment implements 
         }
 
         setHasOptionsMenu(true);
+        productSearchField.setOnClickListener(new View.OnClickListener() {
+            int i = 0;
+            @Override
+            public void onClick(View v) {
+                i++;
+                Handler handler = new Handler();
+                Runnable r = new Runnable() {
+                    @Override
+                    public void run() {
+                        i = 0;
+                    }
+                };
+                if (i == 1) {
+                    handler.postDelayed(r, 250);
+                } else if (i == 2) {
+                    if (flag) {
+                        productSearchField.setInputType(InputType.TYPE_CLASS_TEXT);
+                        flag = false;
+                    } else {
+                        productSearchField.setInputType(InputType.TYPE_CLASS_NUMBER);
+                        flag = true;
+                    }
+                    i = 0;
+                }
+            }
+        });
         productSearchField.addTextChangedListener(new SearchTextChangedListener());
         // oculto la casilla de búsqueda al abrir la ventana, se mostrará al cargar datos
         productSearchField.setVisibility(View.GONE);
@@ -400,28 +409,10 @@ public class OrderNewDispositionFragment extends BaseSupportFragment implements 
                         amountUntaxedView.setText("Base: " + OrderRepository.getCurrentOrder()
                                 .getAmountUntaxed().toString()
                                 + " " + getResources().getString(R.string.currency_symbol));
-//        if (OrderRepository.getCurrentOrder().getAmountUntaxed().floatValue() != 0)
-//            orderMarginAmount.setText(new BigDecimal((OrderRepository
-//                    .getCurrentOrder().getAmountUntaxed().floatValue()
-//                    * OrderRepository.getCurrentOrder().getMargin()
-//                    .floatValue() / 100F)).setScale(2,
-//                    RoundingMode.HALF_UP).toString()
-//                    + getResources().getString(R.string.currency_symbol)
-//                    + " ("
-//                    + new BigDecimal(OrderRepository.getCurrentOrder()
-//                    .getMargin().floatValue()
-//                    * 100F
-//                    / OrderRepository.getCurrentOrder()
-//                    .getAmountUntaxed().floatValue()).setScale(
-//                    2, RoundingMode.HALF_UP).toString() + "%)");
                     if (readOnlyMode) {
                         deliveryDateView.setEnabled(false);
-//            editButtons.setVisibility(View.GONE);
-//            readOnlyButtons.setVisibility(View.VISIBLE);
                     } else {
                         deliveryDateView.setEnabled(true);
-//            editButtons.setVisibility(View.VISIBLE);
-//            readOnlyButtons.setVisibility(View.GONE);
                     }
                     if (reloadProducts)
                         obtainProductsForPartner(partner);
@@ -532,33 +523,6 @@ public class OrderNewDispositionFragment extends BaseSupportFragment implements 
             // vuelvo a mostrar la opción de búsqueda
             productSearchField.setVisibility(View.VISIBLE);
 
-
- /* DAVID - con lo de que sólo cargue los productos de la tarifa del cliente voy a retirar el scroll para que no siga cargando productos
-            allCatalogListView.setOnScrollListener(new InfiniteScrollListener(15) {
-                @Override
-                public void loadMore(final int page, final int totalItemsCount) {
-                    new AsyncTask<Void, List<Product>, List<Product>>() {
-                        @Override
-                        protected List<Product> doInBackground(Void... params) {
-                            try {
-                                return ProductRepository.getInstance().getByExample(new Product(), Restriction.OR, false, 15, page * 15, true, false);
-                            } catch (ServiceException e) {
-                                e.printStackTrace();
-                                return new ArrayList<Product>();
-                            }
-                        }
-
-                        @Override
-                        protected void onPostExecute(List<Product> products) {
-                            super.onPostExecute(products);
-                            currentAllProducts.addAll(products);
-                            adapterAll.notifyDataSetChanged();
-                        }
-                    }.execute();
-
-                }
-            });
-*/
         } else {
             if (indexListAllCatalog != -1 && topListAllCatalog != -1) {
                 allCatalogListView.setSelectionFromTop(indexListAllCatalog, topListAllCatalog);
@@ -757,9 +721,9 @@ public class OrderNewDispositionFragment extends BaseSupportFragment implements 
                             Long id = shopList.get(0).getId();
                             OrderRepository.getCurrentOrder().setShopId(id);
                             shopView.setText(strName);
+                            favouriteProducts = null;
                             reloadProducts = true;
                             loadOnResume();
-
                         }
 
                     } catch (ServiceException e) {
@@ -1353,7 +1317,7 @@ public class OrderNewDispositionFragment extends BaseSupportFragment implements 
                 }
                 List<Product> asyncFavourites = new ArrayList<Product>();
                 List<Product> asyncAll = new ArrayList<Product>();
-                if (favouriteProducts != null)
+                if (favouriteProducts != null && favouriteProducts.size() > 0)
                     for (Product product : favouriteProducts) {
                         if (satisfyCriteria(product, productSearch))
                             asyncFavourites.add(product);

@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.cafedered.midban.fragments.RouteFragment" >
+    tools:context="com.cafedered.midban.view.fragments.RouteFragment" >
     <LinearLayout
         android:id="@+id/fragment_route_header"
         android:layout_width="match_parent"

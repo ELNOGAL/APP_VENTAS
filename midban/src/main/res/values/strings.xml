@@ -25,7 +25,6 @@
         <item>com.cafedered.midban.entities.ProductTemplate</item>
         <item>com.cafedered.midban.entities.ProductCategory</item>
         <item>com.cafedered.midban.entities.ProductPackaging</item>
-        <item>com.cafedered.midban.entities.ProductPartnerPrice</item>
         <item>com.cafedered.midban.entities.PartnerProduct</item>
         <item>com.cafedered.midban.entities.Product</item>
         <item>com.cafedered.midban.entities.User</item>

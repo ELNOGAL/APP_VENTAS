@@ -25,6 +25,8 @@ import java.util.List;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.text.InputType;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -83,6 +85,7 @@ public class ProductCatalogFragment extends BaseSupportFragment implements Cance
     Menu menu;
     LinearLayout footerView;
     SearchTask task;
+    static boolean flag = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -184,6 +187,32 @@ public class ProductCatalogFragment extends BaseSupportFragment implements Cance
                     }
                 }.execute();
 
+            }
+        });
+        searchField.setOnClickListener(new View.OnClickListener() {
+            int i = 0;
+            @Override
+            public void onClick(View v) {
+                i++;
+                Handler handler = new Handler();
+                Runnable r = new Runnable() {
+                    @Override
+                    public void run() {
+                        i = 0;
+                    }
+                };
+                if (i == 1) {
+                    handler.postDelayed(r, 250);
+                } else if (i == 2) {
+                    if (flag) {
+                        searchField.setInputType(InputType.TYPE_CLASS_TEXT);
+                        flag = false;
+                    } else {
+                        searchField.setInputType(InputType.TYPE_CLASS_NUMBER);
+                        flag = true;
+                    }
+                    i = 0;
+                }
             }
         });
         return rootView;
@@ -334,93 +363,6 @@ public class ProductCatalogFragment extends BaseSupportFragment implements Cance
                 return super.onOptionsItemSelected(item);
         }
     }
-
-//    public class ProductCatalogScrollListener implements
-//            AbsListView.OnScrollListener {
-//
-//        @Override
-//        public void onScrollStateChanged(AbsListView arg0, int arg1) {
-//
-//        }
-//
-//        private int previousTotalItemCount = 0;
-//
-//        @Override
-//        public void onScroll(AbsListView view, int firstVisibleItem,
-//                             int visibleItemCount, final int totalItemCount) {
-//            if (totalItemCount > 0 && totalItemCount > previousTotalItemCount) {
-//                int lastInScreen = firstVisibleItem + visibleItemCount;
-//                if (lastInScreen >= totalItemCount - 15 && totalItemCount > lastInScreen) {
-//                    new AsyncTask<Integer, Void, Void>() {
-//
-//                        @Override
-//                        protected void onPreExecute() {
-//                            super.onPreExecute();
-//                            footerView.setVisibility(View.VISIBLE);
-//                        }
-//
-//                        @Override
-//                        protected Void doInBackground(Integer... params) {
-//                            if (previousTotalItemCount < params[0]) {
-//                                previousTotalItemCount = params[0];
-////                                if (MidbanApplication
-////                                        .getValueFromContext(ContextAttributes.PARTNER_TO_DETAIL) != null) {
-////                                    Partner partner = (Partner) MidbanApplication
-////                                            .getValueFromContext(ContextAttributes.PARTNER_TO_DETAIL);
-////                                    currentProducts
-////                                            .addAll(ProductRepository.getInstance()
-////                                                    .getAllForPartner(partner.getId(),
-////                                                            params[0], 5));
-////                                } else if (MidbanApplication
-////                                        .getValueFromContext(ContextAttributes.PARTNER_TO_RESERVATION) != null) {
-////                                    Partner partner = (Partner) MidbanApplication
-////                                            .getValueFromContext(ContextAttributes.PARTNER_TO_RESERVATION);
-////                                    currentProducts
-////                                            .addAll(ProductRepository.getInstance()
-////                                                    .getAllForPartner(partner.getId(),
-////                                                            params[0], 5));
-////                                } else if (MidbanApplication
-////                                        .getValueFromContext(ContextAttributes.PARTNER_TO_ORDER) != null) {
-////                                    Partner partner = (Partner) MidbanApplication
-////                                            .getValueFromContext(ContextAttributes.PARTNER_TO_ORDER);
-////                                    currentProducts
-////                                            .addAll(ProductRepository.getInstance()
-////                                                    .getAllForPartner(partner.getId(),
-////                                                            params[0], 5));
-////                                } else {
-//                                Product productSearch = new Product();
-//                                if (searchField.getText().length() > 1) {
-//                                    productSearch.setNameTemplate(searchField.getText().toString());
-//                                    productSearch.setCode(searchField.getText().toString());
-//                                    try {
-//                                        productSearch.setId(Long
-//                                                .parseLong(searchField.getText().toString()));
-//                                    } catch (NumberFormatException e) {
-//                                        // do nothing
-//                                    }
-//                                }
-//                                try {
-//                                    currentProducts.addAll(ProductRepository.getInstance().getByExample(
-//                                            productSearch, Restriction.OR, false, params[0], 5, ordenarPorCategoria, ordenarAlfabeticamente));
-//                                } catch (ServiceException e) {
-//                                    e.printStackTrace();
-//                                }
-////                                }
-//                            }
-//                            return null;
-//                        }
-//
-//                        @Override
-//                        protected void onPostExecute(Void aVoid) {
-//                            super.onPostExecute(aVoid);
-//                            footerView.setVisibility(View.GONE);
-//                            adapter.notifyDataSetChanged();
-//                        }
-//                    }.execute(totalItemCount);
-//                }
-//            }
-//        }
-//    }
 
     public abstract class InfiniteScrollListener implements AbsListView.OnScrollListener {
         private int bufferItemCount = 10;

@@ -22,12 +22,15 @@ import com.cafedered.cafedroidlitedao.annotations.Id;
 import com.cafedered.cafedroidlitedao.annotations.Property;
 import com.cafedered.midban.annotations.Remote;
 import com.cafedered.midban.annotations.RemoteProperty;
-import com.cafedered.midban.dao.ProductCategoryDAO;
 import com.cafedered.midban.service.repositories.ProductCategoryRepository;
+import com.cafedered.midban.service.repositories.ProductRepository;
 import com.cafedered.midban.utils.LoggerUtil;
 import com.cafedered.midban.utils.exceptions.ConfigurationException;
 import com.cafedered.midban.utils.exceptions.ServiceException;
 import com.debortoliwines.openerp.api.FilterCollection;
+import com.debortoliwines.openerp.api.OpeneERPApiException;
+
+import java.util.List;
 
 @Entity(tableName = "product_template")
 @Remote(object = "product.template")
@@ -100,7 +103,18 @@ public class ProductTemplate extends BaseRemoteEntity {
 
     @Override
     public FilterCollection getRemoteFilters() {
-        return null;
+        FilterCollection filters = new FilterCollection();
+        try {
+            List<Integer> productTmplIds = ProductRepository.getInstance().getDiferentProductTmplIds();
+            if (productTmplIds.size() > 0) {
+                filters.add("id", "in", productTmplIds.toArray(new Integer[]{}));
+            } else {
+                filters.add("id", "=", 0);
+            }
+        } catch (OpeneERPApiException e) {
+            e.printStackTrace();
+        }
+        return filters;
     }
 
     @Override

@@ -22,6 +22,8 @@ import com.cafedered.cafedroidlitedao.annotations.Id;
 import com.cafedered.cafedroidlitedao.annotations.Property;
 import com.cafedered.midban.annotations.Remote;
 import com.cafedered.midban.annotations.RemoteProperty;
+import com.cafedered.midban.service.repositories.OrderLineRepository;
+import com.cafedered.midban.service.repositories.PricelistPricesRepository;
 import com.cafedered.midban.service.repositories.ProductTemplateRepository;
 import com.cafedered.midban.service.repositories.ProductUlRepository;
 import com.cafedered.midban.service.repositories.ProductUomRepository;
@@ -32,6 +34,7 @@ import com.debortoliwines.openerp.api.FilterCollection;
 import com.debortoliwines.openerp.api.OpeneERPApiException;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity(tableName = "product_product")
 @Remote(object = "product.product")
@@ -43,8 +46,8 @@ public class Product extends BaseRemoteEntity {
     @RemoteProperty(name = "id")
     private Long id;
 
-    @Property(columnName = "image_medium")
-    @RemoteProperty(name = "image_medium")
+    @Property(columnName = "image") // Usamos este campo en lugar de image_medium porque tiene mayor calidad
+    @RemoteProperty(name = "image")
     private byte[] imageMedium;
 
     @Property(columnName = "image_small")
@@ -80,10 +83,6 @@ public class Product extends BaseRemoteEntity {
     @Property(columnName = "partner_ref")
     @RemoteProperty(name = "partner_ref")
     private String partnerRef;
-    //
-    // @Property(columnName = "price", type = Property.SQLType.REAL)
-    // @RemoteProperty(name = "price")
-    // private Number price;
 
     @Property(columnName = "price_extra")
     @RemoteProperty(name = "price_extra")
@@ -249,7 +248,6 @@ public class Product extends BaseRemoteEntity {
     @RemoteProperty(name = "pallet_ul")
     private Number typeOfPallet;
 
-
     @Property(columnName = "substitute_products")
     private String substituteProducts;
 
@@ -345,14 +343,6 @@ public class Product extends BaseRemoteEntity {
     public void setPartnerRef(String partnerRef) {
         this.partnerRef = partnerRef;
     }
-
-    // public Number getPrice() {
-    // return price;
-    // }
-    //
-    // public void setPrice(Number price) {
-    // this.price = price;
-    // }
 
     public Number getPriceExtra() {
         return priceExtra;
@@ -716,7 +706,18 @@ public class Product extends BaseRemoteEntity {
     public FilterCollection getRemoteFilters() {
         FilterCollection filters = new FilterCollection();
         try {
-            filters.add("sale_ok", "=", true);
+            List<Integer> productIds1 = OrderLineRepository.getInstance().getDiferentProductIds();
+            List<Integer> productIds2 = PricelistPricesRepository.getInstance().getDiferentProductIds();
+            if (productIds1.size() > 0 && productIds2.size() > 0) {
+                filters.add(FilterCollection.FilterOperator.OR);
+            }
+            if (productIds1.size() > 0) {
+                filters.add("id", "in", productIds1.toArray(new Integer[]{}));
+            }
+            if (productIds2.size() > 0) {
+                filters.add("id", "in", productIds2.toArray(new Integer[]{}));
+            }
+            //filters.add("sale_ok", "=", true);
         } catch (OpeneERPApiException e) {
             e.printStackTrace();
         }

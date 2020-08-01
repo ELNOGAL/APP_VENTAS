@@ -32,10 +32,6 @@ public class ProductCategoryRepository extends
 
     private static ProductCategoryRepository instance = null;
 
-    private static final int MAX_CACHE_CAPACITY = 100;
-
-    Map<Long, ProductCategory> cachedEntities = new HashMap<Long, ProductCategory>();
-
     public static ProductCategoryRepository getInstance() {
         if (instance == null)
             instance = new ProductCategoryRepository();
@@ -48,30 +44,5 @@ public class ProductCategoryRepository extends
 
     public Collection<String> getFirstLevelCategories() {
         return dao.getFirstLevelCategories();
-    }
-
-    @Override
-    public ProductCategory getById(Long id) throws ConfigurationException,
-            ServiceException {
-        if (!cachedEntities.containsKey(id)) {
-            if (cachedEntities.keySet().size() == MAX_CACHE_CAPACITY)
-                cachedEntities
-                        .remove(cachedEntities.keySet().iterator().next());
-            cachedEntities.put(id, super.getById(id));
-        }
-        return cachedEntities.get(id);
-    }
-
-    @Override
-    public void saveOrUpdate(ProductCategory entity) throws ServiceException {
-        try {
-            if (!cachedEntities.containsKey(entity.getId())) {
-                dao.saveOrUpdate(entity);
-                cachedEntities.put(entity.getId(), entity);
-            }
-        } catch (DatabaseException e) {
-            e.printStackTrace();
-            throw new ServiceException("Cannot access data.", e);
-        }
     }
 }

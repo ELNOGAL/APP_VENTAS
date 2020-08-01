@@ -17,6 +17,8 @@
  *******************************************************************************/
 package com.cafedered.midban.view.adapter;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 
 import android.app.Fragment;
@@ -111,14 +113,18 @@ public class PartnerHistoryOrderLineListItemAdapter extends BaseAdapter {
                         + line.getProduct().getId()));
         if (line.getProductUomQuantity() != null)
             holder.quantity.setText(line.getProductUomQuantity().toString());
-        if (line.getProductUomQuantity() != null)
-            holder.quantity.setText(line.getProductUomQuantity().toString());
         if (line.getPriceUnit() != null)
-            holder.price.setText(line.getPriceUnit() + " €");
+            holder.price.setText(new BigDecimal(line.getPriceUnit()
+                    .doubleValue()).setScale(3, RoundingMode.HALF_UP).toString()
+                    + " " + holder.price.getResources().getString(
+                    R.string.currency_symbol));
         if (line.getDiscount() != null)
             holder.discount.setText(line.getDiscount() + "%");
         if (line.getPriceSubtotal() != null)
-            holder.total.setText(line.getPriceSubtotal() + " €");
+            holder.total.setText(new BigDecimal(line.getPriceSubtotal()
+                    .doubleValue()).setScale(2, RoundingMode.HALF_UP).toString()
+                    + " " + holder.total.getResources().getString(
+                    R.string.currency_symbol));
         return vi;
     }
 

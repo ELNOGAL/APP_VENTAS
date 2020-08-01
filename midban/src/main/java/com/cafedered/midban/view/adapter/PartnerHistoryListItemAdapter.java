@@ -120,7 +120,7 @@ public class PartnerHistoryListItemAdapter extends BaseAdapter {
         holder.amount.setText(new BigDecimal(order.getAmountTotal()
                 .doubleValue()).setScale(2, RoundingMode.HALF_UP).toString()
                 + holder.amount.getResources().getString(
-                        R.string.currency_symbol));
+                R.string.currency_symbol));
         holder.state.setText(order.getState());
         holder.invoiced.setChecked(order.isInvoiced());
         holder.shipped.setChecked(order.isShipped());

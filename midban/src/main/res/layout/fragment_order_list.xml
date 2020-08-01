@@ -6,7 +6,7 @@
     android:paddingLeft="@dimen/separator_margin"
     android:paddingRight="@dimen/separator_margin"
     android:paddingTop="@dimen/separator_margin"
-    tools:context="com.cafedered.midban.fragments.OrderListFragment" >
+    tools:context="com.cafedered.midban.view.fragments.OrderListFragment" >
 
     <LinearLayout
         android:id="@+id/fragment_order_summary"

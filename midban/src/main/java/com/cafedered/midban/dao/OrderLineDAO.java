@@ -21,6 +21,9 @@ import android.database.Cursor;
 
 import com.cafedered.midban.entities.OrderLine;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class OrderLineDAO extends BaseDAO<OrderLine> {
 
     private static OrderLineDAO instance;
@@ -36,7 +39,7 @@ public class OrderLineDAO extends BaseDAO<OrderLine> {
         String query = "SELECT ol.*, o.date_order "
                 + "FROM sale_order_line ol, sale_order o, product_product p "
                 + "WHERE ol.product_id = ? "
-                + "AND ol.order_partner_id = ? "
+                + "AND o.partner_shipping_id = ? "
                 + "AND ol.order_id = o.id "
                 + "AND ol.product_id = p.id "
                 + "ORDER BY o.date_order DESC";
@@ -63,5 +66,21 @@ public class OrderLineDAO extends BaseDAO<OrderLine> {
             return line;
         }
         return null;
+    }
+
+    public List<Integer> getDiferentProductIds() {
+        List<Integer> productIds = new ArrayList<Integer>();
+        String query = "SELECT DISTINCT product_id FROM sale_order_line";
+        Cursor cursor = getDaoHelper().getReadableDatabase().rawQuery(query,
+                null);
+        if (!cursor.isAfterLast()) {
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                productIds.add(cursor.getInt(0));
+                cursor.move(1);
+            }
+            cursor.close();
+        }
+        return productIds;
     }
 }

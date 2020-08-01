@@ -26,6 +26,7 @@ import java.util.List;
 import com.cafedered.cafedroidlitedao.annotations.Entity;
 import com.cafedered.cafedroidlitedao.annotations.Id;
 import com.cafedered.cafedroidlitedao.annotations.Property;
+import com.cafedered.cafedroidlitedao.extractor.Restriction;
 import com.cafedered.midban.annotations.Remote;
 import com.cafedered.midban.annotations.RemoteProperty;
 import com.cafedered.midban.conf.ContextAttributes;
@@ -316,11 +317,23 @@ public class Order extends BaseRemoteEntity implements Comparable<Order> {
     public FilterCollection getRemoteFilters() {
         FilterCollection filters = new FilterCollection();
         Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DATE, -90);
+        calendar.add(Calendar.DATE, -365);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {
             filters.add("date_order", ">", formatter.format(calendar.getTime()));
-            filters.add("user_id", "=", ((User) MidbanApplication.getValueFromContext(ContextAttributes.LOGGED_USER)).getId());
+            //filters.add("user_id", "=", ((User) MidbanApplication.getValueFromContext(ContextAttributes.LOGGED_USER)).getId());
+            List<Integer> partnerIds = new ArrayList<Integer>();
+            Partner partnerExample = new Partner();
+            partnerExample.setUserId(((User) MidbanApplication.getValueFromContext(ContextAttributes.LOGGED_USER)).getId());
+            try {
+                for (Partner p : PartnerRepository.getInstance().getByExampleUser(partnerExample, Restriction.AND, true, 100000, 0)) {
+                    partnerIds.add(p.getId().intValue());
+                }
+                filters.add("partner_shipping_id", "in", partnerIds.toArray(new Integer[]{}));
+            } catch (ServiceException e) {
+                if (LoggerUtil.isDebugEnabled())
+                    e.printStackTrace();
+            }
         } catch (OpeneERPApiException e) {
             e.printStackTrace();
         }

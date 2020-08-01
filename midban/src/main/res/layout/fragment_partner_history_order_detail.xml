@@ -7,7 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.cafedered.midban.fragments.PartnerHistoryOrderDetailFragment">
+    tools:context="com.cafedered.midban.view.fragments.PartnerHistoryOrderDetailFragment">
 
     <android.support.v4.widget.NestedScrollView
         android:id="@+id/nsvScrollView"
@@ -271,6 +271,7 @@
                 android:id="@+id/fragment_partner_history_order_detail_list_listview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:nestedScrollingEnabled="true"
                 android:layout_below="@+id/fragment_partner_history_order_detail_list_header"
                 android:layout_marginBottom="60dp" />
 

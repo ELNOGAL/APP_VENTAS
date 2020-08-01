@@ -219,4 +219,29 @@ public class BaseDAO<E extends BaseEntity> {
         // FIXME return correct id
         return cursor.getInt(cursor.getColumnIndex("id")) + 1;
     }
+
+    public List<Integer> getAllIds() {
+        E entity = null;
+        try {
+            entity = (E) ReflectionUtils
+                    .getObjectParametrizedTypeInstance(ReflectionUtils
+                            .getInstanceType(this));
+        } catch (ReflectionException e) {
+            e.printStackTrace();
+        }
+        List<Integer> allIds = new ArrayList<Integer>();
+        String query = "SELECT id FROM "
+                + entity.getClass().getAnnotation(Entity.class).tableName();
+        Cursor cursor = getDaoHelper().getReadableDatabase().rawQuery(query,
+                null);
+        if (!cursor.isAfterLast()) {
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                allIds.add(cursor.getInt(0));
+                cursor.move(1);
+            }
+            cursor.close();
+        }
+        return allIds;
+    }
 }

@@ -53,7 +53,6 @@ public class OrderLineRepository extends
     }
 
     public List<OrderLine> getLinesByOrderId(Long id) {
-//        if (!cacheByOrder.containsKey(id)) {
             OrderLine line = new OrderLine();
             line.setOrderId((Number) id);
             try {
@@ -65,18 +64,15 @@ public class OrderLineRepository extends
                     if (status == null || status.length() == 0 || status.trim().length() == 0)
                         itLines.remove();
                 }
-//                if (cacheByOrder.size() == 99)
-//                    cacheByOrder
-//                            .remove(cacheByOrder.keySet().iterator().next());
-//                cacheByOrder.put(id, result);
                 return result;
             } catch (DatabaseException e) {
                 if (LoggerUtil.isDebugEnabled())
                     e.printStackTrace();
                 return new ArrayList<OrderLine>();
             }
-//        } else {
-//            return cacheByOrder.get(id);
-//        }
+    }
+
+    public List<Integer> getDiferentProductIds() {
+        return dao.getDiferentProductIds();
     }
 }

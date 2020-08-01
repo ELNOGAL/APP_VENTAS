@@ -28,8 +28,14 @@ import com.cafedered.cafedroidlitedao.extractor.Restriction;
 import com.cafedered.midban.annotations.Remote;
 import com.cafedered.midban.annotations.RemoteProperty;
 import com.cafedered.midban.service.repositories.AccountJournalRepository;
+import com.cafedered.midban.service.repositories.AccountRepository;
+import com.cafedered.midban.service.repositories.PartnerRepository;
 import com.debortoliwines.openerp.api.FilterCollection;
 import com.debortoliwines.openerp.api.OpeneERPApiException;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 @Entity(tableName = "account_move_line")
 @Remote(object = "account.move.line")
@@ -159,6 +165,18 @@ public class AccountMoveLine extends BaseRemoteEntity {
         try {
             filters.add("reconcile_id", "is null", null);
             filters.add("debit", ">" ,0);
+            List<Integer> accountIds = new ArrayList<Integer>();
+            Account example = new Account();
+            example.setType("receivable");
+            for (Account anAccount : AccountRepository.getInstance().getByExample(example, Restriction.AND, true, 0, 10000000))
+                accountIds.add(anAccount.getId().intValue());
+            Set idsPartners = PartnerRepository.getInstance().getAllDistinctSomeProperty("id");
+            List<Integer> idsQuery = new ArrayList<Integer>();
+            for (Object idPartner : idsPartners) {
+                idsQuery.add(((Long) idPartner).intValue());
+            }
+            filters.add("account_id", "in", accountIds.toArray());
+            filters.add("partner_id", "in", idsQuery.toArray());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -187,7 +205,10 @@ public class AccountMoveLine extends BaseRemoteEntity {
 
     @Override
     public String toString() {
-        return getAmountResidual().toString();
+        if (getAmountResidual() != null)
+            return getAmountResidual().toString();
+        else
+            return "";
     }
 
 }

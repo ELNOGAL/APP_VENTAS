@@ -112,7 +112,7 @@ public class OrderRepository extends BaseRepository<Order, OrderDAO> {
 
     public List<Product> getProductFavouritesForPartner(Long idPartner, Long idShop) {
         return dao.getProductsOfPartnerWithDateFilters(
-                idPartner, idShop, DateFilters.LAST_90_DAYS.getDatesBack());
+                idPartner, idShop, DateFilters.LAST_YEAR.getDatesBack());
     }
 
     @SuppressLint("DefaultLocale")
@@ -123,7 +123,7 @@ public class OrderRepository extends BaseRepository<Order, OrderDAO> {
                 id, lastOrder.getDatesBack());
         List<PartnerFavouritesDecorator> result = new ArrayList<PartnerFavouritesDecorator>();
         for (Long productId : productIds.keySet()) {
-            if (null == idProduct || productId.equals(idProduct)) {
+            if (productId != null) {
                 try {
                     Product product = ProductRepository.getInstance().getById(
                             productId);
@@ -154,9 +154,9 @@ public class OrderRepository extends BaseRepository<Order, OrderDAO> {
     }
 
     public List<LastSaleCustomObject> getProductLastSalesForPartner(
-            Long productId, Long partnerId) {
-        return dao.getProductLastSalesForPartner(partnerId,
-                productId);
+            Long productId, Long partnerId, Long partnerShippingId) {
+        return dao.getProductLastSalesForPartner(
+                productId, partnerId, partnerShippingId);
     }
 
     public List<Order> getOrdersWithFilters(String state, String dateFrom,

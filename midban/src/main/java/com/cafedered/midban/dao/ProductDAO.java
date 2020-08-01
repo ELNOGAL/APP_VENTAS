@@ -146,9 +146,23 @@ public class ProductDAO extends BaseDAO<Product> {
             if(cursor != null) {
                 cursor.close();
             }
-
         }
-
         return result;
+    }
+
+    public List<Integer> getDiferentProductTmplIds() {
+        List<Integer> productTmplIds = new ArrayList<Integer>();
+        String query = "SELECT DISTINCT product_tmpl_id FROM product_product";
+        Cursor cursor = getDaoHelper().getReadableDatabase().rawQuery(query,
+                null);
+        if (!cursor.isAfterLast()) {
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                productTmplIds.add(cursor.getInt(0));
+                cursor.move(1);
+            }
+            cursor.close();
+        }
+        return productTmplIds;
     }
 }

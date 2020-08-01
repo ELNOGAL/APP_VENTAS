@@ -18,7 +18,7 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/separator_margin"
+        android:layout_marginStart="@dimen/separator_margin"
         android:layout_weight="6"
         android:orientation="vertical">
 
@@ -45,7 +45,7 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/separator_margin"
+        android:layout_marginStart="@dimen/separator_margin"
         android:layout_weight="6"
         android:orientation="vertical" >
 
@@ -66,7 +66,7 @@
         android:id="@+id/product_catalog_order_item_icon_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="right|center_vertical"
+        android:layout_gravity="end|center_vertical"
         android:src="@drawable/icon_info">
     </ImageView>
 

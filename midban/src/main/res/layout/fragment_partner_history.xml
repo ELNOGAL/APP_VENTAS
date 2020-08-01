@@ -6,20 +6,19 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.cafedered.midban.fragments.PartnerHistoryOrderDetailFragment" >
+    tools:context="com.cafedered.midban.view.fragments.PartnerHistoryOrderDetailFragment" >
 
 
     <android.support.v4.widget.NestedScrollView
         android:id="@+id/nsvScrollView"
-        android:fillViewport="true"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:fillViewport="true">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:id="@+id/search_bar"
@@ -27,14 +26,16 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:paddingRight="@dimen/activity_horizontal_margin" >
+                android:paddingRight="@dimen/activity_horizontal_margin">
 
-                <org.droidparts.widget.ClearableEditText         android:drawableRight="@drawable/general_filtrar_borrar"         android:drawablePadding="12dp"
+                <org.droidparts.widget.ClearableEditText
                     android:id="@+id/fragment_partner_history_list_search_field"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="3"
                     android:drawableStart="@drawable/midban_button_search"
+                    android:drawableRight="@drawable/general_filtrar_borrar"
+                    android:drawablePadding="12dp"
                     android:hint="@string/fragment_partner_history_list_search_field_hint" />
 
                 <TextView
@@ -60,8 +61,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_below="@+id/search_bar"
-                android:layout_marginBottom="@dimen/activity_vertical_margin"
                 android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_marginBottom="@dimen/activity_vertical_margin"
                 android:background="@color/midban_secondary_text_color" />
 
             <LinearLayout
@@ -71,7 +72,7 @@
                 android:layout_below="@+id/fragment_partner_history_separator"
                 android:baselineAligned="false"
                 android:orientation="horizontal"
-                android:padding="@dimen/activity_vertical_margin" >
+                android:padding="@dimen/activity_vertical_margin">
 
                 <TextView
                     android:id="@+id/fragment_partner_history_list_item_order"
@@ -149,12 +150,13 @@
                 android:id="@+id/fragment_partner_history_list_listview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_below="@+id/fragment_partner_history_list_header"
                 android:layout_marginBottom="60dp"
-                android:descendantFocusability="blocksDescendants"
+                android:nestedScrollingEnabled="true"
                 android:clickable="true"
+                android:descendantFocusability="blocksDescendants"
                 android:focusable="true"
-                android:focusableInTouchMode="true"
-                android:layout_below="@+id/fragment_partner_history_list_header" />
+                android:focusableInTouchMode="true" />
 
 
         </LinearLayout>
