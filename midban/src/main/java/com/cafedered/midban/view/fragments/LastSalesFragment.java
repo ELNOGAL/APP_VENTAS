@@ -17,8 +17,6 @@
  *******************************************************************************/
 package com.cafedered.midban.view.fragments;
 
-import java.util.List;
-
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -45,6 +43,8 @@ import com.cafedered.midban.utils.ImageUtil;
 import com.cafedered.midban.view.activities.PortadaActivity;
 import com.cafedered.midban.view.adapter.LastSalesListItemAdapter;
 import com.cafedered.midban.view.base.BaseSupportFragment;
+
+import java.util.List;
 
 @Fragment(R.layout.fragment_last_sales)
 public class LastSalesFragment extends BaseSupportFragment {

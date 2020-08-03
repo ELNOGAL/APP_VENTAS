@@ -17,17 +17,8 @@
  *******************************************************************************/
 package com.cafedered.midban.view.adapter;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.text.ParseException;
-import java.util.List;
-import java.util.logging.Level;
-
-import android.app.Fragment;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,23 +26,18 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.cafedered.midban.R;
 import com.cafedered.midban.conf.ContextAttributes;
 import com.cafedered.midban.conf.MidbanApplication;
 import com.cafedered.midban.entities.Order;
-import com.cafedered.midban.entities.User;
 import com.cafedered.midban.service.repositories.OrderRepository;
 import com.cafedered.midban.utils.DateUtil;
-import com.cafedered.midban.utils.LoggerUtil;
-import com.cafedered.midban.utils.MessagesForUser;
-import com.cafedered.midban.utils.SessionFactory;
-import com.cafedered.midban.utils.exceptions.ConfigurationException;
-import com.cafedered.midban.utils.exceptions.ServiceException;
 import com.cafedered.midban.view.activities.OrderActivity;
-import com.cafedered.midban.view.activities.ProductCardActivity;
-import com.debortoliwines.openerp.api.OpenERPCommand;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.List;
 
 public class OrderListItemAdapter extends BaseAdapter {
 

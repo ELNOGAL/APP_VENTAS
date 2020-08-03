@@ -17,11 +17,6 @@
  *******************************************************************************/
 package com.cafedered.midban.view.fragments;
 
-import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -51,6 +46,11 @@ import com.cafedered.midban.utils.exceptions.ServiceException;
 import com.cafedered.midban.view.activities.OrderActivity;
 import com.cafedered.midban.view.adapter.PartnerHistoryOrderLineListItemAdapter;
 import com.cafedered.midban.view.base.BaseSupportFragment;
+
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
 
 @Fragment(R.layout.fragment_partner_history_order_detail)
 public class PartnerHistoryOrderDetailFragment extends BaseSupportFragment {

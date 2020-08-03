@@ -28,11 +28,7 @@ import android.widget.Filter;
 import android.widget.Filterable;
 
 import com.cafedered.cafedroidlitedao.extractor.Restriction;
-import com.cafedered.midban.conf.ContextAttributes;
-import com.cafedered.midban.conf.MidbanApplication;
 import com.cafedered.midban.entities.Product;
-import com.cafedered.midban.entities.Product;
-import com.cafedered.midban.entities.User;
 import com.cafedered.midban.service.repositories.ProductRepository;
 import com.cafedered.midban.utils.LoggerUtil;
 import com.cafedered.midban.utils.exceptions.ServiceException;

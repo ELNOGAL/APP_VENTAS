@@ -17,10 +17,6 @@
  *******************************************************************************/
 package com.cafedered.midban.view.adapter;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.util.List;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,17 +25,18 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.cafedered.cafedroidlitedao.extractor.Restriction;
 import com.cafedered.midban.R;
 import com.cafedered.midban.entities.OrderLine;
 import com.cafedered.midban.entities.ProductUom;
-import com.cafedered.midban.service.repositories.ImageCache;
 import com.cafedered.midban.service.repositories.OrderRepository;
 import com.cafedered.midban.service.repositories.ProductUomRepository;
-import com.cafedered.midban.utils.ImageUtil;
 import com.cafedered.midban.utils.exceptions.ConfigurationException;
 import com.cafedered.midban.utils.exceptions.ServiceException;
 import com.cafedered.midban.view.fragments.OrderFragment;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.List;
 
 public class OrderLinesAdapter extends BaseAdapter {
 

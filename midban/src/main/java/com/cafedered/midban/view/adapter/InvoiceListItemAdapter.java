@@ -17,13 +17,6 @@
  *******************************************************************************/
 package com.cafedered.midban.view.adapter;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.List;
-
-import android.app.Fragment;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,6 +30,12 @@ import com.cafedered.midban.R;
 import com.cafedered.midban.entities.Invoice;
 import com.cafedered.midban.utils.DateUtil;
 import com.cafedered.midban.view.base.BaseSupportFragment;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class InvoiceListItemAdapter extends BaseAdapter {
 

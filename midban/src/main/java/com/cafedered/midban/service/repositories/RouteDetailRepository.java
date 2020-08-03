@@ -38,7 +38,6 @@ import org.apache.xmlrpc.XmlRpcException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Filter;
 
 public class RouteDetailRepository extends BaseRepository<RouteDetail, RouteDetailDAO> {
     private static RouteDetailRepository instance = null;

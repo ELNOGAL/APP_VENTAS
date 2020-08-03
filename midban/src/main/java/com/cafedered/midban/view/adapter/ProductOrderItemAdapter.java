@@ -43,11 +43,7 @@ import com.cafedered.midban.utils.ImageUtil;
 import com.cafedered.midban.utils.exceptions.ConfigurationException;
 import com.cafedered.midban.utils.exceptions.ServiceException;
 import com.cafedered.midban.view.activities.ProductCardActivity;
-import com.cafedered.midban.view.base.BaseSupportFragment;
 import com.cafedered.midban.view.fragments.OrderNewDispositionFragment;
-import com.cafedered.midban.view.fragments.PartnerReservationsFragment;
-import com.cafedered.midban.view.fragments.ProductCardFragment;
-import com.cafedered.midban.view.fragments.ProductCatalogFragment;
 
 import java.math.BigDecimal;
 import java.util.List;

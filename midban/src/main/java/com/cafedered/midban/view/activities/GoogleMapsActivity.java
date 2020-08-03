@@ -17,10 +17,6 @@
  *******************************************************************************/
 package com.cafedered.midban.view.activities;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.logging.Level;
-
 import android.app.ActionBar;
 import android.location.Address;
 import android.location.Geocoder;
@@ -46,6 +42,10 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.logging.Level;
 
 public class GoogleMapsActivity extends FragmentActivity implements OnMapReadyCallback{
 

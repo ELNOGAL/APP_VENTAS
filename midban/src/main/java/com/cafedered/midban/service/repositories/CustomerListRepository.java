@@ -17,9 +17,7 @@
  *******************************************************************************/
 package com.cafedered.midban.service.repositories;
 
-import com.cafedered.midban.dao.ContactDAO;
 import com.cafedered.midban.dao.CustomerListDAO;
-import com.cafedered.midban.entities.Contact;
 import com.cafedered.midban.entities.CustomerList;
 
 public class CustomerListRepository extends BaseRepository<CustomerList, CustomerListDAO> {

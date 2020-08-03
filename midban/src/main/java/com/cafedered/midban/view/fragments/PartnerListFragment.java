@@ -19,9 +19,6 @@
  */
 package com.cafedered.midban.view.fragments;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -45,16 +42,17 @@ import com.cafedered.midban.async.CancelAsyncTaskListener;
 import com.cafedered.midban.conf.ContextAttributes;
 import com.cafedered.midban.conf.MidbanApplication;
 import com.cafedered.midban.entities.Partner;
-import com.cafedered.midban.entities.Product;
 import com.cafedered.midban.entities.User;
 import com.cafedered.midban.service.repositories.PartnerRepository;
-import com.cafedered.midban.service.repositories.ProductRepository;
 import com.cafedered.midban.utils.LoggerUtil;
 import com.cafedered.midban.utils.exceptions.ServiceException;
 import com.cafedered.midban.view.activities.GoogleMapsActivity;
 import com.cafedered.midban.view.adapter.PartnerListItemAdapter;
 import com.cafedered.midban.view.base.BaseSupportFragment;
 import com.cafedered.midban.view.dialogs.FilterPartnersDialog;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Fragment(R.layout.fragment_partner_list)
 public class PartnerListFragment extends BaseSupportFragment implements CancelAsyncTaskListener{

@@ -17,9 +17,6 @@
  *******************************************************************************/
 package com.cafedered.midban.view.fragments;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.NestedScrollView;
@@ -36,7 +33,6 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.cafedered.cafedroidlitedao.extractor.Restriction;
 import com.cafedered.midban.R;
@@ -55,6 +51,9 @@ import com.cafedered.midban.view.activities.PortadaActivity;
 import com.cafedered.midban.view.adapter.PartnerHistoryListItemAdapter;
 import com.cafedered.midban.view.base.BaseSupportFragment;
 import com.cafedered.midban.view.dialogs.FilterPartnerHistoryDialog;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Fragment(R.layout.fragment_partner_history)
 public class PartnerHistoryFragment extends BaseSupportFragment {

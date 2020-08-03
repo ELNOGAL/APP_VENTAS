@@ -17,9 +17,6 @@
  *******************************************************************************/
 package com.cafedered.midban.service.repositories;
 
-import java.util.Collection;
-import java.util.List;
-
 import com.cafedered.cafedroidlitedao.exceptions.DatabaseException;
 import com.cafedered.cafedroidlitedao.extractor.Restriction;
 import com.cafedered.midban.conf.ContextAttributes;
@@ -27,17 +24,9 @@ import com.cafedered.midban.conf.MidbanApplication;
 import com.cafedered.midban.dao.PartnerDAO;
 import com.cafedered.midban.entities.Partner;
 import com.cafedered.midban.entities.User;
-import com.cafedered.midban.utils.SessionFactory;
-import com.cafedered.midban.utils.exceptions.ConfigurationException;
 import com.cafedered.midban.utils.exceptions.ServiceException;
-import com.debortoliwines.openerp.api.FilterCollection;
-import com.debortoliwines.openerp.api.ObjectAdapter;
-import com.debortoliwines.openerp.api.OpeneERPApiException;
-import com.debortoliwines.openerp.api.Row;
-import com.debortoliwines.openerp.api.RowCollection;
-import com.debortoliwines.openerp.api.Session;
 
-import org.apache.xmlrpc.XmlRpcException;
+import java.util.List;
 
 public class PartnerRepository extends BaseRepository<Partner, PartnerDAO> {
     private static PartnerRepository instance = null;

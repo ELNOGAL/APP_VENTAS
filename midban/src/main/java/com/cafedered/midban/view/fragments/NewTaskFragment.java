@@ -17,15 +17,6 @@
  *******************************************************************************/
 package com.cafedered.midban.view.fragments;
 
-import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.logging.Level;
-
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -58,6 +49,15 @@ import com.cafedered.midban.view.base.BaseSupportFragment;
 import com.cafedered.midban.view.dialogs.SelectPartnerDialog;
 import com.roomorama.caldroid.CaldroidFragment;
 import com.roomorama.caldroid.CaldroidListener;
+
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
 
 @Fragment(R.layout.fragment_new_calendar_task)
 public class NewTaskFragment extends BaseSupportFragment {

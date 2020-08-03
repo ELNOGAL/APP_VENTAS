@@ -17,13 +17,6 @@
  *******************************************************************************/
 package com.cafedered.midban.utils;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.lang.reflect.ParameterizedType;
-import java.util.ArrayList;
-import java.util.List;
-
 import android.util.Base64;
 
 import com.cafedered.midban.dao.BaseDAO;
@@ -31,6 +24,13 @@ import com.cafedered.midban.entities.BaseEntity;
 import com.cafedered.midban.service.repositories.BaseRepository;
 import com.cafedered.midban.utils.exceptions.ConfigurationException;
 import com.cafedered.midban.utils.exceptions.ReflectionException;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.lang.reflect.ParameterizedType;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ReflectionUtils {
 

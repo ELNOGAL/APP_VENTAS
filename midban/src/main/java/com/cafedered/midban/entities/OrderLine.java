@@ -22,11 +22,7 @@ import com.cafedered.cafedroidlitedao.annotations.Id;
 import com.cafedered.cafedroidlitedao.annotations.Property;
 import com.cafedered.midban.annotations.Remote;
 import com.cafedered.midban.annotations.RemoteProperty;
-import com.cafedered.midban.conf.ContextAttributes;
-import com.cafedered.midban.conf.MidbanApplication;
-import com.cafedered.midban.service.repositories.OrderLineRepository;
 import com.cafedered.midban.service.repositories.OrderRepository;
-import com.cafedered.midban.service.repositories.PartnerRepository;
 import com.cafedered.midban.service.repositories.ProductRepository;
 import com.cafedered.midban.service.repositories.ProductUomRepository;
 import com.cafedered.midban.utils.LoggerUtil;
@@ -36,8 +32,6 @@ import com.debortoliwines.openerp.api.FilterCollection;
 import com.debortoliwines.openerp.api.OpeneERPApiException;
 
 import java.math.BigDecimal;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.List;
 
 @Entity(tableName = "sale_order_line")

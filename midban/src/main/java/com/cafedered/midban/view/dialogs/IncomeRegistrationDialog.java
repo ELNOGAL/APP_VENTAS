@@ -17,18 +17,6 @@
  *******************************************************************************/
 package com.cafedered.midban.view.dialogs;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.logging.Level;
-
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -52,23 +40,18 @@ import com.cafedered.midban.conf.ContextAttributes;
 import com.cafedered.midban.conf.MidbanApplication;
 import com.cafedered.midban.entities.AccountJournal;
 import com.cafedered.midban.entities.AccountMoveLine;
-import com.cafedered.midban.entities.Invoice;
 import com.cafedered.midban.entities.Partner;
 import com.cafedered.midban.entities.User;
 import com.cafedered.midban.service.repositories.AccountMoveLineRepository;
-import com.cafedered.midban.service.repositories.InvoiceRepository;
 import com.cafedered.midban.service.repositories.PartnerRepository;
 import com.cafedered.midban.service.repositories.PaymentTypeRepository;
 import com.cafedered.midban.utils.DateUtil;
-import com.cafedered.midban.utils.LoggerUtil;
 import com.cafedered.midban.utils.MessagesForUser;
 import com.cafedered.midban.utils.SessionFactory;
 import com.cafedered.midban.utils.exceptions.ConfigurationException;
 import com.cafedered.midban.utils.exceptions.ServiceException;
 import com.cafedered.midban.view.adapter.CustomArrayAdapter;
 import com.cafedered.midban.view.fragments.InvoiceFragment;
-import com.debortoliwines.openerp.api.Field;
-import com.debortoliwines.openerp.api.FieldCollection;
 import com.debortoliwines.openerp.api.FilterCollection;
 import com.debortoliwines.openerp.api.ObjectAdapter;
 import com.debortoliwines.openerp.api.OpeneERPApiException;
@@ -77,6 +60,16 @@ import com.debortoliwines.openerp.api.RowCollection;
 import com.debortoliwines.openerp.api.Session;
 
 import org.apache.xmlrpc.XmlRpcException;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
+import java.util.logging.Level;
 
 public class IncomeRegistrationDialog extends Dialog {
 

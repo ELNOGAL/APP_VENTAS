@@ -17,10 +17,6 @@
  *******************************************************************************/
 package com.cafedered.midban.view.adapter;
 
-import java.text.ParseException;
-import java.util.List;
-
-import android.app.Fragment;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,6 +28,9 @@ import com.cafedered.midban.R;
 import com.cafedered.midban.entities.StockPickingOut;
 import com.cafedered.midban.utils.DateUtil;
 import com.cafedered.midban.view.base.BaseSupportFragment;
+
+import java.text.ParseException;
+import java.util.List;
 
 public class PartnerDeliveryNoteListItemAdapter extends BaseAdapter {
 

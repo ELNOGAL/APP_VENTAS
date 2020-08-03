@@ -2,11 +2,8 @@ package com.cafedered.midban.view.customviews;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.ScrollView;
-
-import com.cafedered.midban.conf.MidbanApplication;
 
 /**
  * Created by nacho on 18/10/15.

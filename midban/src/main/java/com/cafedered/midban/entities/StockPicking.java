@@ -17,8 +17,6 @@
  *******************************************************************************/
 package com.cafedered.midban.entities;
 
-import java.util.Date;
-
 import com.cafedered.cafedroidlitedao.annotations.Entity;
 import com.cafedered.cafedroidlitedao.annotations.Id;
 import com.cafedered.cafedroidlitedao.annotations.Property;
@@ -28,6 +26,8 @@ import com.cafedered.midban.conf.ContextAttributes;
 import com.cafedered.midban.conf.MidbanApplication;
 import com.debortoliwines.openerp.api.FilterCollection;
 import com.debortoliwines.openerp.api.OpeneERPApiException;
+
+import java.util.Date;
 
 @Entity(tableName = "stock_picking")
 @Remote(object = "stock.picking")

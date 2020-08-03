@@ -17,10 +17,10 @@
  *******************************************************************************/
 package com.cafedered.midban.entities;
 
-import java.io.Serializable;
-
 import com.cafedered.midban.service.repositories.ImageCache;
 import com.cafedered.midban.utils.ImageUtil;
+
+import java.io.Serializable;
 
 @SuppressWarnings("serial")
 public abstract class BaseEntity implements Serializable {

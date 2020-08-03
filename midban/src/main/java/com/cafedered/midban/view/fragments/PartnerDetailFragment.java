@@ -17,10 +17,6 @@
  *******************************************************************************/
 package com.cafedered.midban.view.fragments;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.logging.Level;
-
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,6 +41,10 @@ import com.cafedered.midban.view.activities.NewCalendarTaskActivity;
 import com.cafedered.midban.view.activities.OrderActivity;
 import com.cafedered.midban.view.base.BaseSupportFragment;
 import com.cafedered.midban.view.transformers.PartnerTransformer;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.logging.Level;
 
 @Fragment(R.layout.fragment_partner_detail)
 public class PartnerDetailFragment extends BaseSupportFragment {

@@ -17,19 +17,9 @@
  *******************************************************************************/
 package com.cafedered.midban.view.fragments;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.logging.Level;
-
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.app.DialogFragment;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -61,7 +51,6 @@ import com.cafedered.midban.annotations.Click;
 import com.cafedered.midban.annotations.Fragment;
 import com.cafedered.midban.annotations.ItemClicked;
 import com.cafedered.midban.annotations.ItemSelected;
-import com.cafedered.midban.annotations.Remote;
 import com.cafedered.midban.annotations.Wire;
 import com.cafedered.midban.conf.ContextAttributes;
 import com.cafedered.midban.conf.MidbanApplication;
@@ -86,7 +75,6 @@ import com.cafedered.midban.view.activities.ProductCardActivity;
 import com.cafedered.midban.view.activities.ProductCatalogActivity;
 import com.cafedered.midban.view.adapter.IProductSelection;
 import com.cafedered.midban.view.adapter.OrderLinesAdapter;
-import com.cafedered.midban.view.adapter.OrderListItemAdapter;
 import com.cafedered.midban.view.adapter.ProductAutocompleteAdapter;
 import com.cafedered.midban.view.base.BaseSupportFragment;
 import com.cafedered.midban.view.dialogs.OneFieldEditionDialog;
@@ -97,6 +85,15 @@ import com.debortoliwines.openerp.api.OpenERPCommand;
 import com.debortoliwines.openerp.api.Row;
 import com.debortoliwines.openerp.api.RowCollection;
 import com.debortoliwines.openerp.api.Session;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.logging.Level;
 
 @Fragment(R.layout.fragment_order)
 public class OrderFragment extends BaseSupportFragment implements IProductSelection {

@@ -17,15 +17,15 @@
  *******************************************************************************/
 package com.cafedered.midban.dao;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.database.Cursor;
 import android.util.Log;
 
 import com.cafedered.midban.entities.Invoice;
 import com.cafedered.midban.utils.LoggerUtil;
 import com.cafedered.midban.utils.exceptions.ReflectionException;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class InvoiceDAO extends BaseDAO<Invoice> {
 

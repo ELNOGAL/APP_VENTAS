@@ -17,9 +17,6 @@
  *******************************************************************************/
 package com.cafedered.midban.view.adapter;
 
-import java.text.ParseException;
-import java.util.List;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,6 +29,9 @@ import com.cafedered.midban.entities.SynchronizationSummary;
 import com.cafedered.midban.utils.DateUtil;
 import com.cafedered.midban.utils.LoggerUtil;
 import com.cafedered.midban.view.fragments.SynchronizationFragment;
+
+import java.text.ParseException;
+import java.util.List;
 
 public class SynchronizationListItemAdapter extends BaseAdapter {
 

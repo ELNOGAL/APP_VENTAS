@@ -17,9 +17,6 @@
  *******************************************************************************/
 package com.cafedered.midban.view.dialogs;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -36,6 +33,9 @@ import com.cafedered.midban.R;
 import com.cafedered.midban.utils.LoggerUtil;
 import com.cafedered.midban.utils.ReflectionUtils;
 import com.cafedered.midban.utils.exceptions.ReflectionException;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class OneFieldEditionDialog extends Dialog {
 

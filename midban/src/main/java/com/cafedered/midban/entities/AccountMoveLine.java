@@ -27,11 +27,9 @@ import com.cafedered.cafedroidlitedao.annotations.Property;
 import com.cafedered.cafedroidlitedao.extractor.Restriction;
 import com.cafedered.midban.annotations.Remote;
 import com.cafedered.midban.annotations.RemoteProperty;
-import com.cafedered.midban.service.repositories.AccountJournalRepository;
 import com.cafedered.midban.service.repositories.AccountRepository;
 import com.cafedered.midban.service.repositories.PartnerRepository;
 import com.debortoliwines.openerp.api.FilterCollection;
-import com.debortoliwines.openerp.api.OpeneERPApiException;
 
 import java.util.ArrayList;
 import java.util.List;

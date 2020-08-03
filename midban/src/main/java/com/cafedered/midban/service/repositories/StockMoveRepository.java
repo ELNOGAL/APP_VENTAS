@@ -17,16 +17,14 @@
  *******************************************************************************/
 package com.cafedered.midban.service.repositories;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import com.cafedered.cafedroidlitedao.exceptions.DatabaseException;
 import com.cafedered.cafedroidlitedao.extractor.Restriction;
 import com.cafedered.midban.dao.StockMoveDAO;
 import com.cafedered.midban.entities.StockMove;
 import com.cafedered.midban.utils.LoggerUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class StockMoveRepository extends
         BaseRepository<StockMove, StockMoveDAO> {

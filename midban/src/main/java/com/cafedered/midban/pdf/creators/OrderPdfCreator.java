@@ -17,12 +17,6 @@
  *******************************************************************************/
 package com.cafedered.midban.pdf.creators;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.text.ParseException;
-
 import android.os.Environment;
 
 import com.cafedered.midban.R;
@@ -33,6 +27,12 @@ import com.cafedered.midban.pdf.pdfwriter.PDFWriter;
 import com.cafedered.midban.pdf.pdfwriter.StandardFonts;
 import com.cafedered.midban.utils.DateUtil;
 import com.cafedered.midban.utils.LoggerUtil;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.ParseException;
 
 public class OrderPdfCreator {
     private static final int MARGIN_LEFT = 30;

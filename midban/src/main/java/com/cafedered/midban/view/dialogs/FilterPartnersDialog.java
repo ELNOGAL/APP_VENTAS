@@ -17,10 +17,6 @@
  *******************************************************************************/
 package com.cafedered.midban.view.dialogs;
 
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
-
 import android.app.Dialog;
 import android.content.Context;
 import android.view.View;
@@ -38,18 +34,18 @@ import com.cafedered.midban.conf.ContextAttributes;
 import com.cafedered.midban.conf.MidbanApplication;
 import com.cafedered.midban.entities.CommercialRoute;
 import com.cafedered.midban.entities.Partner;
-import com.cafedered.midban.entities.PartnerCategory;
-import com.cafedered.midban.entities.State;
 import com.cafedered.midban.entities.User;
 import com.cafedered.midban.service.repositories.CommercialRouteRepository;
-import com.cafedered.midban.service.repositories.PartnerCategoryRepository;
 import com.cafedered.midban.service.repositories.PartnerRepository;
-import com.cafedered.midban.service.repositories.StateRepository;
 import com.cafedered.midban.utils.LoggerUtil;
 import com.cafedered.midban.utils.exceptions.ServiceException;
 import com.cafedered.midban.view.adapter.CustomArrayAdapter;
 import com.cafedered.midban.view.adapter.PartnerListItemAdapter;
 import com.cafedered.midban.view.fragments.PartnerListFragment;
+
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
 
 public class FilterPartnersDialog extends Dialog {
 

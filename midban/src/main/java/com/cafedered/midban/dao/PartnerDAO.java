@@ -28,7 +28,6 @@ import com.cafedered.cafedroidlitedao.extractor.Restriction;
 import com.cafedered.midban.R;
 import com.cafedered.midban.conf.MidbanApplication;
 import com.cafedered.midban.entities.Partner;
-import com.cafedered.midban.entities.Product;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;

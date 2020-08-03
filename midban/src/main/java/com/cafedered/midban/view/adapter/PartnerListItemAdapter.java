@@ -17,15 +17,8 @@
  *******************************************************************************/
 package com.cafedered.midban.view.adapter;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.util.Collections;
-import java.util.List;
-
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Typeface;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,12 +36,16 @@ import com.cafedered.midban.entities.Partner;
 import com.cafedered.midban.entities.PartnerCategory;
 import com.cafedered.midban.service.repositories.OrderRepository;
 import com.cafedered.midban.service.repositories.PartnerCategoryRepository;
-import com.cafedered.midban.service.repositories.StateRepository;
 import com.cafedered.midban.utils.exceptions.ConfigurationException;
 import com.cafedered.midban.utils.exceptions.ServiceException;
 import com.cafedered.midban.view.activities.GoogleMapsActivity;
 import com.cafedered.midban.view.activities.PartnerDetailActivity;
 import com.cafedered.midban.view.fragments.PartnerListFragment;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.Collections;
+import java.util.List;
 
 public class PartnerListItemAdapter extends BaseAdapter {
 

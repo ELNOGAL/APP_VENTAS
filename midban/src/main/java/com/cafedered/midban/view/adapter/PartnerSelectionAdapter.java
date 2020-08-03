@@ -9,7 +9,6 @@ import android.widget.Filter;
 import android.widget.TextView;
 
 import com.cafedered.cafedroidlitedao.extractor.Restriction;
-import com.cafedered.midban.R;
 import com.cafedered.midban.conf.ContextAttributes;
 import com.cafedered.midban.conf.MidbanApplication;
 import com.cafedered.midban.entities.Partner;

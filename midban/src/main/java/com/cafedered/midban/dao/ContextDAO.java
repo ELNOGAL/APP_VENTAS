@@ -29,7 +29,6 @@ import com.cafedered.cafedroidlitedao.exceptions.BadConfigurationException;
 import com.cafedered.midban.R;
 import com.cafedered.midban.conf.MidbanApplication;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class ContextDAO extends DaoHelper {

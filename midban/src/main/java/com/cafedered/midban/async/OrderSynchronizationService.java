@@ -4,7 +4,6 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.Environment;
 import android.os.IBinder;
-import android.util.Log;
 
 import com.cafedered.midban.conf.MidbanApplication;
 import com.cafedered.midban.entities.Company;
@@ -33,7 +32,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.logging.Logger;
 
 /**
  * Created by nacho on 9/12/15.

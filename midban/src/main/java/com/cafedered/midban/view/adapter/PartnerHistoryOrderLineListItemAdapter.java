@@ -17,11 +17,6 @@
  *******************************************************************************/
 package com.cafedered.midban.view.adapter;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.util.List;
-
-import android.app.Fragment;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,6 +30,10 @@ import com.cafedered.midban.entities.OrderLine;
 import com.cafedered.midban.service.repositories.ImageCache;
 import com.cafedered.midban.utils.ImageUtil;
 import com.cafedered.midban.view.base.BaseSupportFragment;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.List;
 
 public class PartnerHistoryOrderLineListItemAdapter extends BaseAdapter {
 

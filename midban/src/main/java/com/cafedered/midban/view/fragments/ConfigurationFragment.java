@@ -30,22 +30,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cafedered.midban.R;
-import com.cafedered.midban.annotations.Background;
 import com.cafedered.midban.annotations.Click;
 import com.cafedered.midban.annotations.Fragment;
 import com.cafedered.midban.annotations.Transformer;
 import com.cafedered.midban.annotations.Wire;
-import com.cafedered.midban.conf.ContextAttributes;
-import com.cafedered.midban.conf.MidbanApplication;
-import com.cafedered.midban.entities.AccountJournal;
 import com.cafedered.midban.entities.Configuration;
-import com.cafedered.midban.entities.User;
 import com.cafedered.midban.entities.Warehouse;
 import com.cafedered.midban.service.repositories.ConfigurationRepository;
-import com.cafedered.midban.service.repositories.OrderRepository;
 import com.cafedered.midban.service.repositories.WarehouseRepository;
 import com.cafedered.midban.utils.AndroidDatabaseManager;
-import com.cafedered.midban.utils.DateUtil;
 import com.cafedered.midban.utils.LoggerUtil;
 import com.cafedered.midban.utils.MessagesForUser;
 import com.cafedered.midban.utils.SessionFactory;
@@ -53,13 +46,10 @@ import com.cafedered.midban.utils.exceptions.ConfigurationException;
 import com.cafedered.midban.utils.exceptions.ServiceException;
 import com.cafedered.midban.view.activities.LoginActivity;
 import com.cafedered.midban.view.adapter.CustomArrayAdapter;
-import com.cafedered.midban.view.adapter.OrderLinesNewDispositionAdapter;
 import com.cafedered.midban.view.base.BaseSupportFragment;
 import com.cafedered.midban.view.transformers.ConfigurationTransformer;
 
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 

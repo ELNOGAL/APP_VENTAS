@@ -17,10 +17,6 @@
  *******************************************************************************/
 package com.cafedered.midban.view.fragments;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import android.app.FragmentTransaction;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -54,6 +50,9 @@ import com.cafedered.midban.view.activities.PortadaActivity;
 import com.cafedered.midban.view.adapter.PartnerDeliveryNoteListItemAdapter;
 import com.cafedered.midban.view.base.BaseSupportFragment;
 import com.cafedered.midban.view.dialogs.FilterPartnerDeliveryNoteDialog;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Fragment(R.layout.fragment_partner_deliverynote)
 public class PartnerDeliveryNoteFragment extends BaseSupportFragment {

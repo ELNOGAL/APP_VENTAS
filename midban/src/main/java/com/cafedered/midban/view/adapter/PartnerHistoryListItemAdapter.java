@@ -17,13 +17,6 @@
  *******************************************************************************/
 package com.cafedered.midban.view.adapter;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.text.ParseException;
-import java.util.List;
-
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,7 +24,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.cafedered.midban.R;
 import com.cafedered.midban.conf.ContextAttributes;
@@ -40,6 +32,11 @@ import com.cafedered.midban.entities.Order;
 import com.cafedered.midban.utils.DateUtil;
 import com.cafedered.midban.view.base.BaseSupportFragment;
 import com.cafedered.midban.view.fragments.PartnerHistoryOrderDetailFragment;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.ParseException;
+import java.util.List;
 
 public class PartnerHistoryListItemAdapter extends BaseAdapter {
 

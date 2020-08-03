@@ -17,17 +17,13 @@
  *******************************************************************************/
 package com.cafedered.midban.view.base;
 
-import java.util.logging.Level;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.cafedered.midban.R;
@@ -39,6 +35,8 @@ import com.cafedered.midban.utils.MessagesForUser;
 import com.cafedered.midban.utils.ReflectionUtils;
 import com.cafedered.midban.utils.exceptions.ConfigurationException;
 import com.cafedered.midban.utils.exceptions.ReflectionException;
+
+import java.util.logging.Level;
 
 @SuppressLint("Registered")
 public class BaseSupportActivity extends AppCompatActivity {

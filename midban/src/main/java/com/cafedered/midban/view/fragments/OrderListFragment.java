@@ -17,21 +17,11 @@
  *******************************************************************************/
 package com.cafedered.midban.view.fragments;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.logging.Level;
-
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,16 +33,23 @@ import com.cafedered.midban.annotations.Wire;
 import com.cafedered.midban.conf.ContextAttributes;
 import com.cafedered.midban.conf.MidbanApplication;
 import com.cafedered.midban.entities.Order;
-import com.cafedered.midban.entities.OrderLine;
 import com.cafedered.midban.service.repositories.OrderRepository;
 import com.cafedered.midban.service.repositories.PartnerRepository;
 import com.cafedered.midban.utils.LoggerUtil;
 import com.cafedered.midban.utils.MessagesForUser;
-import com.cafedered.midban.utils.exceptions.ConfigurationException;
 import com.cafedered.midban.utils.exceptions.ServiceException;
 import com.cafedered.midban.view.adapter.OrderListItemAdapter;
 import com.cafedered.midban.view.base.BaseSupportFragment;
 import com.cafedered.midban.view.listeners.ITodayDataChangedListenerFragment;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.logging.Level;
 
 @Fragment(R.layout.fragment_order_list)
 public class OrderListFragment extends BaseSupportFragment implements

@@ -17,9 +17,6 @@
  *******************************************************************************/
 package com.cafedered.midban.view.dialogs;
 
-import java.util.LinkedHashSet;
-import java.util.Set;
-
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -33,6 +30,9 @@ import android.widget.TextView;
 
 import com.cafedered.midban.R;
 import com.cafedered.midban.view.adapter.CustomArrayAdapter;
+
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 public class OneComboEditionDialog extends Dialog {
 

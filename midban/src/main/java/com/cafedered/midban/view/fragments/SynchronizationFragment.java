@@ -17,10 +17,6 @@
  *******************************************************************************/
 package com.cafedered.midban.view.fragments;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -49,6 +45,10 @@ import com.cafedered.midban.utils.exceptions.ServiceException;
 import com.cafedered.midban.view.activities.PortadaActivity;
 import com.cafedered.midban.view.adapter.SynchronizationListItemAdapter;
 import com.cafedered.midban.view.base.BaseSupportFragment;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 @Fragment(R.layout.fragment_synchronization)
 public class SynchronizationFragment extends BaseSupportFragment {

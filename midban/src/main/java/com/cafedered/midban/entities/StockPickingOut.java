@@ -17,8 +17,6 @@
  *******************************************************************************/
 package com.cafedered.midban.entities;
 
-import java.util.List;
-
 import com.cafedered.cafedroidlitedao.annotations.Entity;
 import com.cafedered.cafedroidlitedao.annotations.Id;
 import com.cafedered.cafedroidlitedao.annotations.Property;
@@ -26,7 +24,6 @@ import com.cafedered.midban.annotations.Remote;
 import com.cafedered.midban.annotations.RemoteProperty;
 import com.cafedered.midban.conf.ContextAttributes;
 import com.cafedered.midban.conf.MidbanApplication;
-import com.cafedered.midban.dao.PickingTypeDAO;
 import com.cafedered.midban.service.repositories.OrderRepository;
 import com.cafedered.midban.service.repositories.PickingTypeRepository;
 import com.cafedered.midban.service.repositories.StockMoveRepository;
@@ -35,6 +32,8 @@ import com.cafedered.midban.utils.exceptions.ConfigurationException;
 import com.cafedered.midban.utils.exceptions.ServiceException;
 import com.debortoliwines.openerp.api.FilterCollection;
 import com.debortoliwines.openerp.api.OpeneERPApiException;
+
+import java.util.List;
 
 @Entity(tableName = "stock_picking_out")
 @Remote(object = "stock.picking")

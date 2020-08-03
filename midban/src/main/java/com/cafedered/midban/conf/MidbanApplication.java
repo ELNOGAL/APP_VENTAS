@@ -19,29 +19,14 @@
  */
 package com.cafedered.midban.conf;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-
 import android.app.Application;
 import android.arch.lifecycle.Lifecycle;
 import android.arch.lifecycle.LifecycleObserver;
 import android.arch.lifecycle.OnLifecycleEvent;
 import android.arch.lifecycle.ProcessLifecycleOwner;
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Environment;
-import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.cafedered.cafedroidlitedao.exceptions.BadConfigurationException;
@@ -55,6 +40,18 @@ import com.cafedered.midban.utils.GMailSender;
 import com.cafedered.midban.utils.LoggerUtil;
 import com.cafedered.midban.utils.exceptions.ConfigurationException;
 import com.cafedered.midban.utils.exceptions.ServiceException;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MidbanApplication extends Application implements LifecycleObserver {
 

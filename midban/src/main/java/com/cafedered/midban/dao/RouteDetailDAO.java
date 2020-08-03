@@ -21,12 +21,10 @@ import android.database.Cursor;
 import android.util.Log;
 
 import com.cafedered.cafedroidlitedao.exceptions.BadConfigurationException;
-import com.cafedered.cafedroidlitedao.exceptions.BadInvocationException;
 import com.cafedered.cafedroidlitedao.exceptions.DatabaseException;
 import com.cafedered.cafedroidlitedao.extractor.JDBCQueryMaker;
 import com.cafedered.midban.R;
 import com.cafedered.midban.conf.MidbanApplication;
-import com.cafedered.midban.entities.Product;
 import com.cafedered.midban.entities.RouteDetail;
 import com.cafedered.midban.utils.DateUtil;
 

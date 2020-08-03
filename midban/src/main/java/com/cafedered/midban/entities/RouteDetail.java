@@ -12,7 +12,6 @@ import com.debortoliwines.openerp.api.FilterCollection;
 import com.debortoliwines.openerp.api.OpeneERPApiException;
 
 import java.util.Calendar;
-import java.util.Date;
 
 @Entity(tableName = "route_detail")
 @Remote(object = "route.detail")

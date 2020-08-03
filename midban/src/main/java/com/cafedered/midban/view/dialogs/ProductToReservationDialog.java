@@ -17,10 +17,6 @@
  *******************************************************************************/
 package com.cafedered.midban.view.dialogs;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.util.logging.Level;
-
 import android.app.Dialog;
 import android.content.Context;
 import android.os.AsyncTask;
@@ -49,6 +45,10 @@ import com.cafedered.midban.utils.LoggerUtil;
 import com.cafedered.midban.utils.MessagesForUser;
 import com.cafedered.midban.utils.exceptions.ConfigurationException;
 import com.cafedered.midban.utils.exceptions.ServiceException;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.logging.Level;
 
 public class ProductToReservationDialog extends Dialog {
 

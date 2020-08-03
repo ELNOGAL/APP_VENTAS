@@ -17,11 +17,6 @@
  *******************************************************************************/
 package com.cafedered.midban.view.fragments;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
-import java.util.logging.Level;
-
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -61,6 +56,11 @@ import com.cafedered.midban.view.activities.ProductCatalogActivity;
 import com.cafedered.midban.view.adapter.PartnerFavouriteItemAdapter;
 import com.cafedered.midban.view.base.BaseSupportFragment;
 import com.cafedered.midban.view.dialogs.FilterPartnerFavouritesDialog;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
+import java.util.logging.Level;
 
 @Fragment(R.layout.fragment_partner_favourites)
 public class FavouritesPartnerFragment extends BaseSupportFragment {

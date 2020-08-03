@@ -17,12 +17,6 @@
  *******************************************************************************/
 package com.cafedered.midban.service.repositories;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 import com.cafedered.cafedroidlitedao.exceptions.DatabaseException;
 import com.cafedered.cafedroidlitedao.extractor.Restriction;
 import com.cafedered.midban.conf.ContextAttributes;
@@ -34,6 +28,12 @@ import com.cafedered.midban.entities.Product;
 import com.cafedered.midban.entities.User;
 import com.cafedered.midban.utils.exceptions.ConfigurationException;
 import com.cafedered.midban.utils.exceptions.ServiceException;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 public class ProductRepository extends BaseRepository<Product, ProductDAO> {
 

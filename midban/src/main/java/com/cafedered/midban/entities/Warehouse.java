@@ -5,7 +5,6 @@ import com.cafedered.cafedroidlitedao.annotations.Id;
 import com.cafedered.cafedroidlitedao.annotations.Property;
 import com.cafedered.midban.annotations.Remote;
 import com.cafedered.midban.annotations.RemoteProperty;
-import com.cafedered.midban.entities.BaseRemoteEntity;
 import com.debortoliwines.openerp.api.FilterCollection;
 
 /**

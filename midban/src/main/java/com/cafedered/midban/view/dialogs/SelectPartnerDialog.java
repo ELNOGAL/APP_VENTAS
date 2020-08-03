@@ -17,18 +17,11 @@
  *******************************************************************************/
 package com.cafedered.midban.view.dialogs;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
-
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.AsyncTask;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -42,15 +35,14 @@ import com.cafedered.midban.conf.ContextAttributes;
 import com.cafedered.midban.conf.MidbanApplication;
 import com.cafedered.midban.entities.Partner;
 import com.cafedered.midban.entities.User;
-import com.cafedered.midban.service.repositories.OrderRepository;
 import com.cafedered.midban.service.repositories.PartnerRepository;
 import com.cafedered.midban.utils.LoggerUtil;
 import com.cafedered.midban.utils.MessagesForUser;
-import com.cafedered.midban.utils.exceptions.ConfigurationException;
-import com.cafedered.midban.utils.exceptions.ServiceException;
-import com.cafedered.midban.view.adapter.PartnerAutocompleteAdapter;
 import com.cafedered.midban.view.adapter.PartnerSelectionAdapter;
-import com.cafedered.midban.view.customviews.CustomAutocompleteTextView;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
 
 public class SelectPartnerDialog extends Dialog {
 

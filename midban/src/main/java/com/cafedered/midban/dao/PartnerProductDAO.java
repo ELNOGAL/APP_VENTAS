@@ -17,7 +17,6 @@
  *******************************************************************************/
 package com.cafedered.midban.dao;
 
-import com.cafedered.midban.entities.Contact;
 import com.cafedered.midban.entities.PartnerProduct;
 
 public class PartnerProductDAO extends BaseDAO<PartnerProduct> {

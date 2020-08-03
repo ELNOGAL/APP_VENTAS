@@ -17,12 +17,12 @@
  *******************************************************************************/
 package com.cafedered.midban.utils;
 
+import android.annotation.SuppressLint;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.SimpleTimeZone;
-
-import android.annotation.SuppressLint;
 
 @SuppressLint("SimpleDateFormat")
 public class DateUtil {

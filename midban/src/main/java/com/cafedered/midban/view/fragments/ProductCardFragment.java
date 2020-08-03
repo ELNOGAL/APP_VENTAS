@@ -17,12 +17,6 @@
  *******************************************************************************/
 package com.cafedered.midban.view.fragments;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
-
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -70,6 +64,12 @@ import com.cafedered.midban.view.adapter.ProductImageAdapter;
 import com.cafedered.midban.view.base.BaseSupportFragment;
 import com.cafedered.midban.view.dialogs.ProductToCartDialog;
 import com.cafedered.midban.view.transformers.ProductTransformer;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
 
 @Fragment(R.layout.fragment_product_card)
 public class ProductCardFragment extends BaseSupportFragment {

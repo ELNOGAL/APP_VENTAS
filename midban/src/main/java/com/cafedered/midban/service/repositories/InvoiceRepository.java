@@ -17,15 +17,6 @@
  *******************************************************************************/
 package com.cafedered.midban.service.repositories;
 
-import java.io.File;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.text.ParseException;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import android.util.Log;
 
 import com.cafedered.midban.annotations.Remote;
@@ -47,6 +38,15 @@ import com.debortoliwines.openerp.api.ObjectAdapter;
 import com.debortoliwines.openerp.api.OpenERPCommand;
 import com.debortoliwines.openerp.api.Row;
 import com.debortoliwines.openerp.api.Session;
+
+import java.io.File;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.ParseException;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class InvoiceRepository extends BaseRepository<Invoice, InvoiceDAO> {
 

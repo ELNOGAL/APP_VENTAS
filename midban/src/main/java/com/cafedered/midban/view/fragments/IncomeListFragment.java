@@ -17,16 +17,11 @@
  *******************************************************************************/
 package com.cafedered.midban.view.fragments;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -37,16 +32,17 @@ import com.cafedered.midban.annotations.Wire;
 import com.cafedered.midban.conf.ContextAttributes;
 import com.cafedered.midban.conf.MidbanApplication;
 import com.cafedered.midban.entities.AccountMoveLine;
-import com.cafedered.midban.entities.Voucher;
 import com.cafedered.midban.service.repositories.AccountMoveLineRepository;
 import com.cafedered.midban.service.repositories.AccountRepository;
-import com.cafedered.midban.service.repositories.VoucherRepository;
 import com.cafedered.midban.utils.LoggerUtil;
 import com.cafedered.midban.utils.exceptions.ServiceException;
-import com.cafedered.midban.view.adapter.AccountMoveLineListItemAdapter;
 import com.cafedered.midban.view.adapter.IncomeListItemAdapter;
 import com.cafedered.midban.view.base.BaseSupportFragment;
 import com.cafedered.midban.view.listeners.ITodayDataChangedListenerFragment;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Fragment(R.layout.fragment_income_list)
 public class IncomeListFragment extends BaseSupportFragment implements

@@ -17,15 +17,10 @@
  *******************************************************************************/
 package com.cafedered.midban.service.repositories;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-
-import com.cafedered.cafedroidlitedao.exceptions.DatabaseException;
 import com.cafedered.midban.dao.ProductCategoryDAO;
 import com.cafedered.midban.entities.ProductCategory;
-import com.cafedered.midban.utils.exceptions.ConfigurationException;
-import com.cafedered.midban.utils.exceptions.ServiceException;
+
+import java.util.Collection;
 
 public class ProductCategoryRepository extends
         BaseRepository<ProductCategory, ProductCategoryDAO> {

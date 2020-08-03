@@ -17,12 +17,6 @@
  *******************************************************************************/
 package com.cafedered.midban.entities;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-
 import com.cafedered.cafedroidlitedao.annotations.Entity;
 import com.cafedered.cafedroidlitedao.annotations.Id;
 import com.cafedered.cafedroidlitedao.annotations.Property;
@@ -39,6 +33,12 @@ import com.cafedered.midban.utils.exceptions.ConfigurationException;
 import com.cafedered.midban.utils.exceptions.ServiceException;
 import com.debortoliwines.openerp.api.FilterCollection;
 import com.debortoliwines.openerp.api.OpeneERPApiException;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 @Entity(tableName = "sale_order")
 @Remote(object = "sale.order")

@@ -17,16 +17,8 @@
  *******************************************************************************/
 package com.cafedered.midban.view.dialogs;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
-
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.app.DialogFragment;
-import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
@@ -51,6 +43,12 @@ import com.cafedered.midban.utils.exceptions.ServiceException;
 import com.cafedered.midban.view.adapter.CustomArrayAdapter;
 import com.cafedered.midban.view.adapter.PartnerDeliveryNoteListItemAdapter;
 import com.cafedered.midban.view.base.BaseSupportFragment;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
 
 public class FilterPartnerDeliveryNoteDialog extends Dialog {
 

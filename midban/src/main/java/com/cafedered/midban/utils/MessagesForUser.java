@@ -17,8 +17,6 @@
  *******************************************************************************/
 package com.cafedered.midban.utils;
 
-import java.util.logging.Level;
-
 import android.app.Activity;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -28,6 +26,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cafedered.midban.R;
+
+import java.util.logging.Level;
 
 public class MessagesForUser {
 

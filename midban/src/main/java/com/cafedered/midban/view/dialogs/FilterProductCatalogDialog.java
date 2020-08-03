@@ -17,10 +17,6 @@
  *******************************************************************************/
 package com.cafedered.midban.view.dialogs;
 
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
-
 import android.app.Dialog;
 import android.content.Context;
 import android.view.View;
@@ -42,11 +38,14 @@ import com.cafedered.midban.service.repositories.ProductCategoryRepository;
 import com.cafedered.midban.service.repositories.ProductRepository;
 import com.cafedered.midban.service.repositories.ProductTemplateRepository;
 import com.cafedered.midban.utils.LoggerUtil;
-import com.cafedered.midban.utils.exceptions.ConfigurationException;
 import com.cafedered.midban.utils.exceptions.ServiceException;
 import com.cafedered.midban.view.adapter.CustomArrayAdapter;
 import com.cafedered.midban.view.adapter.ProductCatalogItemAdapter;
 import com.cafedered.midban.view.fragments.ProductCatalogFragment;
+
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
 
 public class FilterProductCatalogDialog extends Dialog {
 

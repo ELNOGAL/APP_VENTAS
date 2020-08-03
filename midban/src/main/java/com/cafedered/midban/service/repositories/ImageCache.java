@@ -17,13 +17,13 @@
  *******************************************************************************/
 package com.cafedered.midban.service.repositories;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
 import com.cafedered.midban.R;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class ImageCache {
     private int LIMIT_SIZE = 1000;

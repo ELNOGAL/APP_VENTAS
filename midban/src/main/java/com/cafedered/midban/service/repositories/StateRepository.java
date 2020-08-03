@@ -17,14 +17,8 @@
  *******************************************************************************/
 package com.cafedered.midban.service.repositories;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import com.cafedered.cafedroidlitedao.exceptions.DatabaseException;
 import com.cafedered.midban.dao.StateDAO;
 import com.cafedered.midban.entities.State;
-import com.cafedered.midban.utils.exceptions.ConfigurationException;
-import com.cafedered.midban.utils.exceptions.ServiceException;
 
 public class StateRepository extends BaseRepository<State, StateDAO> {
 

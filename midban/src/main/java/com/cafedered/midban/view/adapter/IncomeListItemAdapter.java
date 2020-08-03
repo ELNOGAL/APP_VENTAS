@@ -17,9 +17,6 @@
  *******************************************************************************/
 package com.cafedered.midban.view.adapter;
 
-import java.util.List;
-
-import android.app.Fragment;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,12 +27,13 @@ import android.widget.TextView;
 import com.cafedered.midban.R;
 import com.cafedered.midban.entities.AccountMoveLine;
 import com.cafedered.midban.entities.Partner;
-import com.cafedered.midban.entities.Voucher;
 import com.cafedered.midban.service.repositories.AccountRepository;
 import com.cafedered.midban.service.repositories.PartnerRepository;
 import com.cafedered.midban.utils.exceptions.ConfigurationException;
 import com.cafedered.midban.utils.exceptions.ServiceException;
 import com.cafedered.midban.view.base.BaseSupportFragment;
+
+import java.util.List;
 
 public class IncomeListItemAdapter extends BaseAdapter {
 

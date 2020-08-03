@@ -17,13 +17,10 @@
  *******************************************************************************/
 package com.cafedered.midban.view.activities;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
 
 import com.cafedered.midban.R;
 import com.cafedered.midban.annotations.Activity;
-import com.cafedered.midban.view.base.BaseSupportActivity;
-import com.cafedered.midban.view.base.BaseSupportFragment;
 import com.cafedered.midban.view.base.BaseSupportActivity;
 import com.cafedered.midban.view.fragments.OrderNewDispositionFragment;
 

@@ -18,20 +18,14 @@
 package com.cafedered.midban.dao;
 
 import android.database.Cursor;
-import android.util.Log;
 
 import com.cafedered.cafedroidlitedao.exceptions.BadConfigurationException;
 import com.cafedered.cafedroidlitedao.exceptions.BadInvocationException;
 import com.cafedered.cafedroidlitedao.exceptions.DatabaseException;
 import com.cafedered.cafedroidlitedao.extractor.JDBCQueryMaker;
 import com.cafedered.cafedroidlitedao.extractor.Restriction;
-import com.cafedered.midban.R;
-import com.cafedered.midban.conf.MidbanApplication;
 import com.cafedered.midban.entities.Shop;
-import com.cafedered.midban.utils.ReflectionUtils;
 import com.cafedered.midban.utils.exceptions.ConfigurationException;
-import com.cafedered.midban.utils.exceptions.ReflectionException;
-import com.cafedered.midban.utils.exceptions.ServiceException;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;

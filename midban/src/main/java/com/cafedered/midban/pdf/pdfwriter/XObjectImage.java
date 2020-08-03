@@ -24,13 +24,13 @@
 
 package com.cafedered.midban.pdf.pdfwriter;
 
+import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.zip.Deflater;
 import java.util.zip.DeflaterOutputStream;
-
-import android.graphics.Bitmap;
-import android.graphics.Bitmap.Config;
 
 public class XObjectImage {
 

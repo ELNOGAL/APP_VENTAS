@@ -19,9 +19,6 @@
  */
 package com.cafedered.midban.view.fragments;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.graphics.drawable.AnimationDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -52,11 +49,8 @@ import com.cafedered.midban.annotations.Wire;
 import com.cafedered.midban.async.CancelAsyncTaskListener;
 import com.cafedered.midban.conf.ContextAttributes;
 import com.cafedered.midban.conf.MidbanApplication;
-import com.cafedered.midban.entities.Company;
-import com.cafedered.midban.entities.Order;
 import com.cafedered.midban.entities.Partner;
 import com.cafedered.midban.entities.Product;
-import com.cafedered.midban.service.repositories.CompanyRepository;
 import com.cafedered.midban.service.repositories.OrderRepository;
 import com.cafedered.midban.service.repositories.ProductRepository;
 import com.cafedered.midban.utils.LoggerUtil;
@@ -64,9 +58,11 @@ import com.cafedered.midban.utils.exceptions.ConfigurationException;
 import com.cafedered.midban.utils.exceptions.ServiceException;
 import com.cafedered.midban.view.activities.PortadaActivity;
 import com.cafedered.midban.view.adapter.ProductCatalogItemAdapter;
-import com.cafedered.midban.view.adapter.ProductOrderItemAdapter;
 import com.cafedered.midban.view.base.BaseSupportFragment;
 import com.cafedered.midban.view.dialogs.FilterProductCatalogDialog;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Fragment(R.layout.fragment_product_catalog)
 public class ProductCatalogFragment extends BaseSupportFragment implements CancelAsyncTaskListener {

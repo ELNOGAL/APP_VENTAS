@@ -17,17 +17,8 @@
  *******************************************************************************/
 package com.cafedered.midban.view.fragments;
 
-import java.text.ParseException;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Date;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.app.DialogFragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -53,6 +44,14 @@ import com.cafedered.midban.utils.exceptions.ServiceException;
 import com.cafedered.midban.view.activities.SynchronizationActivity;
 import com.cafedered.midban.view.base.BaseSupportFragment;
 import com.cafedered.midban.view.listeners.ITodayDataChangedListenerFragment;
+
+import java.text.ParseException;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Date;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 @Fragment(R.layout.fragment_today)
 public class TodayFragment extends BaseSupportFragment {

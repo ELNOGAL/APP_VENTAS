@@ -17,21 +17,6 @@
  *******************************************************************************/
 package com.cafedered.midban.async;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.logging.Level;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -63,7 +48,6 @@ import com.cafedered.midban.entities.ProductUl;
 import com.cafedered.midban.entities.ProductUom;
 import com.cafedered.midban.entities.ProductUomCateg;
 import com.cafedered.midban.entities.Shop;
-import com.cafedered.midban.entities.Synchronization;
 import com.cafedered.midban.entities.SynchronizationSummary;
 import com.cafedered.midban.entities.Tax;
 import com.cafedered.midban.entities.User;
@@ -89,7 +73,6 @@ import com.cafedered.midban.service.repositories.ProductUlRepository;
 import com.cafedered.midban.service.repositories.ProductUomCategRepository;
 import com.cafedered.midban.service.repositories.ProductUomRepository;
 import com.cafedered.midban.service.repositories.ShopRepository;
-import com.cafedered.midban.service.repositories.SynchronizationRepository;
 import com.cafedered.midban.service.repositories.SynchronizationSummaryRepository;
 import com.cafedered.midban.service.repositories.TaxRepository;
 import com.cafedered.midban.service.repositories.UserRepository;
@@ -102,12 +85,20 @@ import com.cafedered.midban.utils.SessionFactory;
 import com.cafedered.midban.utils.exceptions.ConfigurationException;
 import com.cafedered.midban.utils.exceptions.ServiceException;
 import com.cafedered.midban.utils.exceptions.SynchronizationErrorException;
-import com.debortoliwines.openerp.api.FilterCollection;
-import com.debortoliwines.openerp.api.ObjectAdapter;
 import com.debortoliwines.openerp.api.OpenERPCommand;
-import com.debortoliwines.openerp.api.Row;
-import com.debortoliwines.openerp.api.RowCollection;
-import com.debortoliwines.openerp.api.Session;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
 
 public class SynchronizationAsyncTask extends AsyncTask<User, String, Boolean> {
 

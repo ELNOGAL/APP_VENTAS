@@ -17,29 +17,17 @@
  *******************************************************************************/
 package com.cafedered.midban.view.dialogs;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
-
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.view.View;
 import android.view.Window;
-import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.cafedered.cafedroidlitedao.extractor.Restriction;
 import com.cafedered.midban.R;
 import com.cafedered.midban.annotations.Click;
 import com.cafedered.midban.annotations.TextChanged;
@@ -54,13 +42,16 @@ import com.cafedered.midban.entities.User;
 import com.cafedered.midban.service.repositories.ImageCache;
 import com.cafedered.midban.service.repositories.OrderRepository;
 import com.cafedered.midban.service.repositories.ProductRepository;
-import com.cafedered.midban.service.repositories.ProductUomRepository;
 import com.cafedered.midban.utils.ImageUtil;
 import com.cafedered.midban.utils.InjectionUtils;
 import com.cafedered.midban.utils.LoggerUtil;
 import com.cafedered.midban.utils.MessagesForUser;
 import com.cafedered.midban.utils.exceptions.ConfigurationException;
 import com.cafedered.midban.utils.exceptions.ServiceException;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.logging.Level;
 
 public class ProductToCartDialog extends Dialog   {
 

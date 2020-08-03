@@ -18,9 +18,7 @@
 package com.cafedered.midban.service.repositories;
 
 import com.cafedered.midban.dao.AccountJournalDAO;
-import com.cafedered.midban.dao.AccountMoveLineDAO;
 import com.cafedered.midban.entities.AccountJournal;
-import com.cafedered.midban.entities.AccountMoveLine;
 
 public class AccountJournalRepository extends BaseRepository<AccountJournal, AccountJournalDAO> {
     private static AccountJournalRepository instance = null;

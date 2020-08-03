@@ -17,11 +17,6 @@
  *******************************************************************************/
 package com.cafedered.midban.view.activities;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.text.ParseException;
-import java.util.logging.Level;
-
 import android.content.res.Resources.NotFoundException;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -48,6 +43,11 @@ import com.cafedered.midban.utils.MessagesForUser;
 import com.cafedered.midban.utils.exceptions.ConfigurationException;
 import com.cafedered.midban.utils.exceptions.ServiceException;
 import com.cafedered.midban.view.base.BaseSupportActivity;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.ParseException;
+import java.util.logging.Level;
 
 @Activity(displayAppIcon = true,
         initFragment = VoidFragment.class,

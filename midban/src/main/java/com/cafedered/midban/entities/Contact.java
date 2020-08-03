@@ -17,18 +17,17 @@
  *******************************************************************************/
 package com.cafedered.midban.entities;
 
-import java.util.Date;
-
 import com.cafedered.cafedroidlitedao.annotations.Entity;
 import com.cafedered.cafedroidlitedao.annotations.Id;
 import com.cafedered.cafedroidlitedao.annotations.Property;
 import com.cafedered.midban.annotations.Remote;
 import com.cafedered.midban.annotations.RemoteProperty;
-import com.cafedered.midban.dao.StateDAO;
 import com.cafedered.midban.service.repositories.StateRepository;
 import com.debortoliwines.openerp.api.FilterCollection;
 import com.debortoliwines.openerp.api.FilterCollection.FilterOperator;
 import com.debortoliwines.openerp.api.OpeneERPApiException;
+
+import java.util.Date;
 
 @Entity(tableName = "res_partner_contact")
 @Remote(object = "res.partner")

@@ -17,6 +17,13 @@
  *******************************************************************************/
 package com.cafedered.midban.service.repositories;
 
+import com.cafedered.cafedroidlitedao.exceptions.DatabaseException;
+import com.cafedered.midban.dao.TaskDAO;
+import com.cafedered.midban.entities.Task;
+import com.cafedered.midban.utils.DateUtil;
+import com.cafedered.midban.utils.exceptions.ConfigurationException;
+import com.cafedered.midban.utils.exceptions.ServiceException;
+
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -24,13 +31,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import com.cafedered.cafedroidlitedao.exceptions.DatabaseException;
-import com.cafedered.midban.dao.TaskDAO;
-import com.cafedered.midban.entities.Task;
-import com.cafedered.midban.utils.DateUtil;
-import com.cafedered.midban.utils.exceptions.ConfigurationException;
-import com.cafedered.midban.utils.exceptions.ServiceException;
 
 public class TaskRepository extends BaseRepository<Task, TaskDAO> {
     private static TaskRepository instance = null;

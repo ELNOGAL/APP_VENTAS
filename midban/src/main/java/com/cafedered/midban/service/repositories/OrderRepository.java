@@ -17,20 +17,12 @@
  *******************************************************************************/
 package com.cafedered.midban.service.repositories;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import android.annotation.SuppressLint;
 
 import com.cafedered.cafedroidlitedao.exceptions.DatabaseException;
 import com.cafedered.cafedroidlitedao.extractor.Restriction;
 import com.cafedered.midban.dao.OrderDAO;
 import com.cafedered.midban.entities.Order;
-import com.cafedered.midban.entities.Partner;
 import com.cafedered.midban.entities.Product;
 import com.cafedered.midban.entities.decorators.LastSaleCustomObject;
 import com.cafedered.midban.entities.decorators.PartnerFavouritesDecorator;
@@ -38,6 +30,13 @@ import com.cafedered.midban.pdf.creators.OrderPdfCreator;
 import com.cafedered.midban.utils.LoggerUtil;
 import com.cafedered.midban.utils.exceptions.ConfigurationException;
 import com.cafedered.midban.utils.exceptions.ServiceException;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @SuppressLint("DefaultLocale")
 public class OrderRepository extends BaseRepository<Order, OrderDAO> {

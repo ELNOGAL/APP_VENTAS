@@ -17,7 +17,6 @@
  *******************************************************************************/
 package com.cafedered.midban.view.adapter;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.widget.RelativeLayout;
 import android.widget.TextView;

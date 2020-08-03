@@ -17,15 +17,6 @@
  *******************************************************************************/
 package com.cafedered.midban.dao;
 
-import java.lang.reflect.InvocationTargetException;
-import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
 import android.database.Cursor;
 import android.util.Log;
 
@@ -41,8 +32,6 @@ import com.cafedered.midban.entities.Order;
 import com.cafedered.midban.entities.OrderLine;
 import com.cafedered.midban.entities.PricelistPrices;
 import com.cafedered.midban.entities.Product;
-import com.cafedered.midban.entities.ProductCategory;
-import com.cafedered.midban.entities.ProductTemplate;
 import com.cafedered.midban.entities.ProductUom;
 import com.cafedered.midban.entities.decorators.LastSaleCustomObject;
 import com.cafedered.midban.service.repositories.OrderRepository;
@@ -55,6 +44,15 @@ import com.cafedered.midban.utils.ReflectionUtils;
 import com.cafedered.midban.utils.exceptions.ConfigurationException;
 import com.cafedered.midban.utils.exceptions.ReflectionException;
 import com.cafedered.midban.utils.exceptions.ServiceException;
+
+import java.lang.reflect.InvocationTargetException;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 public class OrderDAO extends BaseDAO<Order> {
 

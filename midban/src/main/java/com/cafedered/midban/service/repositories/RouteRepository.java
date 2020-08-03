@@ -18,9 +18,7 @@
 package com.cafedered.midban.service.repositories;
 
 import com.cafedered.midban.dao.RouteDAO;
-import com.cafedered.midban.dao.RouteDetailDAO;
 import com.cafedered.midban.entities.Route;
-import com.cafedered.midban.entities.RouteDetail;
 import com.cafedered.midban.entities.Synchronization;
 import com.cafedered.midban.utils.DateUtil;
 import com.cafedered.midban.utils.LoggerUtil;
@@ -38,7 +36,6 @@ import org.apache.xmlrpc.XmlRpcException;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 

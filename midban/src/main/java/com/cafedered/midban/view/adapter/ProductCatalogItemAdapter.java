@@ -17,12 +17,7 @@
  *******************************************************************************/
 package com.cafedered.midban.view.adapter;
 
-import java.math.BigDecimal;
-import java.util.List;
-import java.util.Random;
-
 import android.annotation.SuppressLint;
-import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -49,6 +44,9 @@ import com.cafedered.midban.view.fragments.OrderNewDispositionFragment;
 import com.cafedered.midban.view.fragments.PartnerReservationsFragment;
 import com.cafedered.midban.view.fragments.ProductCardFragment;
 import com.cafedered.midban.view.fragments.ProductCatalogFragment;
+
+import java.math.BigDecimal;
+import java.util.List;
 
 public class ProductCatalogItemAdapter extends BaseAdapter {
 

@@ -18,19 +18,6 @@
 package com.cafedered.midban.utils;
 
 
-import java.io.BufferedInputStream;
-import java.io.InputStream;
-import java.net.URL;
-import java.security.KeyStore;
-import java.security.cert.Certificate;
-import java.security.cert.CertificateFactory;
-import java.security.cert.X509Certificate;
-import java.util.HashMap;
-
-import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.TrustManagerFactory;
-
 import android.annotation.SuppressLint;
 import android.util.Log;
 
@@ -39,6 +26,18 @@ import com.cafedered.midban.entities.Configuration;
 import com.cafedered.midban.service.repositories.ConfigurationRepository;
 import com.debortoliwines.openerp.api.OpenERPXmlRpcProxy;
 import com.debortoliwines.openerp.api.Session;
+
+import java.io.BufferedInputStream;
+import java.io.InputStream;
+import java.net.URL;
+import java.security.KeyStore;
+import java.security.cert.Certificate;
+import java.security.cert.CertificateFactory;
+import java.security.cert.X509Certificate;
+
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManagerFactory;
 
 public class SessionFactory {
     private String loggedUsername;

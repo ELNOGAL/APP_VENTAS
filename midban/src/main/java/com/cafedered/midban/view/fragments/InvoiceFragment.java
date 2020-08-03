@@ -17,10 +17,6 @@
  *******************************************************************************/
 package com.cafedered.midban.view.fragments;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
-
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -33,7 +29,6 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AbsListView;
-import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -47,21 +42,21 @@ import com.cafedered.midban.annotations.Wire;
 import com.cafedered.midban.conf.ContextAttributes;
 import com.cafedered.midban.conf.MidbanApplication;
 import com.cafedered.midban.entities.AccountMoveLine;
-import com.cafedered.midban.entities.Invoice;
 import com.cafedered.midban.entities.Partner;
 import com.cafedered.midban.entities.User;
 import com.cafedered.midban.service.repositories.AccountMoveLineRepository;
-import com.cafedered.midban.service.repositories.InvoiceRepository;
 import com.cafedered.midban.utils.LoggerUtil;
 import com.cafedered.midban.utils.MessagesForUser;
 import com.cafedered.midban.utils.exceptions.ServiceException;
-import com.cafedered.midban.view.activities.InvoiceDetailActivity;
 import com.cafedered.midban.view.activities.PortadaActivity;
 import com.cafedered.midban.view.adapter.AccountMoveLineListItemAdapter;
-import com.cafedered.midban.view.adapter.InvoiceListItemAdapter;
 import com.cafedered.midban.view.base.BaseSupportFragment;
 import com.cafedered.midban.view.dialogs.FilterInvoicesDialog;
 import com.cafedered.midban.view.dialogs.IncomeRegistrationDialog;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
 
 @Fragment(R.layout.fragment_invoice)
 public class InvoiceFragment extends BaseSupportFragment {

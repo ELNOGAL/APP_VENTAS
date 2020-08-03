@@ -19,14 +19,10 @@
  */
 package com.cafedered.midban.view.activities;
 
-import java.util.logging.Level;
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Message;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -42,15 +38,15 @@ import com.cafedered.midban.annotations.Wire;
 import com.cafedered.midban.async.OrderSynchronizationService;
 import com.cafedered.midban.conf.ContextAttributes;
 import com.cafedered.midban.conf.MidbanApplication;
-import com.cafedered.midban.entities.RouteDetail;
 import com.cafedered.midban.entities.User;
 import com.cafedered.midban.service.repositories.OrderRepository;
-import com.cafedered.midban.service.repositories.RouteDetailRepository;
 import com.cafedered.midban.service.repositories.UserRepository;
 import com.cafedered.midban.utils.MessagesForUser;
 import com.cafedered.midban.utils.exceptions.ServiceException;
 import com.cafedered.midban.view.base.BaseSupportActivity;
 import com.cafedered.midban.view.dialogs.SelectPartnerDialog;
+
+import java.util.logging.Level;
 
 @Activity(layout = R.layout.activity_portada,
         title = R.string.activity_portada_title,

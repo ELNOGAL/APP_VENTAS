@@ -17,9 +17,6 @@
  *******************************************************************************/
 package com.cafedered.midban.view.fragments;
 
-import java.text.ParseException;
-import java.util.logging.Level;
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
@@ -47,6 +44,9 @@ import com.cafedered.midban.view.activities.GoogleMapsActivity;
 import com.cafedered.midban.view.activities.NewCalendarTaskActivity;
 import com.cafedered.midban.view.activities.PortadaActivity;
 import com.cafedered.midban.view.base.BaseSupportFragment;
+
+import java.text.ParseException;
+import java.util.logging.Level;
 
 @Fragment(R.layout.fragment_task_detail)
 public class TaskDetailFragment extends BaseSupportFragment {

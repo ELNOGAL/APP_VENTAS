@@ -17,13 +17,6 @@
  *******************************************************************************/
 package com.cafedered.midban.dao;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.ParameterizedType;
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
-
 import android.annotation.SuppressLint;
 import android.database.Cursor;
 
@@ -35,6 +28,13 @@ import com.cafedered.midban.entities.BaseEntity;
 import com.cafedered.midban.utils.ReflectionUtils;
 import com.cafedered.midban.utils.exceptions.ConfigurationException;
 import com.cafedered.midban.utils.exceptions.ReflectionException;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.ParameterizedType;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
 
 public class BaseDAO<E extends BaseEntity> {
 

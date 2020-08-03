@@ -18,7 +18,6 @@
 package com.cafedered.midban.view.adapter;
 
 import android.app.AlertDialog;
-import android.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -31,29 +30,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.widget.BaseAdapter;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.cafedered.midban.R;
 import com.cafedered.midban.conf.ContextAttributes;
 import com.cafedered.midban.conf.MidbanApplication;
 import com.cafedered.midban.entities.CustomerList;
-import com.cafedered.midban.entities.Invoice;
 import com.cafedered.midban.entities.Partner;
-import com.cafedered.midban.entities.Route;
 import com.cafedered.midban.entities.decorators.RouteDecorator;
 import com.cafedered.midban.service.repositories.CustomerListRepository;
-import com.cafedered.midban.service.repositories.InvoiceRepository;
 import com.cafedered.midban.service.repositories.OrderRepository;
 import com.cafedered.midban.service.repositories.PartnerRepository;
-import com.cafedered.midban.service.repositories.RouteRepository;
-import com.cafedered.midban.utils.DateUtil;
 import com.cafedered.midban.utils.LoggerUtil;
-import com.cafedered.midban.utils.MessagesForUser;
 import com.cafedered.midban.utils.SessionFactory;
 import com.cafedered.midban.utils.exceptions.ConfigurationException;
 import com.cafedered.midban.utils.exceptions.ServiceException;
@@ -64,12 +54,8 @@ import com.debortoliwines.openerp.api.OpenERPCommand;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class RouteListItemAdapter extends BaseAdapter {
 

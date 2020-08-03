@@ -17,11 +17,6 @@
  *******************************************************************************/
 package com.cafedered.midban.view.adapter;
 
-import java.util.Iterator;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -44,6 +39,11 @@ import com.cafedered.midban.service.repositories.OrderRepository;
 import com.cafedered.midban.utils.ImageUtil;
 import com.cafedered.midban.view.dialogs.ProductToCartDialog;
 import com.cafedered.midban.view.fragments.FavouritesPartnerFragment;
+
+import java.util.Iterator;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
 
 public class PartnerFavouriteItemAdapter extends BaseAdapter {
 

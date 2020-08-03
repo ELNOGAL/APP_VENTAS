@@ -17,10 +17,6 @@
  *******************************************************************************/
 package com.cafedered.midban.view.fragments;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 import android.app.ProgressDialog;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.AsyncTask;
@@ -63,6 +59,10 @@ import com.cafedered.midban.view.adapter.ProductCatalogItemAdapter;
 import com.cafedered.midban.view.base.BaseSupportFragment;
 import com.cafedered.midban.view.dialogs.FilterProductReservationsDialog;
 import com.cafedered.midban.view.dialogs.ProductToReservationDialog;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Fragment(R.layout.fragment_partner_reservations_list_product)
 public class PartnerReservationsFragment extends BaseSupportFragment implements CancelAsyncTaskListener{

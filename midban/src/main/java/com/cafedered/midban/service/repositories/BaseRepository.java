@@ -17,18 +17,6 @@
  *******************************************************************************/
 package com.cafedered.midban.service.repositories;
 
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import org.apache.xmlrpc.XmlRpcException;
-
 import android.util.Log;
 
 import com.cafedered.cafedroidlitedao.exceptions.DatabaseException;
@@ -37,8 +25,6 @@ import com.cafedered.midban.annotations.Remote;
 import com.cafedered.midban.annotations.RemoteProperty;
 import com.cafedered.midban.conf.MidbanApplication;
 import com.cafedered.midban.dao.BaseDAO;
-import com.cafedered.midban.entities.AccountJournal;
-import com.cafedered.midban.entities.AccountMoveLine;
 import com.cafedered.midban.entities.BaseEntity;
 import com.cafedered.midban.entities.BaseRemoteEntity;
 import com.cafedered.midban.entities.Order;
@@ -59,6 +45,18 @@ import com.debortoliwines.openerp.api.OpeneERPApiException;
 import com.debortoliwines.openerp.api.Row;
 import com.debortoliwines.openerp.api.RowCollection;
 import com.debortoliwines.openerp.api.Session;
+
+import org.apache.xmlrpc.XmlRpcException;
+
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class BaseRepository<E extends BaseEntity, D extends BaseDAO<E>> {
 

@@ -17,9 +17,7 @@
  *******************************************************************************/
 package com.cafedered.midban.service.repositories;
 
-import com.cafedered.midban.dao.CompanyDAO;
 import com.cafedered.midban.dao.WeekDayDAO;
-import com.cafedered.midban.entities.Company;
 import com.cafedered.midban.entities.WeekDay;
 
 public class WeekDayRepository extends BaseRepository<WeekDay, WeekDayDAO> {

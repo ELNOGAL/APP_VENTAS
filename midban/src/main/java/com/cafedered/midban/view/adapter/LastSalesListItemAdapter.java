@@ -17,8 +17,6 @@
  *******************************************************************************/
 package com.cafedered.midban.view.adapter;
 
-import java.util.List;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,6 +27,8 @@ import android.widget.TextView;
 
 import com.cafedered.midban.R;
 import com.cafedered.midban.entities.decorators.LastSaleCustomObject;
+
+import java.util.List;
 
 public class LastSalesListItemAdapter extends BaseAdapter {
 

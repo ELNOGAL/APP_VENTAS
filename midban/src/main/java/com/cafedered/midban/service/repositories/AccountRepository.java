@@ -18,9 +18,7 @@
 package com.cafedered.midban.service.repositories;
 
 import com.cafedered.midban.dao.AccountDAO;
-import com.cafedered.midban.dao.AccountJournalDAO;
 import com.cafedered.midban.entities.Account;
-import com.cafedered.midban.entities.AccountJournal;
 
 public class AccountRepository extends BaseRepository<Account, AccountDAO> {
     private static AccountRepository instance = null;

@@ -17,8 +17,6 @@
  *******************************************************************************/
 package com.cafedered.midban.view.transformers;
 
-import android.app.Fragment;
-
 import com.cafedered.midban.entities.Product;
 import com.cafedered.midban.utils.exceptions.ConfigurationException;
 

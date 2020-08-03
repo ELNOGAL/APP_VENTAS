@@ -22,7 +22,6 @@ import com.cafedered.cafedroidlitedao.annotations.Id;
 import com.cafedered.cafedroidlitedao.annotations.Property;
 import com.cafedered.midban.annotations.Remote;
 import com.cafedered.midban.annotations.RemoteProperty;
-import com.cafedered.midban.dao.ProductCategoryDAO;
 import com.cafedered.midban.service.repositories.ProductCategoryRepository;
 import com.debortoliwines.openerp.api.FilterCollection;
 

@@ -17,10 +17,6 @@
  *******************************************************************************/
 package com.cafedered.midban.view.transformers;
 
-import java.lang.reflect.Field;
-import java.util.List;
-
-import android.app.Fragment;
 import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -31,7 +27,9 @@ import com.cafedered.midban.utils.LoggerUtil;
 import com.cafedered.midban.utils.ReflectionUtils;
 import com.cafedered.midban.utils.exceptions.ConfigurationException;
 import com.cafedered.midban.utils.exceptions.ReflectionException;
-import com.cafedered.midban.view.base.BaseSupportFragment;
+
+import java.lang.reflect.Field;
+import java.util.List;
 
 public class BaseTransformer<E extends BaseEntity> {
 

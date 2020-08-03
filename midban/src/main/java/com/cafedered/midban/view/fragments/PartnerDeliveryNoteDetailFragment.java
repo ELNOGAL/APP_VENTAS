@@ -17,13 +17,6 @@
  *******************************************************************************/
 package com.cafedered.midban.view.fragments;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.text.ParseException;
-import java.util.List;
-import java.util.Random;
-import java.util.logging.Level;
-
 import android.content.res.Resources.NotFoundException;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -62,6 +55,13 @@ import com.cafedered.midban.view.activities.PortadaActivity;
 import com.cafedered.midban.view.adapter.OrderLinesAdapter;
 import com.cafedered.midban.view.base.BaseSupportFragment;
 import com.cafedered.midban.view.dialogs.OneFieldEditionDialog;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.ParseException;
+import java.util.List;
+import java.util.Random;
+import java.util.logging.Level;
 
 @Fragment(R.layout.fragment_partner_delivery_note_detail)
 public class PartnerDeliveryNoteDetailFragment extends BaseSupportFragment {

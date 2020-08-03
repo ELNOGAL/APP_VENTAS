@@ -17,15 +17,7 @@
  *******************************************************************************/
 package com.cafedered.midban.utils;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
-
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
@@ -47,6 +39,13 @@ import com.cafedered.midban.annotations.Wire;
 import com.cafedered.midban.utils.exceptions.ConfigurationException;
 import com.cafedered.midban.utils.exceptions.ReflectionException;
 import com.cafedered.midban.view.base.BaseSupportActivity;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
 
 public class InjectionUtils {
     public static void injectAnnotatedFieldsAndMethods(final View rootView,

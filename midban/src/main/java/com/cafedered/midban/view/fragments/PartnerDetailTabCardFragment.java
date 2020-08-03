@@ -56,8 +56,6 @@ import com.cafedered.midban.view.dialogs.OneFieldEditionDialog;
 import com.cafedered.midban.view.dialogs.PartnerAddressEditionDialog;
 import com.cafedered.midban.view.transformers.PartnerTransformer;
 
-import java.util.List;
-
 @Fragment(R.layout.fragment_partner_detail_tab_card)
 public class PartnerDetailTabCardFragment extends BaseSupportFragment {
     @Wire(view = R.id.fragment_partner_detail_tab_card_contact_name_data_tv,

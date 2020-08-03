@@ -17,13 +17,13 @@
  *******************************************************************************/
 package com.cafedered.midban.view.adapter;
 
-import java.util.Collection;
-
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+
+import java.util.Collection;
 
 public class CustomArrayAdapter<T> extends ArrayAdapter<T> {
 

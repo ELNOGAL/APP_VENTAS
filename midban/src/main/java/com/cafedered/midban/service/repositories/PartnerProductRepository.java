@@ -17,9 +17,7 @@
  *******************************************************************************/
 package com.cafedered.midban.service.repositories;
 
-import com.cafedered.midban.dao.ContactDAO;
 import com.cafedered.midban.dao.PartnerProductDAO;
-import com.cafedered.midban.entities.Contact;
 import com.cafedered.midban.entities.PartnerProduct;
 
 public class PartnerProductRepository extends BaseRepository<PartnerProduct, PartnerProductDAO> {

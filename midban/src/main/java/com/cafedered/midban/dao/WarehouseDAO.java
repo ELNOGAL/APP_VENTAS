@@ -1,6 +1,5 @@
 package com.cafedered.midban.dao;
 
-import com.cafedered.midban.entities.WeekDay;
 import com.cafedered.midban.entities.Warehouse;
 
 /**

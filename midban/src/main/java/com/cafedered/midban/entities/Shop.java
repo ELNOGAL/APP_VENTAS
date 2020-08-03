@@ -17,27 +17,12 @@
  *******************************************************************************/
 package com.cafedered.midban.entities;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-
 import com.cafedered.cafedroidlitedao.annotations.Entity;
 import com.cafedered.cafedroidlitedao.annotations.Id;
 import com.cafedered.cafedroidlitedao.annotations.Property;
 import com.cafedered.midban.annotations.Remote;
 import com.cafedered.midban.annotations.RemoteProperty;
-import com.cafedered.midban.conf.ContextAttributes;
-import com.cafedered.midban.conf.MidbanApplication;
-import com.cafedered.midban.service.repositories.OrderLineRepository;
-import com.cafedered.midban.service.repositories.PartnerRepository;
-import com.cafedered.midban.utils.DateUtil;
-import com.cafedered.midban.utils.LoggerUtil;
-import com.cafedered.midban.utils.exceptions.ConfigurationException;
-import com.cafedered.midban.utils.exceptions.ServiceException;
 import com.debortoliwines.openerp.api.FilterCollection;
-import com.debortoliwines.openerp.api.OpeneERPApiException;
 
 @Entity(tableName = "sale_shop")
 @Remote(object = "sale.shop")

@@ -1,9 +1,7 @@
 package com.cafedered.midban.service.repositories;
 
 import com.cafedered.midban.dao.WarehouseDAO;
-import com.cafedered.midban.dao.WeekDayDAO;
 import com.cafedered.midban.entities.Warehouse;
-import com.cafedered.midban.entities.WeekDay;
 
 /**
  * Created by nacho on 29/11/15.

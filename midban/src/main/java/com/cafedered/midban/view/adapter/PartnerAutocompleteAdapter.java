@@ -19,12 +19,8 @@
  */
 package com.cafedered.midban.view.adapter;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.os.AsyncTask;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -39,6 +35,9 @@ import com.cafedered.midban.entities.User;
 import com.cafedered.midban.service.repositories.PartnerRepository;
 import com.cafedered.midban.utils.LoggerUtil;
 import com.cafedered.midban.utils.exceptions.ServiceException;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class PartnerAutocompleteAdapter extends BaseAdapter implements Filterable {
 

@@ -18,11 +18,8 @@
 package com.cafedered.midban.view.activities;
 
 import android.app.ProgressDialog;
-import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -33,7 +30,6 @@ import android.widget.Toast;
 import com.cafedered.cafedroidlitedao.extractor.Restriction;
 import com.cafedered.midban.R;
 import com.cafedered.midban.annotations.Activity;
-import com.cafedered.midban.annotations.Background;
 import com.cafedered.midban.annotations.Click;
 import com.cafedered.midban.annotations.Wire;
 import com.cafedered.midban.conf.ContextAttributes;
@@ -51,7 +47,6 @@ import com.cafedered.midban.utils.exceptions.ServiceException;
 import com.cafedered.midban.utils.exceptions.UserNotFoundException;
 import com.cafedered.midban.view.base.BaseSupportActivity;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
