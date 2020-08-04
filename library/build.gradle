@@ -8,7 +8,7 @@ android {
         targetSdkVersion 27
     }
 
-    flavorDimensions "abi"
+    flavorDimensions "default"
 
     buildTypes {
         release {
@@ -19,8 +19,8 @@ android {
 }
 
 dependencies {
-    implementation 'com.android.support:appcompat-v7:27.1.0'
-    implementation 'com.android.support:support-v4:27.1.0'
-    implementation 'com.android.support:design:27.1.0'
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support:support-v4:27.1.1'
+    implementation 'com.android.support:design:27.1.1'
     implementation files('libs/date4j.jar')
 }

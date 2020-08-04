@@ -57,14 +57,14 @@ repositories{
 
 dependencies {
     implementation project(':library')
-    implementation 'com.android.support:appcompat-v7:27.1.0'
-    implementation 'com.android.support:support-v4:27.1.0'
-    implementation 'com.android.support:design:27.1.0'
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support:mediarouter-v7:27.1.1'
+    implementation 'com.android.support:support-v4:27.1.1'
+    implementation 'com.android.support:design:27.1.1'
     implementation 'com.google.android.gms:play-services:+'
-    implementation "android.arch.lifecycle:extensions:1.1.0"
+    implementation "android.arch.lifecycle:extensions:1.1.1"
     implementation files('libs/cafedroid-lite-dao-1.1.jar')
     implementation files('libs/openerp-java-api-1.5.0.jar')
-    //implementation files('libs/ws-commons-util-1.0.2.jar')
     implementation files('libs/mail.jar')
     implementation files('libs/activation.jar')
     implementation files('libs/additionnal.jar')
@@ -72,5 +72,4 @@ dependencies {
     implementation group: 'commons-io', name: 'commons-io', version: '+'
     implementation group: 'commons-httpclient', name: 'commons-httpclient', version: '+'
     implementation group: 'org.apache.xmlrpc', name: 'xmlrpc-common', version: '3.1.3'
-
 }
