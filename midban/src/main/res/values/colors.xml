@@ -32,6 +32,7 @@
     <color name="red">#FF0000</color>
     <color name="blue">#0000FF</color>
     <color name="green">#009900</color>
+    <color name="darkblue">#00008B</color>
     <color name="midban_lighter_grey">#FAFAFA</color>
     <color name="midgan_light_grey">#EEEEEE</color>
     <color name="midban_grey">#CCCCCC</color>

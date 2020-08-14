@@ -288,6 +288,8 @@ public class OrderLine extends BaseRemoteEntity {
     }
 
     public void setDiscountType(String discountType) {
+        if (discountType == null)
+            discountType = "";
         this.discountType = discountType;
     }
 

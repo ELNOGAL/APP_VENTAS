@@ -3,6 +3,7 @@
 
     <string name="app_name">Ventas Valquin</string>
     <string name="action_settings">Settings</string>
+    <string name="configuration_version">Versión: 1.0.4 - Fecha: 14/08/2020 - PGC</string>
 
     <!-- configuration parameters -->
     <string name="database_name">midban</string>
@@ -350,9 +351,7 @@
     <!-- OrderListFragment -->
     <string name="fragment_order_list_header_code">Pedido</string>
     <string name="fragment_order_list_header_partner">Cliente</string>
-    <string name="fragment_order_list_header_date">Fecha</string>
     <string name="fragment_order_list_header_amount">Importe</string>
-    <string name="fragment_order_list_header_lines">Lín.</string>
     <string name="fragment_order_list_header_state">Estado</string>
     <string name="fragment_order_list_num_orders">Número de pedidos:</string>
     <string name="fragment_order_list_amount_orders">Importe pedidos:</string>
@@ -558,6 +557,7 @@
     <string name="fragment_order_new_disposition_shop_tv">Tienda:</string>
     <string name="fragment_order_new_disposition_delivery_date_tv">Entrega:</string>
     <string name="fragment_order_new_disposition_product_favourites">Favoritos</string>
+    <string name="fragment_order_new_disposition_loading_items">Cargando...</string>
     <string name="fragment_order_new_disposition_all_catalog">Todo el catálogo</string>
     <string name="fragment_order_new_disposition_lines_header_product">Producto</string>
     <string name="fragment_order_new_disposition_lines_header_quantity">Cant.</string>

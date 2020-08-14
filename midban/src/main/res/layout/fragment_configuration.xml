@@ -17,7 +17,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/field_bottom_margin"
-            android:text="Versión: 1.0.3 - 01/08/2020 - PGC" />
+            android:text="@string/configuration_version" />
 
         <TextView
             android:id="@+id/tv_configuration_field_protocol"

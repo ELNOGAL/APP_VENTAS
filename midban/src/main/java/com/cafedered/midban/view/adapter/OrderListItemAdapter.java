@@ -66,11 +66,10 @@ public class OrderListItemAdapter extends BaseAdapter {
     }
 
     public static class ViewHolder {
-        public TextView partnerCode;
+        public TextView clientOrderRef;
         public TextView partnerName;
         public TextView lines;
         public TextView code;
-        public TextView date;
         public TextView amount;
         public TextView amountUntaxed;
         public TextView state;
@@ -80,15 +79,14 @@ public class OrderListItemAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         View vi = convertView;
         final ViewHolder holder;
-//        if (convertView == null) {
             vi = inflater.inflate(R.layout.order_list_item, null);
             holder = new ViewHolder();
-            holder.partnerCode = (TextView) vi
-                    .findViewById(R.id.order_list_item_partner_code);
+            holder.clientOrderRef = (TextView) vi
+                    .findViewById(R.id.order_list_item_client_order_ref);
             holder.partnerName = (TextView) vi
                     .findViewById(R.id.order_list_item_partner_name);
-            holder.code = (TextView) vi.findViewById(R.id.order_list_item_code);
-            holder.date = (TextView) vi.findViewById(R.id.order_list_item_date);
+            holder.code = (TextView) vi
+                    .findViewById(R.id.order_list_item_code);
             holder.amount = (TextView) vi
                     .findViewById(R.id.order_list_item_amount);
             holder.amountUntaxed = (TextView) vi
@@ -97,15 +95,13 @@ public class OrderListItemAdapter extends BaseAdapter {
                     .findViewById(R.id.order_list_item_state);
             holder.lines = (TextView) vi
                     .findViewById(R.id.order_list_item_lines);
-            holder.edit = (ImageView) vi.findViewById(R.id.order_list_item_edit);
-//            vi.setTag(holder);
-//        } else
-//            holder = (ViewHolder) vi.getTag();
+            holder.edit = (ImageView) vi
+                    .findViewById(R.id.order_list_item_edit);
 
         final Order order = orders.get(position);
-        if (order.getState() != null && !order.getState().contains("draft")) {
+        if (order.getState() != null && !order.getState().equals("draft") && !order.getState().equals("not_sent")) {
             if (order.getPendingSynchronization() == null || order.getPendingSynchronization() != 1L) {
-                holder.partnerName.setOnClickListener(new View.OnClickListener() {
+                holder.code.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         OrderRepository.setCurrentOrder(order);
@@ -127,7 +123,7 @@ public class OrderListItemAdapter extends BaseAdapter {
         }
         // DAVID - VOLVER
         // LA EDICIÓN NO FUNCIONA ASÍ QUE VOY A DESACTIVAR EL BOTÓN
-        //holder.edit.setVisibility(View.GONE);
+        holder.edit.setVisibility(View.GONE);
 
         holder.edit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -143,22 +139,9 @@ public class OrderListItemAdapter extends BaseAdapter {
                     fragment.getActivity().finish();
             }
         });
-        holder.code.setText(order.getName().toString());
-        try {
-            holder.date
-                    .setText(DateUtil.toFormattedString(DateUtil.parseDate(
-                            order.getDateOrder(), "yyyy-MM-dd HH:mm:ss"),
-                            "dd.MM.yyyy"));
-        } catch (Exception e) {
-            try {
-                holder.date
-                        .setText(DateUtil.toFormattedString(DateUtil.parseDate(
-                                order.getRequestedDate(), "yyyy-MM-dd HH:mm:ss"),
-                                "dd.MM.yyyy"));
-            } catch (Exception ex) {
-                holder.date.setText("");
-            }
-        }
+        holder.code.setText(order.getName());
+        // holder.clientOrderRef.setText(order.getClientOrderRef() + "");
+        holder.clientOrderRef.setText(order.getClientOrderRef() == null ? "" : order.getClientOrderRef());
         holder.amount.setText("Total: " + new BigDecimal(order.getAmountTotal().floatValue()).setScale(2, RoundingMode.HALF_UP).toString()
                 + " " + holder.amount.getResources().getString(
                         R.string.currency_symbol));
@@ -167,39 +150,44 @@ public class OrderListItemAdapter extends BaseAdapter {
                     + " " + holder.amountUntaxed.getResources().getString(
                     R.string.currency_symbol));
         }
-        if (order.getState() != null && order.getState().contains("draft"))
+        if (order.getState() != null && order.getState().equals("draft"))
             holder.state.setText("Borrador");
-        else if (order.getState() != null && order.getState().contains("sent"))
-            holder.state.setText("Borrador");
-        else if (order.getState() != null && order.getState().contains("wait_risk"))
+        else if (order.getState() != null && order.getState().equals("sent"))
+            holder.state.setText("Registrado");
+        else if (order.getState() != null && order.getState().equals("not_sent"))
+            holder.state.setText("Pdte. sincro");
+        else if (order.getState() != null && order.getState().equals("wait_risk"))
             holder.state.setText("Esp. riesgo");
-        else if (order.getState() != null && order.getState().contains("progress"))
+        else if (order.getState() != null && order.getState().equals("progress"))
             holder.state.setText("Confirmado");
-        else if (order.getState() != null && order.getState().contains("shipping_except"))
+        else if (order.getState() != null && order.getState().equals("shipping_except"))
             holder.state.setText("Excepción");
-        else if (order.getState() != null && order.getState().contains("done"))
+        else if (order.getState() != null && order.getState().equals("done"))
             holder.state.setText("Realizado");
-        else if (order.getState() != null && order.getState().contains("cancel"))
+        else if (order.getState() != null && order.getState().equals("cancel"))
             holder.state.setText("Cancelado");
         else if (order.getState() != null)
             holder.state.setText(order.getState());
         if (order.getPendingSynchronization() != null && order.getPendingSynchronization() == 1) {
-            holder.state.setText("Pte. sincro");
+            holder.state.setText("Pdte. sincro");
             holder.edit.setVisibility(View.GONE);
             holder.state.setBackgroundColor(vi.getResources().getColor(R.color.button_active_bg));
         }
         try {
-            holder.partnerCode.setText(order.getPartner().getRef());
-            holder.partnerName.setText(order.getPartner().getName()
+            holder.partnerName.setText(order.getPartnerShipping().getName()
                     .replace("null", ""));
         } catch (NullPointerException e) {
             // do nothing... it is better to catch this than instantiate new
             // partner for comparison
         }
         try {
-            holder.lines.setText(order.getLinesPersisted().size() + "");
+            holder.lines.setText("Líneas: " + order.getLinesPersisted().size() + "");
+            if (order.getState() != null && order.getState().equals("not_sent")) {
+                // holder.lines.setText("Líneas: " + order.getLines().size());
+                holder.lines.setText("");
+            }
         } catch (Exception e) {
-            holder.lines.setText(order.getLines().size());
+            holder.lines.setText("Líneas: " + order.getLines().size());
         }
         return vi;
     }

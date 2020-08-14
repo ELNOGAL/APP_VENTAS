@@ -214,7 +214,7 @@ public class OrderLinesNewDispositionAdapter extends BaseAdapter {
                 }
             });
         } else {
-            holder.deleteIcon.setVisibility(View.GONE);
+            holder.deleteIcon.setVisibility(View.INVISIBLE);
         }
 
         if (fragment != null && showDeleteIcon) {

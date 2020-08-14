@@ -151,6 +151,7 @@ public class SynchronizationAsyncTask extends AsyncTask<User, String, Boolean> {
         User user = params[0];
         Long initTime = new Date().getTime();
         String error = "";
+        OrderSynchronizationService.anotherThreadSynchronizing = true;
 
         try {
             lastPublishedProgress = new String[] { "Sincronización en curso...",
@@ -507,6 +508,7 @@ public class SynchronizationAsyncTask extends AsyncTask<User, String, Boolean> {
                     e.printStackTrace();
             }
             currentProgress = MAX_PROGRESS;
+            OrderSynchronizationService.anotherThreadSynchronizing = false;
             return error.isEmpty();
         }
     }

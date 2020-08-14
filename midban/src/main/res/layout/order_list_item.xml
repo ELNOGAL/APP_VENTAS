@@ -6,96 +6,103 @@
     android:orientation="horizontal"
     android:padding="@dimen/separator_margin" >
 
-    <TextView
-        android:id="@+id/order_list_item_code"
+    <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center_horizontal"
-        android:textColor="@color/midban_secondary_text_color"
-        android:textSize="@dimen/h5" />
+        android:layout_weight="1.6"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/order_list_item_code"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:textColor="@color/darkblue"
+            android:textSize="@dimen/h5" />
+
+        <TextView
+            android:id="@+id/order_list_item_client_order_ref"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:textSize="@dimen/h5" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="4"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/order_list_item_partner_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/separator_margin"
+            android:gravity="start"
+            android:textSize="@dimen/h5" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/order_list_item_amount_untaxed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/separator_margin"
+            android:gravity="start"
+            android:textSize="@dimen/h5" />
+
+        <TextView
+            android:id="@+id/order_list_item_amount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/separator_margin"
+            android:gravity="start"
+            android:textSize="@dimen/h5" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1.5"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
         <TextView
-            android:id="@+id/order_list_item_partner_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/separator_margin"
-            android:gravity="left"
-            android:textSize="@dimen/h5" />
-
-        <TextView
-            android:id="@+id/order_list_item_partner_code"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/separator_margin"
-            android:gravity="left"
-            android:textColor="@color/midban_secondary_text_color"
-            android:textSize="@dimen/h5" />
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/order_list_item_date"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/separator_margin"
-        android:layout_weight="0.9"
-        android:gravity="center_horizontal"
-        android:textSize="@dimen/h5" />
-
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_weight="1.2">
-        <TextView
-            android:id="@+id/order_list_item_amount_untaxed"
+            android:id="@+id/order_list_item_state"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/separator_margin"
-            android:gravity="right"
+            android:layout_marginStart="@dimen/separator_margin"
+            android:gravity="start"
+            android:textColor="@color/darkblue"
             android:textSize="@dimen/h5" />
+
         <TextView
-            android:id="@+id/order_list_item_amount"
+            android:id="@+id/order_list_item_lines"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/separator_margin"
-            android:gravity="right"
+            android:layout_marginStart="@dimen/separator_margin"
+            android:gravity="start"
             android:textSize="@dimen/h5" />
+
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/order_list_item_lines"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/separator_margin"
-        android:layout_weight="0.5"
-        android:gravity="center_horizontal"
-        android:textSize="@dimen/h5" />
-
-    <TextView
-        android:id="@+id/order_list_item_state"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/separator_margin"
-        android:layout_weight="0.9"
-        android:gravity="center_horizontal"
-        android:textSize="@dimen/h5" />
-
     <LinearLayout
-        android:layout_width="0dp"
+        android:layout_width="32dp"
         android:layout_height="wrap_content"
-        android:layout_weight="0.4">
+        android:gravity="end">
+
         <ImageView
             android:id="@+id/order_list_item_edit"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:src="@drawable/header_footer_edit_black"/>
+            android:src="@drawable/header_footer_edit_black" />
     </LinearLayout>
 
 </LinearLayout>

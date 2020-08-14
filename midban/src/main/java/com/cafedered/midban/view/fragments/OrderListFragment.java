@@ -112,18 +112,41 @@ public class OrderListFragment extends BaseSupportFragment implements
                                 order.setId(Calendar.getInstance().getTimeInMillis());
                             }
                             if (pendingOrder.get("name").equals("/")) {
-                                //String partnerName = PartnerRepository.getInstance().getById(((Integer) pendingOrder.get("partner_id")).longValue()).getName();
                                 order.setName("(Pendiente)");
+                                order.setState("not_sent");
                             } else {
                                 order.setName((String) pendingOrder.get("name"));
+                                order.setState((String) pendingOrder.get("state"));
                             }
-                            order.setState((String) pendingOrder.get("state"));
                             order.setDateOrder((String) pendingOrder.get("date_order"));
                             order.setCreateDate((String) pendingOrder.get("create_date"));
                             order.setAmountTax((Number) pendingOrder.get("amount_tax"));
                             order.setAmountTotal((Number) pendingOrder.get("amount_total"));
                             order.setAmountUntaxed((Number) pendingOrder.get("amount_untaxed"));
                             order.setPartnerId((Number) pendingOrder.get("partner_id"));
+                            order.setClientOrderRef((String) pendingOrder.get("client_order_ref"));
+                            // Leemos las lineas
+                            /*
+                            Object order_line[] = (Object[]) pendingOrder.get("order_line");
+                            List<OrderLine> orderLines = new ArrayList();
+                            for (int i = 0; i < order_line.length; i++) {
+                                Object lines2[] = (Object[]) order_line[i];
+                                Object lines = (Object) lines2[(lines2).length - 1];
+                                OrderLine line = new OrderLine();
+                                line.setProductId(((HashMap<String, Number>) lines).get("product_id").intValue());
+                                line.setName(((HashMap<String, String>) lines).get("name"));
+                                line.setProductUom(((HashMap<String, Number>) lines).get("product_uom").intValue());
+                                line.setProductUos(((HashMap<String, Number>) lines).get("product_uos").intValue());
+                                line.setProductUomQuantity(((HashMap<String, Number>) lines).get("product_uom_qty").intValue());
+                                line.setProductUosQuantity(((HashMap<String, Number>) lines).get("product_uos_qty").intValue());
+                                line.setPriceUnit(((HashMap<String, Number>) lines).get("price_unit").doubleValue());
+                                line.setDiscount(((HashMap<String, Number>) lines).get("discount").doubleValue());
+                                line.setDiscountType(((HashMap<String, String>) lines).get("discount_type"));
+                                orderLines.add(line);
+                            }
+                            order.setLines(orderLines);
+                            */
+                            // Añadimos el pedido a la lista
                             orders.add(order);
                         }
                     }

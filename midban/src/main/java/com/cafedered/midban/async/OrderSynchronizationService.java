@@ -69,7 +69,6 @@ public class OrderSynchronizationService extends Service {
             }
             String maxDateOld = SynchronizationRepository.getInstance().getMaxDateFor(Company.class);
 
-
             if (LoggerUtil.isDebugEnabled()) {
                 System.out.println("Timer for orders doing work");
                 appendLog(new Date().toString() + "Servicio en funcionamiento...");
@@ -132,10 +131,6 @@ public class OrderSynchronizationService extends Service {
                                 SessionFactory
                                         .getInstance(MidbanApplication.getLoggedUser().getLogin(),
                                                 MidbanApplication.getLoggedUser().getPasswd()).getSession().executeCommand("sale.order", "create_and_confirm", new Object[]{anOrder});
-
-                            // dejo lo de arriba para probar lo del context
-                            // commandConfirm.callObjectFunction("sale.order", "create_and_confirm", new Object[]{anOrder});
-                            // si ha ido bien la elimino
                                 itOrders.remove();
                             } catch (Exception e) {
                                 e.printStackTrace();
@@ -146,7 +141,13 @@ public class OrderSynchronizationService extends Service {
                     OrderRepository.getInstance().getRemoteObjects(new Order(),
                             MidbanApplication.getLoggedUser().getLogin(),
                             MidbanApplication.getLoggedUser().getPasswd(), false);
+                    OrderLineRepository.getInstance().getRemoteObjects(new OrderLine(),
+                            MidbanApplication.getLoggedUser().getLogin(),
+                            MidbanApplication.getLoggedUser().getPasswd(), false);
 
+                    // Comento las siguientes lineas porque es lo mismo que se acaba de hacer y
+                    // creo que no tiene sentido hacer mas tarde lo mismo que se hace aqui cada 30 segundos
+                    /*
                     if (size > 0) {
                         try {
                             syncOrders.schedule(syncTask, 120000L);
@@ -154,6 +155,7 @@ public class OrderSynchronizationService extends Service {
                             //already scheduled
                         }
                     }
+                    */
                 } catch (ConfigurationException e) {
                     if (LoggerUtil.isDebugEnabled())
                         e.printStackTrace();

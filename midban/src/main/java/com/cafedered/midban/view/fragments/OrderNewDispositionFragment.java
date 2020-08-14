@@ -249,7 +249,7 @@ public class OrderNewDispositionFragment extends BaseSupportFragment implements 
                 .getValueFromContext(ContextAttributes.READ_ONLY_ORDER_MODE) != null
                 && (Boolean) MidbanApplication.getValueFromContext(
                 ContextAttributes.READ_ONLY_ORDER_MODE)) {
-            partner = OrderRepository.getCurrentOrder().getPartner();
+            partner = OrderRepository.getCurrentOrder().getPartnerShipping();
             readOnlyMode = true;
         } else if (OrderRepository.getInstance().isOrderInitialized()
                 && OrderRepository.getCurrentOrder().getPartnerId() != null)
@@ -263,8 +263,6 @@ public class OrderNewDispositionFragment extends BaseSupportFragment implements 
         if (partner == null) {
             getActivity().finish();
         } else {
-            // String title = (partner.getRef() + " - " + partner.getName());
-            // ((BaseSupportActivity) getActivity()).getSupportActionBar().setTitle(title.length() > 30 ? title.substring(0, 30) : title);
             String title = partner.getName();
             ((BaseSupportActivity) getActivity()).getSupportActionBar().setTitle(title.length() > 60 ? title.substring(0, 20) + "..." + title.substring(title.length() - 40) : title);
             calculateRiskLimit(partner);
@@ -729,19 +727,14 @@ public class OrderNewDispositionFragment extends BaseSupportFragment implements 
                     } catch (ServiceException e) {
                         e.printStackTrace();
                     }
-
                 }
             });
             builderSingle.show();
-
-
-
         } catch (ConfigurationException e) {
             e.printStackTrace();
         } catch (ServiceException e) {
             e.printStackTrace();
         }
-
     }
 
     @Click(view = R.id.fragment_order_new_disposition_favourites_toggle)
@@ -814,10 +807,8 @@ public class OrderNewDispositionFragment extends BaseSupportFragment implements 
                                                                                     R.string.fragment_order_notes_text),
                                                                     ""));
                                     OrderRepository.getCurrentOrder().setPartnerId(partner.getId());
-                                    OrderRepository.getCurrentOrder().setPartnerInvoiceId(
-                                            partner.getId());
-                                    OrderRepository.getCurrentOrder().setPartnerShippingId(
-                                            partner.getId());
+                                    OrderRepository.getCurrentOrder().setPartnerInvoiceId(partner.getId());
+                                    OrderRepository.getCurrentOrder().setPartnerShippingId(partner.getId());
                                     OrderRepository.getCurrentOrder().setState("draft");
                                     calculateAmounts();
                                     OrderRepository.getCurrentOrder().setPricelistId(Long.parseLong(_tarifaActual));
@@ -857,19 +848,19 @@ public class OrderNewDispositionFragment extends BaseSupportFragment implements 
     private HashMap<String, Object> fillOrder(Order confirmOrder, boolean sendLines) throws ServiceException, ConfigurationException {
         HashMap<String, Object> orderOdoo = new HashMap<String, Object>();
 
-        if (confirmOrder.getId().intValue() == OrderRepository.getInstance().getNextIdNumber()) {
+        // if (confirmOrder.getId().intValue() == OrderRepository.getInstance().getNextIdNumber()) {
+        if (confirmOrder.getId() == 0L) {
             List<Object> linesOrderOdoo = new ArrayList<Object>();
             if (sendLines) {
                 fillLineParamsWithOrderLines(linesOrderOdoo, confirmOrder.getLines(), false);
             }
             // DAVID - vamos a enviar el company_id ya que en el contexto no les llega a servidor
             orderOdoo.put("app_company_id", MidbanApplication.activeCompany);
-
             // DAVID - por petición del integrador campo "delay" con valor a 5 en cabecera
-            //orderOdoo.put("delay", 5);
-            orderOdoo.put("client_order_ref", confirmOrder.getClientOrderRef());
+            // orderOdoo.put("delay", 5);
             if (confirmOrder.getShopId() != null)
                 orderOdoo.put("shop_id", confirmOrder.getShopId().intValue());
+            orderOdoo.put("client_order_ref", confirmOrder.getClientOrderRef());
             orderOdoo.put("partner_id", confirmOrder.getPartnerId().intValue());
             orderOdoo.put("order_line", linesOrderOdoo.toArray());
             orderOdoo.put("warehouse_id", ConfigurationRepository.getInstance().getConfiguration().getWarehouseId().intValue());
@@ -907,12 +898,14 @@ public class OrderNewDispositionFragment extends BaseSupportFragment implements 
                 fillLineParamsWithOrderLines(linesOrderOdoo, confirmOrder.getLines(), true);
                 fillRemoveOfOldLines(linesOrderOdoo, confirmOrder.getLines());
             }
+            // DAVID - vamos a enviar el company_id ya que en el contexto no les llega a servidor
+            orderOdoo.put("app_company_id", MidbanApplication.activeCompany);
             // DAVID - por petición del integrador campo "delay" con valor a 5 en cabecera
-            orderOdoo.put("delay", 5);
+            // orderOdoo.put("delay", 5);
+            orderOdoo.put("id", confirmOrder.getId().intValue());
             if (confirmOrder.getShopId() != null)
                 orderOdoo.put("shop_id", confirmOrder.getShopId().intValue());
             orderOdoo.put("client_order_ref", confirmOrder.getClientOrderRef());
-            orderOdoo.put("id", confirmOrder.getId().intValue());
             orderOdoo.put("partner_id", confirmOrder.getPartnerId().intValue());
             orderOdoo.put("order_line", linesOrderOdoo.toArray());
             orderOdoo.put("warehouse_id", ConfigurationRepository.getInstance().getConfiguration().getWarehouseId().intValue());
@@ -944,7 +937,6 @@ public class OrderNewDispositionFragment extends BaseSupportFragment implements 
             if (confirmOrder.getRequestedDate() != null)
                 orderOdoo.put("requested_date", confirmOrder.getRequestedDate());
         }
-
         return orderOdoo;
     }
 
@@ -1049,7 +1041,6 @@ public class OrderNewDispositionFragment extends BaseSupportFragment implements 
                     }
                     return "PENDIENTE";
                 }
-
                 return "OK";
             }
 
@@ -1074,18 +1065,20 @@ public class OrderNewDispositionFragment extends BaseSupportFragment implements 
                         new AsyncTask<Void, Void, Void>() {
                             @Override
                             protected Void doInBackground(Void... params) {
-                                OrderSynchronizationService.anotherThreadSynchronizing = true;
-                                try{
+                                if (!OrderSynchronizationService.anotherThreadSynchronizing) {
                                     try {
+                                        OrderSynchronizationService.anotherThreadSynchronizing = true;
+                                        try {
                                             OrderRepository.getInstance().getRemoteObjects(new Order(), user.getLogin(),
                                                     user.getPasswd(), false);
                                             OrderLineRepository.getInstance().getRemoteObjects(new OrderLine(), user.getLogin(),
                                                     user.getPasswd(), false);
-                                    } catch (ConfigurationException e) {
-                                        e.printStackTrace();
+                                        } catch (ConfigurationException e) {
+                                            e.printStackTrace();
+                                        }
+                                    } finally {
+                                        OrderSynchronizationService.anotherThreadSynchronizing = false;
                                     }
-                                }finally {
-                                    OrderSynchronizationService.anotherThreadSynchronizing =  false;
                                 }
                                 return null;
                             }
@@ -1166,7 +1159,7 @@ public class OrderNewDispositionFragment extends BaseSupportFragment implements 
             }
             lineValues.put("tax_id", new Object[]{new Object[]{6,0,new Number[]{taxId}}});
             lineValues.put("discount", lines.get(i).getDiscount().doubleValue());
-            lineValues.put("discount_type", lines.get(i).getDiscountType().toString());
+            lineValues.put("discount_type", lines.get(i).getDiscountType());
             dictionary[2] = lineValues;
             params.add(dictionary);
         }
@@ -1306,11 +1299,11 @@ public class OrderNewDispositionFragment extends BaseSupportFragment implements 
                 Product productSearch = new Product();
                 String productSearchF = params[0];
                 if (productSearchF.length() > 1) {
-                    productSearch.setNameTemplate(productSearchF.toString());
-                    productSearch.setCode(productSearchF.toString());
+                    productSearch.setNameTemplate(productSearchF);
+                    productSearch.setCode(productSearchF);
                     try {
                         productSearch.setId(Long
-                                .parseLong(productSearchF.toString()));
+                                .parseLong(productSearchF));
                     } catch (NumberFormatException e) {
                         // do nothing
                     }
@@ -1318,9 +1311,15 @@ public class OrderNewDispositionFragment extends BaseSupportFragment implements 
                 List<Product> asyncFavourites = new ArrayList<Product>();
                 List<Product> asyncAll = new ArrayList<Product>();
                 if (favouriteProducts != null && favouriteProducts.size() > 0)
-                    for (Product product : favouriteProducts) {
-                        if (satisfyCriteria(product, productSearch))
-                            asyncFavourites.add(product);
+                    try {
+                        for (Product product : favouriteProducts) {
+                            if (satisfyCriteria(product, productSearch))
+                                asyncFavourites.add(product);
+                        }
+                    } catch (Exception e) {
+                        // En ocasiones favouriteProducts se pone a null después de entrar en el for
+                        // Probablemente por alguna tarea asíncrona
+                        e.printStackTrace();
                     }
                 try {
                     asyncAll.addAll(ProductRepository.getInstance().getByExample(productSearch, Restriction.OR, false, 15, 0, true, false, _tarifaActual));
@@ -1790,8 +1789,13 @@ public class OrderNewDispositionFragment extends BaseSupportFragment implements 
 
     @Click(view = R.id.fragment_order_new_disposition_button_repeat)
     public void repeatOrder() {
-        MidbanApplication.putValueInContext(ContextAttributes.READ_ONLY_ORDER_MODE, Boolean.FALSE);
-        readOnlyMode = false;
+        // De momento no vamos a permitir repetir pedidos
+        // Este paso hay que analizarlo ya que por ejemplo los precios deberian actualizarse siempre
+        // con los actuales (desconozco si lo hace) (14/08/2020) Pedro Gómez
+        // MidbanApplication.putValueInContext(ContextAttributes.READ_ONLY_ORDER_MODE, Boolean.FALSE);
+        // readOnlyMode = false;
+        // Para que lo tome como nuevo pedido ponemos el ID a 0
+        // OrderRepository.getCurrentOrder().setId(0L);
         this.onResume();
     }
 

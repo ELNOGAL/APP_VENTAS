@@ -313,6 +313,24 @@ public class Order extends BaseRemoteEntity implements Comparable<Order> {
         return new Partner();
     }
 
+    public Partner getPartnerShipping() {
+        try {
+            if (partnerShippingId != null) {
+                return PartnerRepository.getInstance().getById(
+                        partnerShippingId.longValue());
+            } else {
+                return getPartner();
+            }
+        } catch (ConfigurationException e) {
+            if (LoggerUtil.isDebugEnabled())
+                e.printStackTrace();
+        } catch (ServiceException e) {
+            if (LoggerUtil.isDebugEnabled())
+                e.printStackTrace();
+        }
+        return new Partner();
+    }
+
     @Override
     public FilterCollection getRemoteFilters() {
         FilterCollection filters = new FilterCollection();

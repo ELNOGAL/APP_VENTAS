@@ -96,7 +96,8 @@ public class OrderRepository extends BaseRepository<Order, OrderDAO> {
     public static Order getCurrentOrder() {
         if (currentOrder == null) {
             currentOrder = new Order();
-            currentOrder.setId(getInstance().getNextIdNumber().longValue());
+            // currentOrder.setId(getInstance().getNextIdNumber().longValue());
+            currentOrder.setId(0L);
         }
         return currentOrder;
     }

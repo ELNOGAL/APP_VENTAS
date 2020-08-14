@@ -18,21 +18,21 @@
             android:id="@+id/fragment_order_num_orders"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/separator_margin"
+            android:layout_marginStart="@dimen/separator_margin"
             android:textSize="@dimen/h4" />
 
         <TextView
             android:id="@+id/fragment_order_amount_orders"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/separator_margin"
+            android:layout_marginStart="@dimen/separator_margin"
             android:textSize="@dimen/h4" />
 
         <TextView
             android:id="@+id/fragment_order_margin_orders"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/separator_margin"
+            android:layout_marginStart="@dimen/separator_margin"
             android:textSize="@dimen/h4" />
     </LinearLayout>
 
@@ -50,7 +50,7 @@
             android:id="@+id/fragment_order_list_header_code"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="1.6"
             android:gravity="center_horizontal"
             android:text="@string/fragment_order_list_header_code"
             android:textSize="@dimen/h5"
@@ -60,21 +60,10 @@
             android:id="@+id/fragment_order_list_header_partner"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/separator_margin"
-            android:layout_weight="1.5"
+            android:layout_marginStart="@dimen/separator_margin"
+            android:layout_weight="4"
             android:gravity="center_horizontal"
             android:text="@string/fragment_order_list_header_partner"
-            android:textSize="@dimen/h5"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/fragment_order_list_header_date"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/separator_margin"
-            android:layout_weight="0.9"
-            android:gravity="center_horizontal"
-            android:text="@string/fragment_order_list_header_date"
             android:textSize="@dimen/h5"
             android:textStyle="bold" />
 
@@ -82,21 +71,10 @@
             android:id="@+id/fragment_order_list_header_amount"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/separator_margin"
-            android:layout_weight="1.2"
+            android:layout_marginStart="@dimen/separator_margin"
+            android:layout_weight="2"
             android:gravity="center_horizontal"
             android:text="@string/fragment_order_list_header_amount"
-            android:textSize="@dimen/h5"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/fragment_order_list_header_lines"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/separator_margin"
-            android:layout_weight="0.5"
-            android:gravity="center_horizontal"
-            android:text="@string/fragment_order_list_header_lines"
             android:textSize="@dimen/h5"
             android:textStyle="bold" />
 
@@ -104,16 +82,16 @@
             android:id="@+id/fragment_order_list_header_state"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/separator_margin"
-            android:layout_weight="0.9"
+            android:layout_marginStart="@dimen/separator_margin"
+            android:layout_weight="1.5"
             android:gravity="center_horizontal"
             android:text="@string/fragment_order_list_header_state"
             android:textSize="@dimen/h5"
             android:textStyle="bold" />
+
         <View
-            android:layout_width="0dp"
-            android:layout_height="10dp"
-            android:layout_weight="0.4"/>
+            android:layout_width="32dp"
+            android:layout_height="10dp" />
     </LinearLayout>
 
     <ListView
