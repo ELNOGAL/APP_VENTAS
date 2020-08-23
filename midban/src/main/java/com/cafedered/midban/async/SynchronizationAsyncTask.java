@@ -157,6 +157,7 @@ public class SynchronizationAsyncTask extends AsyncTask<User, String, Boolean> {
             lastPublishedProgress = new String[] { "Sincronización en curso...",
                     "" + currentProgress++ };
             publishProgress(lastPublishedProgress);
+
             try {
                 lastPublishedProgress =new String[] { "Sincronizando tiendas...",
                         "" + currentProgress++ };
@@ -420,6 +421,7 @@ public class SynchronizationAsyncTask extends AsyncTask<User, String, Boolean> {
                 throw new SynchronizationErrorException(e,
                         "Error al sincronizar empresas.");
             }
+
         } catch (SynchronizationErrorException e) {
             error = e.getDescriptiveErrorMessage();
             if (LoggerUtil.isDebugEnabled()) {

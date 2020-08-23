@@ -34,6 +34,7 @@ import com.cafedered.midban.annotations.Click;
 import com.cafedered.midban.annotations.Fragment;
 import com.cafedered.midban.annotations.Transformer;
 import com.cafedered.midban.annotations.Wire;
+import com.cafedered.midban.conf.MidbanApplication;
 import com.cafedered.midban.entities.Configuration;
 import com.cafedered.midban.entities.Warehouse;
 import com.cafedered.midban.service.repositories.ConfigurationRepository;
@@ -182,22 +183,30 @@ public class ConfigurationFragment extends BaseSupportFragment {
             // do nothing
         }
         if (warehouses.size() == 0) {
-
-            Warehouse wh3 = new Warehouse();
-            wh3.setId(1L);
-            wh3.setName("Quival");
-            warehouses.add(wh3);
-
             Warehouse wh1 = new Warehouse();
-            wh1.setId(4L);
-            wh1.setName("Depósito Valquin");
-            warehouses.add(wh1);
+            wh1.setId(1L);
+            wh1.setName("Quival");
 
             Warehouse wh2 = new Warehouse();
             wh2.setId(6L);
             wh2.setName("Valquin");
-            warehouses.add(wh2);
 
+            Warehouse wh3 = new Warehouse();
+            wh3.setId(4L);
+            wh3.setName("Depósito Valquin");
+
+            if (MidbanApplication.activeCompany == 3) {
+                warehouses.add(wh1);
+            } else {
+                if (MidbanApplication.activeCompany == 2) {
+                    warehouses.add(wh2);
+                    warehouses.add(wh3);
+                } else {
+                    warehouses.add(wh1);
+                    warehouses.add(wh2);
+                    warehouses.add(wh3);
+                }
+            }
         }
         Warehouse[] result = new Warehouse[warehouses.size()];
         result = warehouses.toArray(result);

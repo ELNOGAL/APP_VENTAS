@@ -24,7 +24,7 @@ public class PricelistPricesRepository extends BaseRepository<PricelistPrices, P
         dao = PricelistPricesDAO.getInstance();
     }
 
-    public static List<Product>  getProductsOfPriceList(Long pricelistId) {
+    public static List<Product> getProductsOfPriceList(Long pricelistId) {
         ArrayList<Product> result = new ArrayList<Product>();
         try {
             PricelistPrices example = new PricelistPrices();
@@ -46,7 +46,7 @@ public class PricelistPricesRepository extends BaseRepository<PricelistPrices, P
         return result;
     }
 
-    public static List<Product>  getProductsOfPartner(Long partner){
+    public static List<Product> getProductsOfPartner(Long partner){
         Partner p = null;
         try {
 

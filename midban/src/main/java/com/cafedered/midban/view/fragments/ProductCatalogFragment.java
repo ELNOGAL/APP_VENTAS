@@ -94,7 +94,6 @@ public class ProductCatalogFragment extends BaseSupportFragment implements Cance
         if (OrderRepository.getInstance().isOrderInitialized()
                 && OrderRepository.getCurrentOrder().getPartnerId() != null){
             priceListId = (String) MidbanApplication.getValueFromContext(ContextAttributes.ACTUAL_TARIFF);
-            //priceListId = OrderRepository.getCurrentOrder().getPartner().getPricelistId().toString();
         }
         if ((priceListId == null) || ("".equals(priceListId))) {
             if (!MidbanApplication.priceListIdActualCompany().equals("")) {

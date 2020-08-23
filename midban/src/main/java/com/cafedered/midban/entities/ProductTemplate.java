@@ -51,10 +51,7 @@ public class ProductTemplate extends BaseRemoteEntity {
     private String description;
 
     @Property(columnName = "categ_id")
-    @RemoteProperty(name = "categ_id",
-            entityRef = ProductCategory.class,
-            repositoryRef = ProductCategoryRepository.class,
-            orderedProperties = { "id", "name" })
+    @RemoteProperty(name = "categ_id")
     private Number categId;
 
     @Property(columnName = "taxes_id")

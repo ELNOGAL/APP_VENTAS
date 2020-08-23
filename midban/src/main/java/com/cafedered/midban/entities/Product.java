@@ -59,10 +59,7 @@ public class Product extends BaseRemoteEntity {
     private String nameTemplate;
 
     @Property(columnName = "product_tmpl_id")
-    @RemoteProperty(name = "product_tmpl_id",
-            entityRef = ProductTemplate.class,
-            repositoryRef = ProductTemplateRepository.class,
-            orderedProperties = { "id", "name" })
+    @RemoteProperty(name = "product_tmpl_id")
     private Number productTmplId;
 
     @Property(columnName = "ul")

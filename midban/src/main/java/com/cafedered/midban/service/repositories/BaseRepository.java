@@ -169,7 +169,7 @@ public class BaseRepository<E extends BaseEntity, D extends BaseDAO<E>> {
             String passwd, boolean doDeletes) throws ConfigurationException {
 
         int result = 0;
-        Long initDate = new Date().getTime();
+        Date initDate = new Date();
         String error = "";
         Remote annotation = entity.getClass().getAnnotation(Remote.class);
         if (annotation == null)
@@ -408,10 +408,10 @@ public class BaseRepository<E extends BaseEntity, D extends BaseDAO<E>> {
         }
         try {
             Date endDataSynchro = new Date();
-            Long duration = endDataSynchro.getTime() - initDate;
+            Long duration = endDataSynchro.getTime() - initDate.getTime();
             SynchronizationRepository.getInstance().saveOrUpdate(
                     Synchronization.create(entity.getClass().getName(),
-                            DateUtil.toFormattedString(endDataSynchro), result,
+                            DateUtil.toFormattedString(initDate), result, // Guardamos initDate en lugar de endDataSynchro porque creo que es más correcto (PGC 22/08/2020)
                             duration, error));
         } catch (ServiceException e) {
             throw new ConfigurationException(e);

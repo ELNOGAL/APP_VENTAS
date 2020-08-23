@@ -65,12 +65,11 @@ public class MidbanApplication extends Application implements LifecycleObserver 
 //  public static int activeCompany = 3; // QUIVAL
     public static boolean appInForeground = true;
 
-    public static int getResourceLogo(){
+    public static int getResourceLogo() {
         // VALQUIN
-        if (MidbanApplication.activeCompany == 2){
+        if (MidbanApplication.activeCompany == 2) {
             return R.drawable.valquin;
-        }
-        else{
+        } else {
             return R.drawable.logo_midban;
         }
     }
@@ -80,8 +79,7 @@ public class MidbanApplication extends Application implements LifecycleObserver 
         Company actualCompany = null;
         try {
             actualCompany = CompanyRepository.getInstance().getById(new Long(activeCompany));
-        } catch (ConfigurationException
-                e1) {
+        } catch (ConfigurationException e1) {
             e1.printStackTrace();
         } catch (ServiceException e1) {
             e1.printStackTrace();

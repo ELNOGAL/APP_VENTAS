@@ -439,65 +439,66 @@ public class OrderNewDispositionFragment extends BaseSupportFragment implements 
             allProducts = new ArrayList<Product>();
 
             String info = "";
-            if (OrderRepository.getCurrentOrder().getShopId() != null) {
-                /*
-- Se selecciona tienda:
+/*
+(En Odoo, los campos property_product_pricelist y property_product_pricelist_indirect_invoicing son commercial_fields
+y por tanto al escribir un valor en el commercial_partner_id se propaga a las direcciones)
 
+- Se selecciona tienda:
  - Si indirect_invoicing = True
-    - En primer lugar busca la tarifa de indirectos en el campo del cliente "property_product_pricelist_indirect_invoicing" (si fuese una direccion lo buscaría en su "parent_id")
+    - En primer lugar busca la tarifa de indirectos en el campo del cliente "property_product_pricelist_indirect_invoicing"
     - Si no hay nada en ese campo:
-    - Si en la tienda está informado "pricelist_id" , cargaria productos y precios de esta tarifa
-    - Si no está informado "pricelist_id" , caería en el caso de indirect_invoicing = False
+       - Si en la tienda está informado "pricelist_id", cargaria productos y precios de esta tarifa
+       - Si no está informado "pricelist_id", caería en el caso de indirect_invoicing = False
 
   - Si indirect_invoicing = False
-    - Si el partner seleccionado no es una dirección carga su tarifa (productos y precios)
-    - Si es una dirección busca su parent_id, coge la tarifa de este y carga estos productos y tarifas
-        */
+    - Carga la tarifa de venta del cliente (productos y precios)
+    - Si no hay nada en ese campo:
+       - Si en la tienda está informado "pricelist_id", cargaria productos y precios de esta tarifa
+*/
+            if (OrderRepository.getCurrentOrder().getShopId() != null) {
                 try {
                     Shop shop = ShopRepository.getInstance().getById(OrderRepository.getCurrentOrder().getShopId().longValue());
                     if (shop != null) {
                         Partner p = PartnerRepository.getInstance().getById(partner.getId().longValue());
-                        Partner parent = null;
                         // - Si indirect_invoicing = True
                         if (shop.getIndirectInvoicing()) {
-                            if ((p != null) && (p.getType() != null) && (p.getType().equals("delivery")) && (p.getParentId().longValue() > 0)) {
-                                parent = PartnerRepository.getInstance().getById(p.getParentId().longValue());
-                            }
-                            // - En primer lugar busca la tarifa de indirectos en el campo del cliente "property_product_pricelist_indirect_invoicing" (si fuese una direccion lo buscaría en su "parent_id")
-                            if ((parent != null) && (parent.getPricelistIndirectId() != null)) {
-                                loaded = true;
-                                info = "Dirección de entrega. Carga indirecta. \nCliente " + parent.getName();
-                                setTarifaActual(parent.getPricelistIndirectId().toString());
-                            } else {
-                                if (p.getPricelistIndirectId() != null) {
-                                    loaded = true;
+                            // - En primer lugar busca la tarifa de indirectos en el campo del cliente "property_product_pricelist_indirect_invoicing"
+                            if ((p != null) && (p.getPricelistIndirectId() != null) && (p.getPricelistIndirectId().longValue() > 0)) {
+                                if (p.getIsCompany() == true) {
                                     info = "Dirección principal. Carga indirecta. \nCliente " + p.getName();
-                                    setTarifaActual(p.getPricelistIndirectId().toString());
+                                } else {
+                                    info = "Dirección de entrega. Carga indirecta. \nCliente " + p.getName();
                                 }
+                                loaded = true;
+                                setTarifaActual(p.getPricelistIndirectId().toString());
                             }
-                            // - Si en la tienda está informado  "pricelist_id" , cargaria productos y precios de esta tarifa
+                            // - Si en la tienda está informado "pricelist_id", cargaria productos y precios de esta tarifa
                             if (!loaded) {
-                                if (shop.getPricelistId() != null) {
+                                if ((shop.getPricelistId() != null) && (shop.getPricelistId().longValue() > 0)) {
                                     info = "Carga indirecta tienda " + shop.getName();
                                     loaded = true;
                                     setTarifaActual(shop.getPricelistId().toString());
                                 }
                             }
                         }
-                        // - Si es una dirección busca su parent_id, coge la tarifa de este y carga estos productos y tarifas
+                        // - Carga la tarifa de venta del cliente (productos y precios)
                         if (!loaded) {
-                            if ((parent != null) && (parent.getPricelistId() != null)) {
+                            if ((p != null) && (p.getPricelistId() != null) && (p.getPricelistId().longValue() > 0)) {
+                                if (p.getIsCompany() == true) {
+                                    info = "Dirección principal. Carga directa. \nCliente " + p.getName();
+                                } else {
+                                    info = "Dirección de entrega. Carga directa. \nCliente " + p.getName();
+                                }
                                 loaded = true;
-                                info = "Dirección de entrega. Carga directa. \nCliente " + parent.getName();
-                                setTarifaActual(parent.getPricelistId().toString());
+                                setTarifaActual(p.getPricelistId().toString());
                             }
                         }
-
-                        // - Si el partner seleccionado no es una dirección carga su tarifa (productos y precios)
+                        // - Si en la tienda está informado "pricelist_id", cargaria productos y precios de esta tarifa
                         if (!loaded) {
-                            if ((p != null) && (p.getPricelistId() != null)) {
-                                info = "Dirección principal. Carga directa. \nCliente " + p.getName();
-                                setTarifaActual(p.getPricelistId().toString());
+                            if ((shop.getPricelistId() != null) && (shop.getPricelistId().longValue() > 0)) {
+                                info = "Carga directa tienda " + shop.getName();
+                                loaded = true;
+                                setTarifaActual(shop.getPricelistId().toString());
                             }
                         }
                     }
