@@ -766,15 +766,19 @@ public class SynchronizationAsyncTask extends AsyncTask<User, String, Boolean> {
             }
             Map lineValues = new HashMap();
             lineValues.put("product_id", lines.get(i).getProductId().intValue());
-            if (lines.get(i).getName() != null)
+            if (lines.get(i).getName() != null) {
                 lineValues.put("description", lines.get(i).getName());
-            lineValues.put("product_uos_qty", lines.get(i).getProductUosQuantity().intValue());
+            }
+            lineValues.put("product_uom_qty", lines.get(i).getProductUomQuantity().intValue());
+            lineValues.put("product_uos_qty", lines.get(i).getProductUosQuantity().doubleValue());
+            lineValues.put("product_uom", lines.get(i).getProductUom().intValue());
             lineValues.put("product_uos", lines.get(i).getProductUos().intValue());
             lineValues.put("price_unit", lines.get(i).getPriceUnit().doubleValue());
             Product product = null;
             try {
                 product = ProductRepository.getInstance().getById(lines.get(i).getProductId().longValue());
                 lineValues.put("tax_id", new Number[]{product.getProductTemplate().getTaxesId()});
+                lineValues.put("name", product.getNameTemplate());
             } catch (ConfigurationException e) {
                 e.printStackTrace();
             } catch (ServiceException e) {

@@ -1144,8 +1144,8 @@ y por tanto al escribir un valor en el commercial_partner_id se propaga a las di
             if (lines.get(i).getName() != null) {
                 lineValues.put("description", lines.get(i).getName());
             }
-            lineValues.put("product_uos_qty", lines.get(i).getProductUosQuantity().intValue());
             lineValues.put("product_uom_qty", lines.get(i).getProductUomQuantity().intValue());
+            lineValues.put("product_uos_qty", lines.get(i).getProductUosQuantity().doubleValue());
             Product product = ProductRepository.getInstance().getById(lines.get(i).getProductId().longValue());
             if (product != null) {
                 lineValues.put("product_uom", product.getUom().getId().intValue());
@@ -1164,7 +1164,6 @@ y por tanto al escribir un valor en el commercial_partner_id se propaga a las di
             dictionary[2] = lineValues;
             params.add(dictionary);
         }
-
     }
 
     private void clearContext() {
