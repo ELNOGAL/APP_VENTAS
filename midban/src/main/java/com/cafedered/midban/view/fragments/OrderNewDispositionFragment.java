@@ -55,6 +55,7 @@ import com.cafedered.midban.entities.Shop;
 import com.cafedered.midban.entities.Tax;
 import com.cafedered.midban.entities.User;
 import com.cafedered.midban.service.repositories.AccountPaymentTermRepository;
+import com.cafedered.midban.service.repositories.CommercialRouteRepository;
 import com.cafedered.midban.service.repositories.ConfigurationRepository;
 import com.cafedered.midban.service.repositories.OrderLineRepository;
 import com.cafedered.midban.service.repositories.OrderRepository;
@@ -331,23 +332,7 @@ public class OrderNewDispositionFragment extends BaseSupportFragment implements 
                 } catch (ParseException e) {
                     //do nothing
                 }
-            } else {
-                // else nada, no se quiere que se cubra automáticamente así que comento este trozo
-                // https://bitbucket.org/noroestesoluciones/odoo-app/issues/103/correcciones-en-la-operativa-de-la-fecha
-                /*
-                OrderRepository.getCurrentOrder().setRequestedDate(getDeliveryDate());
-                if (OrderRepository.getCurrentOrder().getRequestedDate() != null) {
-                    try {
-                        deliveryDateView.setText(DateUtil.toFormattedString(DateUtil.parseDate(OrderRepository.getCurrentOrder().getRequestedDate()), "dd.MM.yyyy"));
-                    } catch (ParseException e) {
-                        //do nothing
-                    }
-                }
-                hasta aquí */
             }
-//        adapterLines = new OrderLinesNewDispositionAdapter(getActivity(),
-//                OrderRepository.getCurrentOrder().getLines(), this);
-//        orderLinesListView.setAdapter(adapterLines);
             if (readOnlyMode) {
                 buttonOk.setVisibility(View.GONE);
                 buttonRepeat.setVisibility(View.VISIBLE);
@@ -591,7 +576,7 @@ y por tanto al escribir un valor en el commercial_partner_id se propaga a las di
                 line.setDiscount1(0.0F);
                 line.setDiscount2(0.0F);
                 line.setDiscount3(0.0F);
-                line.setDiscountType("0");
+                line.setDiscountType("-1");
                 Number taxId = product.getProductTemplate().getTaxesId();
                 if (taxId == null) {
                     MessagesForUser.showMessage(getView(), getResources().getString(R.string.error_al_anadir_producto), Toast.LENGTH_SHORT, Level.SEVERE);
@@ -796,17 +781,7 @@ y por tanto al escribir un valor en el commercial_partner_id se propaga a las di
                                             DateUtil.toFormattedString(new Date()));
                                     OrderRepository.getCurrentOrder().setDateOrder(DateUtil.convertToUTC(DateUtil.toFormattedString(new Date())));
                                     OrderRepository.getCurrentOrder().setMargin(0.0);
-                                    OrderRepository
-                                            .getCurrentOrder()
-                                            .setNote(
-                                                    orderNotesView
-                                                            .getText()
-                                                            .toString()
-                                                            .replace(
-                                                                    getResources()
-                                                                            .getString(
-                                                                                    R.string.fragment_order_notes_text),
-                                                                    ""));
+                                    OrderRepository.getCurrentOrder().setNote(orderNotesView.getText().toString());
                                     OrderRepository.getCurrentOrder().setPartnerId(partner.getId());
                                     OrderRepository.getCurrentOrder().setPartnerInvoiceId(partner.getId());
                                     OrderRepository.getCurrentOrder().setPartnerShippingId(partner.getId());
@@ -1402,7 +1377,7 @@ y por tanto al escribir un valor en el commercial_partner_id se propaga a las di
     public void clickNotes() {
         if (!readOnlyMode)
             new OneFieldEditionDialog(orderNotesView)
-                    .openDialogForUniqueTextField(orderNotesView.getTag().toString(), "", null, null, false);
+                    .openDialogForUniqueTextField(orderNotesView.getTag().toString(), "", null, null, false, true);
     }
 
     private void calculateAmounts() {
@@ -1511,41 +1486,6 @@ y por tanto al escribir un valor en el commercial_partner_id se propaga a las di
 
     private String getDeliveryDate() {
         return DateUtil.toFormattedString(Calendar.getInstance().getTime(), "yyyy-MM-dd HH:mm:ss");
-
-        /* DAVID - LA PROPIEDAD delivery_days HA DESAPARECIDO.
-        *
-        *
-        *
-        *   https://bitbucket.org/noroestesoluciones/odoo-app/issues/4/modificar-la-sincronizaci-n
-        *   Sobre el error sincronizando clientes:
-        *   "Por lo que he podido revisar solo deben fallaros esos dos campos: (5 = "delivery_days_ids" -> "deliveryDays" y 6 = "state_id" -> "stateId")
-        *   Delivery_days_id Puede daros algún problema más adelante ya que si no recuerdo mal lo usaba para calcular una fecha de entrega en un pedido. Si fuese el caso, lo ignoráis en el pedido y ponéis la fecha del día en la que se hace el pedido de momento "
-        *
-        Calendar tomorrow = Calendar.getInstance();
-        tomorrow.add(Calendar.DATE, 1);
-        String days = partner.getDeliveryDays();
-        if (days == null || days.length() == 0)
-            return null;
-        do {
-            List<Integer> daysI = new ArrayList<Integer>();
-            for (String day : days.split(";")) {
-                if (day != null) {
-                    int aDay = Integer.valueOf(day);
-                    if (aDay == 7)
-                        aDay = 1;
-                    else aDay = aDay + 1;
-                    daysI.add(aDay);
-                }
-            }
-            do {
-                if (daysI.contains(tomorrow.get(Calendar.DAY_OF_WEEK))) {
-                    return DateUtil.toFormattedString(tomorrow.getTime(), "yyyy-MM-dd HH:mm:ss");
-                } else
-                    tomorrow.add(Calendar.DATE, 1);
-            } while (true);
-
-        } while (true);
-        * */
     }
 
     private void calculateRiskLimit(final Partner partner) {
@@ -1815,6 +1755,33 @@ y por tanto al escribir un valor en el commercial_partner_id se propaga a las di
                 return true;
             case R.id.notes_item:
                 clickNotes();
+                return true;
+            case R.id.info_item:
+                String mensaje = "\n";
+                mensaje += "Dirección entrega: \n" + partner.getContactAddress();
+                String CommercialRouteName = "";
+                try {
+                    CommercialRouteName =  CommercialRouteRepository.getInstance().getById(
+                            partner.getCommercialRouteId().longValue()).getName();
+                } catch (ConfigurationException e) {
+                    if (LoggerUtil.isDebugEnabled())
+                        e.printStackTrace();
+                } catch (ServiceException e) {
+                    if (LoggerUtil.isDebugEnabled())
+                        e.printStackTrace();
+                }
+                mensaje += "\n\n" + "Ruta comercial: \n" + CommercialRouteName;
+                new AlertDialog.Builder(getActivity())
+                        .setIcon(android.R.drawable.ic_dialog_info)
+                        .setTitle("Información")
+                        .setMessage(mensaje)
+                        .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // no hago nada
+                            }
+                        })
+                        .show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

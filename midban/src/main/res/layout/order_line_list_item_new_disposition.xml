@@ -72,7 +72,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:textColor="@color/abc_search_url_text"
+            android:textColor="@color/midban_abc_search_url_text"
             android:textSize="@dimen/h6" />
 
     </LinearLayout>
@@ -96,7 +96,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:textColor="@color/abc_search_url_text"
+            android:textColor="@color/midban_abc_search_url_text"
             android:textSize="@dimen/h6" />
 
     </LinearLayout>

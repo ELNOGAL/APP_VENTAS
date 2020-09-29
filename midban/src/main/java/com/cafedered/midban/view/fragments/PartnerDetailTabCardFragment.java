@@ -225,19 +225,19 @@ public class PartnerDetailTabCardFragment extends BaseSupportFragment {
                     .openDialogForUniqueTextField(
                             longClicked.getTag().toString(),
                             "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$",
-                            partner, "email", true);
+                            partner, "email", true, false);
         if (longClicked.equals(partnerName))
             new OneFieldEditionDialog(longClicked)
                     .openDialogForUniqueTextField(longClicked.getTag()
-                            .toString(), "", partner, "name", true);
+                            .toString(), "", partner, "name", true, false);
         if (longClicked.equals(partnerPhone))
             new OneFieldEditionDialog(longClicked)
                     .openDialogForUniqueTextField(longClicked.getTag()
-                            .toString(), "", partner, "phone", true);
+                            .toString(), "", partner, "phone", true, false);
         if (longClicked.equals(partnerFax))
             new OneFieldEditionDialog(longClicked)
                     .openDialogForUniqueTextField(longClicked.getTag()
-                            .toString(), "", partner, "fax", true);
+                            .toString(), "", partner, "fax", true, false);
     }
 
     @LongClick(views = {

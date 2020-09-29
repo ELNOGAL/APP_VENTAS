@@ -49,7 +49,8 @@
     
     <!-- order -->
     <color name="midban_order_notes_bg">#f8ecb8</color>
-    
+    <color name="midban_abc_search_url_text">#ff7fa87f</color>
+
     <!-- transparent -->
     <color name="transparent">#FFFFFFFF</color>
 

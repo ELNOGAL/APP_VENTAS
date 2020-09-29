@@ -25,7 +25,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/separator_margin"
-                android:layout_weight="1"
                 android:baselineAligned="false"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
@@ -73,9 +72,8 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/separator_margin"
-                        android:layout_weight="1"
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 
@@ -95,9 +93,8 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/separator_margin"
-                        android:layout_weight="1"
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 
@@ -112,18 +109,10 @@
                             android:layout_width="190dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/label_to_value_margin"
+                            android:singleLine="true"
                             android:textSize="@dimen/h5" />
                     </LinearLayout>
                 </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/separator_margin"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
             </LinearLayout>
 
             <LinearLayout
@@ -273,7 +262,7 @@
                     android:layout_marginTop="@dimen/separator_margin"
                     android:drawableEnd="@drawable/general_flecha_arriba"
                     android:text="@string/fragment_order_new_disposition_product_favourites"
-                    android:textColor="@color/abc_search_url_text"
+                    android:textColor="@color/midban_abc_search_url_text"
                     android:textSize="@dimen/h4" />
 
                 <View
@@ -298,7 +287,7 @@
                     android:layout_marginTop="@dimen/separator_margin"
                     android:drawableEnd="@drawable/general_flecha_arriba"
                     android:text="@string/fragment_order_new_disposition_all_catalog"
-                    android:textColor="@color/abc_search_url_text"
+                    android:textColor="@color/midban_abc_search_url_text"
                     android:textSize="@dimen/h4" />
 
                 <View
@@ -355,7 +344,6 @@
                 android:background="@color/midban_order_notes_bg"
                 android:padding="@dimen/button_vertical_padding"
                 android:tag="Notas"
-                android:text="@string/fragment_order_notes_text"
                 android:textSize="@dimen/h5"
                 android:visibility="gone" />
 

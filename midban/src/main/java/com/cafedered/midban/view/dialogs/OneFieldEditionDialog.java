@@ -23,6 +23,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -49,13 +50,14 @@ public class OneFieldEditionDialog extends Dialog {
     }
 
     public void openDialogForUniqueTextField(String name) {
-        openDialogForUniqueTextField(name, "", null, null, true);
+        openDialogForUniqueTextField(name, "", null, null, true, false);
     }
 
     @SuppressLint("DefaultLocale")
     public void openDialogForUniqueTextField(String name,
             final String validatorRegex, final Object obj,
-            final String objectFieldName, final boolean setVisibleOnChange) {
+            final String objectFieldName, final boolean setVisibleOnChange,
+            final boolean setMultiLine) {
         LayoutInflater li = LayoutInflater.from(mContext);
         View dialogView = li
                 .inflate(R.layout.dialog_single_field_edition, null);
@@ -71,6 +73,13 @@ public class OneFieldEditionDialog extends Dialog {
         final EditText textField = (EditText) dialogView
                 .findViewById(R.id.single_field_edition_popup_textfield);
         textField.setText(((TextView) clickedView).getText());
+        if (setMultiLine) {
+            textField.setTextSize(dialogView.getResources().getDimension(R.dimen.h3));
+            textField.setSingleLine(false);
+            textField.setMinLines(3);
+            textField.setGravity(Gravity.START);
+            textField.setSelection(textField.getText().length());
+        }
         alertDialogBuilder.setPositiveButton(R.string.confirm,
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
