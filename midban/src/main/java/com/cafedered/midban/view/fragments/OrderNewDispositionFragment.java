@@ -45,6 +45,7 @@ import com.cafedered.midban.async.OrderSynchronizationService;
 import com.cafedered.midban.conf.ContextAttributes;
 import com.cafedered.midban.conf.MidbanApplication;
 import com.cafedered.midban.entities.AccountPaymentTerm;
+import com.cafedered.midban.entities.CommercialRoute;
 import com.cafedered.midban.entities.Order;
 import com.cafedered.midban.entities.OrderLine;
 import com.cafedered.midban.entities.Partner;
@@ -265,7 +266,7 @@ public class OrderNewDispositionFragment extends BaseSupportFragment implements 
             getActivity().finish();
         } else {
             String title = partner.getName();
-            ((BaseSupportActivity) getActivity()).getSupportActionBar().setTitle(title.length() > 60 ? title.substring(0, 20) + "..." + title.substring(title.length() - 40) : title);
+            ((BaseSupportActivity) getActivity()).getSupportActionBar().setTitle(title.length() > 58 ? title.substring(0, 20) + "..." + title.substring(title.length() - 38) : title);
             calculateRiskLimit(partner);
             OrderRepository.getCurrentOrder().setPartnerId(partner.getId());
             paymentMode.setText(getString(R.string.fragment_partner_detail_tab_card_payment_mode));
@@ -1759,10 +1760,15 @@ y por tanto al escribir un valor en el commercial_partner_id se propaga a las di
             case R.id.info_item:
                 String mensaje = "\n";
                 mensaje += "Dirección entrega: \n" + partner.getContactAddress();
-                String CommercialRouteName = "";
+                String commercialRouteName = "";
                 try {
-                    CommercialRouteName =  CommercialRouteRepository.getInstance().getById(
-                            partner.getCommercialRouteId().longValue()).getName();
+                    CommercialRoute commercialRoute = CommercialRouteRepository.getInstance().getById(
+                            partner.getCommercialRouteId().longValue());
+                    if (commercialRoute != null) {
+                        commercialRouteName = commercialRoute.getName();
+                    } else {
+                        commercialRouteName = "No definida";
+                    }
                 } catch (ConfigurationException e) {
                     if (LoggerUtil.isDebugEnabled())
                         e.printStackTrace();
@@ -1770,7 +1776,7 @@ y por tanto al escribir un valor en el commercial_partner_id se propaga a las di
                     if (LoggerUtil.isDebugEnabled())
                         e.printStackTrace();
                 }
-                mensaje += "\n\n" + "Ruta comercial: \n" + CommercialRouteName;
+                mensaje += "\n\n" + "Ruta comercial: \n" + commercialRouteName;
                 new AlertDialog.Builder(getActivity())
                         .setIcon(android.R.drawable.ic_dialog_info)
                         .setTitle("Información")

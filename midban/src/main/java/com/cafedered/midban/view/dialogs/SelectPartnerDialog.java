@@ -84,6 +84,7 @@ public class SelectPartnerDialog extends Dialog {
                     dialogView.getContext(), R.id.single_field_edition_popup_textfield, partners);
             searchText.setThreshold(2);
             searchText.setAdapter(adapter);
+            searchText.setSingleLine(false);
             if (dismissListener != null) {
                 alertDialogBuilder.setOnDismissListener(dismissListener);
             }
@@ -97,7 +98,7 @@ public class SelectPartnerDialog extends Dialog {
                                     partnerId = Long.parseLong(text.substring(0,
                                             text.indexOf("-")).trim());
                                 }
-                                catch (Exception e){
+                                catch (Exception e) {
                                     MessagesForUser.showMessage(dialogView,
                                             R.string.partner_has_no_ref,
                                             Toast.LENGTH_LONG, Level.SEVERE);

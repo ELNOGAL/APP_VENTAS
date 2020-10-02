@@ -5,30 +5,31 @@
     android:layout_height="wrap_content"
     android:layout_gravity="top|center_horizontal"
     android:background="@color/white"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/dialog_single_field_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/h1"
-        android:gravity="center_horizontal"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
         android:layout_marginBottom="@dimen/activity_vertical_margin"
-        android:layout_marginTop="@dimen/activity_vertical_margin" />
+        android:gravity="center_horizontal"
+        android:textSize="@dimen/h1" />
 
     <AutoCompleteTextView
         android:id="@+id/single_field_edition_popup_textfield"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/midban_partner_header_bg"
-        android:drawableLeft="@drawable/general_buscar"
+        android:drawableStart="@drawable/general_buscar"
         android:drawablePadding="@dimen/separator_margin"
         android:dropDownWidth="match_parent"
         android:dropDownHeight="280dp"
         android:gravity="center_horizontal"
         android:inputType="text"
-        android:paddingLeft="@dimen/separator_margin"
+        android:paddingStart="@dimen/separator_margin"
         android:paddingTop="@dimen/separator_margin"
+        android:paddingEnd="@dimen/separator_margin"
         android:paddingBottom="@dimen/activity_vertical_margin"
         android:textSize="@dimen/h1" />
 

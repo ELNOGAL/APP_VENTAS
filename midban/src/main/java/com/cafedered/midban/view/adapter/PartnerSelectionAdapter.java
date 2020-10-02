@@ -1,6 +1,7 @@
 package com.cafedered.midban.view.adapter;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +31,9 @@ public class PartnerSelectionAdapter extends ArrayAdapter<Partner> {
     private Filter mFilter = new Filter() {
         @Override
         public String convertResultToString(Object resultValue) {
-            return ((Partner)resultValue).getId().toString() + " - " + ((Partner)resultValue).getName();
+            return ((Partner) resultValue).getId().toString() + " - " + ((Partner) resultValue).getName() +
+                    "\n\n===================================\n" +
+                    ((Partner) resultValue).getContactAddress();
         }
 
         @Override
@@ -46,25 +49,18 @@ public class PartnerSelectionAdapter extends ArrayAdapter<Partner> {
                 if (constraint != null)
                     example.setName(constraint.toString());
                 try {
-                    if (constraint != null && constraint.length() > 1)
+                    if (constraint != null && constraint.length() > 1) {
                         suggestions = PartnerRepository.getInstance().getByExampleUser(example, Restriction.OR, false, 100, 0);
-                    else suggestions = new ArrayList<Partner>();
+                    } else {
+                        suggestions = new ArrayList<Partner>();
+                    }
                 } catch (ServiceException e) {
                     if (LoggerUtil.isDebugEnabled())
                         e.printStackTrace();
                 }
-//                for (Partner customer : mCustomers) {
-//                    // Note: change the "contains" to "startsWith" if you only want starting matches
-//                    if (customer.getName().toLowerCase().contains(constraint.toString().toLowerCase())
-//                            || customer.getRef().toLowerCase().contains(constraint.toString().toLowerCase())) {
-//                        suggestions.add(customer);
-//                    }
-//                }
-
                 results.values = suggestions;
                 results.count = suggestions.size();
             }
-
             return results;
         }
 
@@ -101,7 +97,15 @@ public class PartnerSelectionAdapter extends ArrayAdapter<Partner> {
         Partner customer = getItem(position);
 
         TextView name = (TextView) view.findViewById(android.R.id.text1);
-        name.setText(customer.getId().toString() + " - " + customer.getName());
+        String nameText = customer.getId().toString() + " - " + customer.getName();
+        if (nameText.length() > 75)
+            nameText = nameText.substring(0, 75) + "...\n..." + nameText.substring(75, nameText.length() - 1);
+        name.setText(nameText);
+        if (customer.getIsCompany()) {
+            name.setTypeface(null, Typeface.NORMAL);
+        } else {
+            name.setTypeface(null, Typeface.BOLD);
+        }
 
         return view;
     }
