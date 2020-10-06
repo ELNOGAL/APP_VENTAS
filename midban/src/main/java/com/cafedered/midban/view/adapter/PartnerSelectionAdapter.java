@@ -99,7 +99,7 @@ public class PartnerSelectionAdapter extends ArrayAdapter<Partner> {
         TextView name = (TextView) view.findViewById(android.R.id.text1);
         String nameText = customer.getId().toString() + " - " + customer.getName();
         if (nameText.length() > 75)
-            nameText = nameText.substring(0, 75) + "...\n..." + nameText.substring(75, nameText.length() - 1);
+            nameText = nameText.substring(0, 75) + "...\n..." + nameText.substring(75, nameText.length());
         name.setText(nameText);
         if (customer.getIsCompany()) {
             name.setTypeface(null, Typeface.NORMAL);
