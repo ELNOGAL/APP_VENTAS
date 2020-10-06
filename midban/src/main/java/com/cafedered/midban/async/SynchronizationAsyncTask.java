@@ -769,7 +769,7 @@ public class SynchronizationAsyncTask extends AsyncTask<User, String, Boolean> {
             if (lines.get(i).getName() != null) {
                 lineValues.put("description", lines.get(i).getName());
             }
-            lineValues.put("product_uom_qty", lines.get(i).getProductUomQuantity().intValue());
+            lineValues.put("product_uom_qty", lines.get(i).getProductUomQuantity().doubleValue());
             lineValues.put("product_uos_qty", lines.get(i).getProductUosQuantity().doubleValue());
             lineValues.put("product_uom", lines.get(i).getProductUom().intValue());
             lineValues.put("product_uos", lines.get(i).getProductUos().intValue());
