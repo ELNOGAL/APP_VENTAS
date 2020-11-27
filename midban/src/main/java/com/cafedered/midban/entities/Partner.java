@@ -432,7 +432,9 @@ public class Partner extends BaseRemoteEntity {
                 // filters.add(FilterCollection.FilterOperator.AND);
                 filters.add("customer", "=", true);
                 filters.add("user_id", "=", uId);
-                filters.add("customer_state", "in", new String[] {"active", "active_no_sales"});
+                // filters.add("customer_state", "in", new String[] {"active", "active_no_sales"});
+                // El 27-11-2020 Juan quiere que no se sincronicen los que tienen customer_state = "active_no_sales"
+                filters.add("customer_state", "=", "active");
                 filters.add(FilterCollection.FilterOperator.OR);
                 filters.add("is_company", "=", true);
                 filters.add("type", "=", "delivery");
