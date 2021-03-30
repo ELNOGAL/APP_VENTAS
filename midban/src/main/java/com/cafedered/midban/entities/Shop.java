@@ -23,6 +23,7 @@ import com.cafedered.cafedroidlitedao.annotations.Property;
 import com.cafedered.midban.annotations.Remote;
 import com.cafedered.midban.annotations.RemoteProperty;
 import com.debortoliwines.openerp.api.FilterCollection;
+import com.debortoliwines.openerp.api.OpeneERPApiException;
 
 @Entity(tableName = "sale_shop")
 @Remote(object = "sale.shop")
@@ -44,6 +45,14 @@ public class Shop extends BaseRemoteEntity implements Comparable<Order> {
     @Property(columnName = "pricelist_id")
     @RemoteProperty(name = "pricelist_id")
     private Number pricelistId;
+
+    @Property(columnName = "in_app")
+    @RemoteProperty(name = "in_app")
+    private Boolean inApp;
+
+    @Property(columnName = "active")
+    @RemoteProperty(name = "active")
+    private Boolean active;
 
     @Property(columnName = "sequence")
     @RemoteProperty(name = "sequence")
@@ -68,7 +77,15 @@ public class Shop extends BaseRemoteEntity implements Comparable<Order> {
 
     @Override
     public FilterCollection getRemoteFilters() {
-        return null;
+        FilterCollection filters = new FilterCollection();
+        try {
+            filters.add(FilterCollection.FilterOperator.OR);
+            filters.add("active", "=", true);
+            filters.add("active", "=", false);
+        } catch (OpeneERPApiException e) {
+            e.printStackTrace();
+        }
+        return filters;
     }
 
     @Override
@@ -100,6 +117,22 @@ public class Shop extends BaseRemoteEntity implements Comparable<Order> {
 
     public void setPricelistId(Number pricelistId) {
         this.pricelistId = pricelistId;
+    }
+
+    public Boolean getInApp() {
+        return inApp;
+    }
+
+    public void setInApp(Boolean inApp) {
+        this.inApp = inApp;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 
     public Number getSequence() {

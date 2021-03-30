@@ -159,7 +159,7 @@ public class SynchronizationAsyncTask extends AsyncTask<User, String, Boolean> {
             publishProgress(lastPublishedProgress);
 
             try {
-                lastPublishedProgress =new String[] { "Sincronizando tiendas...",
+                lastPublishedProgress = new String[] { "Sincronizando tiendas...",
                         "" + currentProgress++ };
                 publishProgress(lastPublishedProgress);
                 ShopRepository.getInstance().getRemoteObjects(new Shop(),
@@ -171,7 +171,7 @@ public class SynchronizationAsyncTask extends AsyncTask<User, String, Boolean> {
             }
 
             try {
-                lastPublishedProgress =new String[] { "Sincronizando precios...",
+                lastPublishedProgress = new String[] { "Sincronizando precios...",
                         "" + currentProgress++ };
                 publishProgress(lastPublishedProgress);
                 PricelistPricesRepository.getInstance().getRemoteObjects(new PricelistPrices(),
@@ -237,7 +237,7 @@ public class SynchronizationAsyncTask extends AsyncTask<User, String, Boolean> {
             }
 
             try {
-                lastPublishedProgress =new String[] { "Sincronizando rutas comerciales...",
+                lastPublishedProgress = new String[] { "Sincronizando rutas comerciales...",
                         "" + currentProgress++ };
                 publishProgress(lastPublishedProgress);
                 CommercialRouteRepository.getInstance().getRemoteObjects(new CommercialRoute(),
@@ -258,7 +258,7 @@ public class SynchronizationAsyncTask extends AsyncTask<User, String, Boolean> {
                     user.getPasswd());
 
             try {
-                lastPublishedProgress =new String[] { "Sincronizando clientes...",
+                lastPublishedProgress = new String[] { "Sincronizando clientes...",
                         "" + currentProgress++ };
                 publishProgress(lastPublishedProgress);
                 PartnerRepository.getInstance().getRemoteObjects(new Partner(),
@@ -290,7 +290,7 @@ public class SynchronizationAsyncTask extends AsyncTask<User, String, Boolean> {
                         "Error al sincronizar cuentas contables.");
             }
             try {
-                lastPublishedProgress =new String[] { "Sincronizando cobros cliente...",
+                lastPublishedProgress = new String[] { "Sincronizando cobros cliente...",
                         "" + currentProgress++ };
                 publishProgress(lastPublishedProgress);
                 AccountMoveLineRepository.getInstance().getRemoteObjects(new AccountMoveLine(),

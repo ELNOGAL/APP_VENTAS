@@ -57,6 +57,8 @@ public class OrderListFragment extends BaseSupportFragment implements
 
     @Wire(view = R.id.fragment_order_num_orders)
     TextView numOrders;
+    @Wire(view = R.id.fragment_order_amount_orders_untaxed)
+    TextView amountOrdersUntaxed;
     @Wire(view = R.id.fragment_order_amount_orders)
     TextView amountOrders;
     @Wire(view = R.id.fragment_order_margin_orders)
@@ -174,26 +176,40 @@ public class OrderListFragment extends BaseSupportFragment implements
                 numOrders.setText(view.getResources().getString(
                         R.string.fragment_order_list_num_orders)
                         + " " + result.size());
-                float amount = 0.0F;
+                float amount_untaxed = 0.0F;
+                float amount_total = 0.0F;
                 float margin = 0.0F;
+                float margin_perc = 0.0F;
                 for (Order order : result) {
-                    amount += order.getAmountTotal() != null ? order
+                    amount_untaxed += order.getAmountUntaxed() != null ? order
+                            .getAmountUntaxed().floatValue() : 0.0F;
+                    amount_total += order.getAmountTotal() != null ? order
                             .getAmountTotal().floatValue() : 0.0F;
                     margin += order.getMargin() != null ? order.getMargin()
                             .floatValue() : 0.0F;
                 }
+                if (amount_total != 0.0F) {
+                    margin_perc = 100 * margin / amount_total;
+                }
+                amountOrdersUntaxed.setText(view.getResources().getString(
+                        R.string.fragment_order_list_amount_untaxed_orders)
+                        + " "
+                        + new BigDecimal(amount_untaxed).setScale(2, RoundingMode.HALF_UP).toString()
+                        + " " + view.getResources().getString(
+                        R.string.currency_symbol));
                 amountOrders.setText(view.getResources().getString(
                         R.string.fragment_order_list_amount_orders)
                         + " "
-                        + new BigDecimal(amount).setScale(2, RoundingMode.HALF_UP).toString()
+                        + new BigDecimal(amount_total).setScale(2, RoundingMode.HALF_UP).toString()
                         + " " + view.getResources().getString(
-                                R.string.currency_symbol));
+                        R.string.currency_symbol));
                 marginOrders.setText(view.getResources().getString(
                         R.string.fragment_order_list_margin_orders)
                         + " "
                         + new BigDecimal(margin).setScale(2, RoundingMode.HALF_UP).toString()
                         + " " + view.getResources().getString(
-                                R.string.currency_symbol));
+                        R.string.currency_symbol)
+                        + " (" + new BigDecimal(margin_perc).setScale(2, RoundingMode.HALF_UP).toString() + "%)");
             }
         }.execute();
     }

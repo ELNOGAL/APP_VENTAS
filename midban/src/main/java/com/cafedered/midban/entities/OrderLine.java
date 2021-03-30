@@ -84,6 +84,14 @@ public class OrderLine extends BaseRemoteEntity {
     @RemoteProperty(name = "discount")
     private Number discount;
 
+    @Property(columnName = "margin", type = Property.SQLType.REAL)
+    @RemoteProperty(name = "margin")
+    private Number margin;
+
+    @Property(columnName = "margin_perc", type = Property.SQLType.REAL)
+    @RemoteProperty(name = "margin_perc")
+    private Number marginPerc;
+
     @Property(columnName = "order_partner_id")
     @RemoteProperty(name = "order_partner_id")
     private Number orderPartnerId;
@@ -291,6 +299,22 @@ public class OrderLine extends BaseRemoteEntity {
         if (discountType == null)
             discountType = "";
         this.discountType = discountType;
+    }
+
+    public Number getMargin() {
+        return margin;
+    }
+
+    public void setMargin(Number margin) {
+        this.margin = margin;
+    }
+
+    public Number getMarginPerc() {
+        return marginPerc;
+    }
+
+    public void setMarginPerc(Number marginPerc) {
+        this.marginPerc = marginPerc;
     }
 
     public Number getOrderPartnerId() {

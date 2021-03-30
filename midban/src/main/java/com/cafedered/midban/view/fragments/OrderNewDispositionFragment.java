@@ -129,6 +129,8 @@ public class OrderNewDispositionFragment extends BaseSupportFragment implements 
     private TextView amountUntaxedView;
     @Wire(view = R.id.fragment_order_new_disposition_credit_available)
     private TextView creditAvailableView;
+    @Wire(view = R.id.fragment_order_new_disposition_margin)
+    private TextView marginView;
     @Wire(view = R.id.fragment_order_new_disposition_number_of_lines)
     private TextView numberOfLinesView;
     @Wire(view = R.id.fragment_order_new_disposition_product_search_field)
@@ -326,6 +328,11 @@ public class OrderNewDispositionFragment extends BaseSupportFragment implements 
                 amountUntaxedView.setText("Base: " + OrderRepository.getCurrentOrder()
                         .getAmountUntaxed().toString()
                         + getResources().getString(R.string.currency_symbol));
+            if (OrderRepository.getCurrentOrder().getMargin() != null)
+                marginView.setText("Margen: " + OrderRepository.getCurrentOrder()
+                        .getMargin().toString()
+                        + getResources().getString(R.string.currency_symbol)
+                        + " (" + OrderRepository.getCurrentOrder().getMarginPerc().toString() + "%)");
             refView.setText(OrderRepository.getCurrentOrder().getClientOrderRef());
             if (OrderRepository.getCurrentOrder().getRequestedDate() != null) {
                 try {
@@ -393,6 +400,11 @@ public class OrderNewDispositionFragment extends BaseSupportFragment implements 
                         amountUntaxedView.setText("Base: " + OrderRepository.getCurrentOrder()
                                 .getAmountUntaxed().toString()
                                 + " " + getResources().getString(R.string.currency_symbol));
+                    if (OrderRepository.getCurrentOrder().getMargin() != null)
+                        marginView.setText("Margen: " + OrderRepository.getCurrentOrder()
+                                .getMargin().toString()
+                                + " " + getResources().getString(R.string.currency_symbol)
+                                + " (" + OrderRepository.getCurrentOrder().getMarginPerc().toString() + "%)");
                     if (readOnlyMode) {
                         deliveryDateView.setEnabled(false);
                     } else {
@@ -682,8 +694,10 @@ y por tanto al escribir un valor en el commercial_partner_id se propaga a las di
             builderSingle.setTitle("Tienda:");
 
             final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_single_choice); //  select_dialog_singlechoice
-            for (Shop shop: shops){
-               arrayAdapter.add(shop.getName());
+            for (Shop shop: shops) {
+                if (shop.getInApp() && shop.getActive()) {
+                    arrayAdapter.add(shop.getName());
+                }
             }
 
             builderSingle.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
@@ -802,6 +816,11 @@ y por tanto al escribir un valor en el commercial_partner_id se propaga a las di
                                         amountUntaxedView.setText("Base: " + OrderRepository.getCurrentOrder()
                                                 .getAmountUntaxed().toString()
                                                 + getResources().getString(R.string.currency_symbol));
+                                    if (OrderRepository.getCurrentOrder().getMargin() != null)
+                                        marginView.setText("Margen: " + OrderRepository.getCurrentOrder()
+                                                .getMargin().toString()
+                                                + getResources().getString(R.string.currency_symbol)
+                                                + " (" + OrderRepository.getCurrentOrder().getMarginPerc().toString() + "%)");
                                     orderLinesListView.setAdapter(new OrderLinesNewDispositionAdapter(OrderNewDispositionFragment.this.getActivity(),
                                             OrderRepository.getCurrentOrder().getLines(), OrderNewDispositionFragment.this));
                                 } catch (Exception e) {
@@ -1385,6 +1404,7 @@ y por tanto al escribir un valor en el commercial_partner_id se propaga a las di
         double amountUntaxed = 0.0d;
         double amountTax = 0.0d;
         double margin = 0.0d;
+        double marginPerc = 0.0d;
 //        productSearchField.setText("");
         for (OrderLine line : OrderRepository.getCurrentOrder().getLines()) {
             if (line.getDiscount() != null) {
@@ -1429,9 +1449,18 @@ y por tanto al escribir un valor en el commercial_partner_id se propaga a las di
             } catch (ConfigurationException e) {
             } catch (ServiceException e) {
             }
-            margin += line.getProductUomQuantity().doubleValue()
-                    * (line.getPriceUnit().doubleValue() - line.getProduct()
-                    .getStandardPrice().doubleValue());
+            if (line.getId() != null && line.getMargin() != null) {
+                // Si tiene id usamos el valor de margen en lugar de calcularlo (no es un pedido nuevo)
+                margin += line.getMargin().doubleValue();
+            } else {
+                // Si no tiene id se trata de un pedido nuevo y calculamos el margen
+                margin += line.getPriceSubtotal().doubleValue() -
+                        line.getProductUomQuantity().doubleValue()
+                                * line.getProduct().getStandardPrice().doubleValue();
+            }
+        }
+        if (amountUntaxed != 0) {
+            marginPerc = 100 * margin / amountUntaxed;
         }
         OrderRepository.getCurrentOrder()
                 .setAmountUntaxed(
@@ -1444,6 +1473,8 @@ y por tanto al escribir un valor en el commercial_partner_id se propaga a las di
                         RoundingMode.HALF_UP));
         OrderRepository.getCurrentOrder().setMargin(
                 new BigDecimal(margin).setScale(2, RoundingMode.HALF_UP));
+        OrderRepository.getCurrentOrder().setMarginPerc(
+                new BigDecimal(marginPerc).setScale(2, RoundingMode.HALF_UP));
     }
 
     public void onLineSelected(final OrderLine line) {

@@ -393,11 +393,44 @@ public class OrderLinesNewDispositionAdapter extends BaseAdapter {
                     alert.show();
                 }
             };
+            View.OnClickListener dialogMargin = new View.OnClickListener () {
+                @Override
+                public void onClick(View v) {
+                    double margin = 0.0d;
+                    double marginPerc = 0.0d;
+                    AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext());
+                    alert.setTitle("Información:");
+                    if (line.getId() != null && line.getMargin() != null) {
+                        // Si tiene id usamos el valor de margen en lugar de calcularlo (no es un pedido nuevo)
+                        margin += line.getMargin().doubleValue();
+                    } else {
+                        // Si no tiene id se trata de un pedido nuevo y calculamos el margen
+                        margin += line.getPriceSubtotal().doubleValue() -
+                                line.getProductUomQuantity().doubleValue()
+                                        * line.getProduct().getStandardPrice().doubleValue();
+                    }
+                    if (line.getPriceSubtotal().doubleValue() != 0) {
+                        marginPerc = 100 * margin / line.getPriceSubtotal().doubleValue();
+                    }
+                    String mensaje =
+                            "Importe linea: " + new BigDecimal(line.getPriceSubtotal().doubleValue()).setScale(2, RoundingMode.HALF_UP) + " €" + "\n" +
+                            "Margen: " + new BigDecimal(margin).setScale(2, RoundingMode.HALF_UP) + " €"
+                            + " (" + new BigDecimal(marginPerc).setScale(2, RoundingMode.HALF_UP) + "%)";
+                    alert.setMessage(mensaje);
+                    alert.setNegativeButton("Cerrar", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            dialog.cancel();
+                        }
+                    });
+                    alert.show();
+                }
+            };
             holder.discount.setOnClickListener(dialogDiscount);
             holder.unitUom.setOnClickListener(dialogQuantityUom);
             holder.unitUos.setOnClickListener(dialogQuantityUos);
             holder.quantityUom.setOnClickListener(dialogQuantityUom);
             holder.quantityUos.setOnClickListener(dialogQuantityUos);
+            holder.total.setOnClickListener(dialogMargin);
             }
         return vi;
     }

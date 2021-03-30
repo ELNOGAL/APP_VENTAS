@@ -133,8 +133,7 @@ public class PartnerHistoryOrderDetailFragment extends BaseSupportFragment {
         if (null != order.getLinesPersisted()) {
             orderLines.setText("" + order.getLinesPersisted().size());
         } else {
-            orderLines
-                    .setText(getResources().getString(R.string.not_available));
+            orderLines.setText(getResources().getString(R.string.not_available));
         }
 
         if (null != order.getAmountTotal()) {
@@ -145,7 +144,9 @@ public class PartnerHistoryOrderDetailFragment extends BaseSupportFragment {
                     .getString(R.string.not_available));
         }
         if (null != order.getMargin()) {
-            orderMargin.setText(order.getMargin().toString());
+            orderMargin.setText(order.getMargin().toString()
+                    + getResources().getString(R.string.currency_symbol)
+                    + " (" + order.getMarginPerc().toString() + "%)");
         } else {
             orderMargin.setText(getResources()
                     .getString(R.string.not_available));
