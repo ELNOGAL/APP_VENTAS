@@ -31,8 +31,12 @@ import com.cafedered.midban.R;
 import com.cafedered.midban.conf.ContextAttributes;
 import com.cafedered.midban.conf.MidbanApplication;
 import com.cafedered.midban.entities.Order;
+import com.cafedered.midban.entities.Shop;
 import com.cafedered.midban.service.repositories.OrderRepository;
+import com.cafedered.midban.service.repositories.ShopRepository;
 import com.cafedered.midban.utils.DateUtil;
+import com.cafedered.midban.utils.exceptions.ConfigurationException;
+import com.cafedered.midban.utils.exceptions.ServiceException;
 import com.cafedered.midban.view.activities.OrderActivity;
 
 import java.math.BigDecimal;
@@ -140,8 +144,23 @@ public class OrderListItemAdapter extends BaseAdapter {
             }
         });
         holder.code.setText(order.getName());
+        String shop_name = "";
+        if (order.getShopId() != null) {
+            try {
+                Shop shop = ShopRepository.getInstance().getById(order.getShopId().longValue());
+                //if (shop != null && shop.getIndirectInvoicing() == true) {
+                if (shop != null) {
+                    //holder.code.setText(order.getName() + " i");
+                    shop_name = shop.getName() == null ? "" : shop.getName();
+                }
+            } catch (ConfigurationException e) {
+                e.printStackTrace();
+            } catch (ServiceException e) {
+                e.printStackTrace();
+            }
+        }
         // holder.clientOrderRef.setText(order.getClientOrderRef() + "");
-        holder.clientOrderRef.setText(order.getClientOrderRef() == null ? "" : order.getClientOrderRef());
+        holder.clientOrderRef.setText(order.getClientOrderRef() == null ? shop_name : shop_name + "\n" + order.getClientOrderRef());
         holder.amount.setText("Total: " + new BigDecimal(order.getAmountTotal().floatValue()).setScale(2, RoundingMode.HALF_UP).toString()
                 + " " + holder.amount.getResources().getString(
                         R.string.currency_symbol));

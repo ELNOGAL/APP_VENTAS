@@ -323,15 +323,15 @@ public class OrderNewDispositionFragment extends BaseSupportFragment implements 
             if (OrderRepository.getCurrentOrder().getAmountTotal() != null)
                 amountTotalView.setText("Total: " + OrderRepository.getCurrentOrder()
                         .getAmountTotal().toString()
-                        + getResources().getString(R.string.currency_symbol));
+                        + " " + getResources().getString(R.string.currency_symbol));
             if (OrderRepository.getCurrentOrder().getAmountUntaxed() != null)
                 amountUntaxedView.setText("Base: " + OrderRepository.getCurrentOrder()
                         .getAmountUntaxed().toString()
-                        + getResources().getString(R.string.currency_symbol));
+                        + " " + getResources().getString(R.string.currency_symbol));
             if (OrderRepository.getCurrentOrder().getMargin() != null)
                 marginView.setText("Margen: " + OrderRepository.getCurrentOrder()
                         .getMargin().toString()
-                        + getResources().getString(R.string.currency_symbol)
+                        + " " + getResources().getString(R.string.currency_symbol)
                         + " (" + OrderRepository.getCurrentOrder().getMarginPerc().toString() + "%)");
             refView.setText(OrderRepository.getCurrentOrder().getClientOrderRef());
             if (OrderRepository.getCurrentOrder().getRequestedDate() != null) {
@@ -811,15 +811,15 @@ y por tanto al escribir un valor en el commercial_partner_id se propaga a las di
                                             + OrderRepository.getCurrentOrder().getLines().size());
                                     amountTotalView.setText("Total: " + OrderRepository.getCurrentOrder()
                                             .getAmountTotal().toString()
-                                            + getResources().getString(R.string.currency_symbol));
+                                            + " " + getResources().getString(R.string.currency_symbol));
                                     if (OrderRepository.getCurrentOrder().getAmountUntaxed() != null)
                                         amountUntaxedView.setText("Base: " + OrderRepository.getCurrentOrder()
                                                 .getAmountUntaxed().toString()
-                                                + getResources().getString(R.string.currency_symbol));
+                                                + " " + getResources().getString(R.string.currency_symbol));
                                     if (OrderRepository.getCurrentOrder().getMargin() != null)
                                         marginView.setText("Margen: " + OrderRepository.getCurrentOrder()
                                                 .getMargin().toString()
-                                                + getResources().getString(R.string.currency_symbol)
+                                                + " " + getResources().getString(R.string.currency_symbol)
                                                 + " (" + OrderRepository.getCurrentOrder().getMarginPerc().toString() + "%)");
                                     orderLinesListView.setAdapter(new OrderLinesNewDispositionAdapter(OrderNewDispositionFragment.this.getActivity(),
                                             OrderRepository.getCurrentOrder().getLines(), OrderNewDispositionFragment.this));

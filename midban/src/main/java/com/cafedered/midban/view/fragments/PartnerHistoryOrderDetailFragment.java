@@ -38,7 +38,9 @@ import com.cafedered.midban.conf.MidbanApplication;
 import com.cafedered.midban.entities.Order;
 import com.cafedered.midban.entities.OrderLine;
 import com.cafedered.midban.entities.Partner;
+import com.cafedered.midban.entities.Shop;
 import com.cafedered.midban.service.repositories.OrderRepository;
+import com.cafedered.midban.service.repositories.ShopRepository;
 import com.cafedered.midban.utils.DateUtil;
 import com.cafedered.midban.utils.MessagesForUser;
 import com.cafedered.midban.utils.exceptions.ConfigurationException;
@@ -83,6 +85,9 @@ public class PartnerHistoryOrderDetailFragment extends BaseSupportFragment {
     @Wire(view = R.id.fragment_partner_history_order_detail_address)
     private TextView orderAddress;
 
+    @Wire(view = R.id.fragment_partner_history_order_detail_shop)
+    private TextView orderShop;
+
     @Wire(view = R.id.fragment_partner_history_order_detail_list_listview)
     ListView list;
 
@@ -125,10 +130,17 @@ public class PartnerHistoryOrderDetailFragment extends BaseSupportFragment {
             orderDate.setText(getResources().getString(R.string.not_available));
         }
 
-        // TODO how to get order delivery date?
-        orderDeliveryDate.setText(getResources().getString(
-                R.string.fragment_partner_history_order_detail_delivery_date)
-                + " " + getResources().getString(R.string.not_available));
+        try {
+            if (order.getRequestedDate() != null)
+                orderDeliveryDate.setText(DateUtil.toFormattedString(
+                        DateUtil.parseDate(order.getRequestedDate(),
+                                "yyyy-MM-dd HH:mm:ss"), "dd.MM.yyyy"));
+            else
+                orderDeliveryDate.setText(getResources().getString(
+                        R.string.not_available));
+        } catch (ParseException e) {
+            orderDeliveryDate.setText(getResources().getString(R.string.not_available));
+        }
 
         if (null != order.getLinesPersisted()) {
             orderLines.setText("" + order.getLinesPersisted().size());
@@ -136,20 +148,36 @@ public class PartnerHistoryOrderDetailFragment extends BaseSupportFragment {
             orderLines.setText(getResources().getString(R.string.not_available));
         }
 
-        if (null != order.getAmountTotal()) {
-            orderAmount.setText(order.getAmountTotal().toString()
-                    + getResources().getString(R.string.currency_symbol));
+        if (null != order.getAmountTotal() && null != order.getAmountUntaxed()) {
+            orderAmount.setText(
+                    order.getAmountUntaxed().toString() + " " + getResources().getString(R.string.currency_symbol) +
+                    " / " +
+                    order.getAmountTotal().toString() + " " + getResources().getString(R.string.currency_symbol));
         } else {
             orderAmount.setText(getResources()
                     .getString(R.string.not_available));
         }
         if (null != order.getMargin()) {
             orderMargin.setText(order.getMargin().toString()
-                    + getResources().getString(R.string.currency_symbol)
+                    + " " + getResources().getString(R.string.currency_symbol)
                     + " (" + order.getMarginPerc().toString() + "%)");
         } else {
             orderMargin.setText(getResources()
                     .getString(R.string.not_available));
+        }
+
+        orderShop.setText(getResources().getString(R.string.not_available));
+        if (order.getShopId() != null) {
+            try {
+                Shop shop = ShopRepository.getInstance().getById(order.getShopId().longValue());
+                if (shop != null) {
+                    orderShop.setText(shop.getName() == null ? getResources().getString(R.string.not_available) : shop.getName());
+                }
+            } catch (ConfigurationException e) {
+                e.printStackTrace();
+            } catch (ServiceException e) {
+                e.printStackTrace();
+            }
         }
 
         orderAddress.setText(partner.getCompleteAddress());

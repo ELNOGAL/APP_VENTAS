@@ -144,7 +144,7 @@ public class PartnerDeliveryNoteDetailFragment extends BaseSupportFragment {
             stockPickingOutAmount.setText(new BigDecimal(relatedOrder
                     .getAmountTotal().doubleValue()).setScale(2,
                     RoundingMode.HALF_UP).toString()
-                    + getResources().getString(R.string.currency_symbol));
+                    + " " + getResources().getString(R.string.currency_symbol));
         } else {
             stockPickingOutAmount.setText(getResources().getString(
                     R.string.not_available));

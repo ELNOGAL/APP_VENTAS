@@ -47,14 +47,14 @@
                             android:layout_gravity="left"
                             android:layout_marginRight="@dimen/separator_margin"
                             android:text="@string/fragment_partner_history_order_detail_order_number"
-                            android:textSize="@dimen/h1" />
+                            android:textSize="@dimen/h1"
+                            android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/fragment_partner_history_order_detail_order_number"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="left"
-                            android:textColor="@color/midban_secondary_text_color"
                             android:textSize="@dimen/h1" />
                     </LinearLayout>
 
@@ -70,7 +70,8 @@
                             android:layout_gravity="left"
                             android:layout_marginRight="@dimen/separator_margin"
                             android:text="@string/fragment_partner_history_order_detail_date"
-                            android:textSize="@dimen/h3" />
+                            android:textSize="@dimen/h3"
+                            android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/fragment_partner_history_order_detail_order_date"
@@ -80,12 +81,28 @@
                             android:textSize="@dimen/h3" />
                     </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/fragment_partner_history_order_detail_delivery_date"
-                        android:layout_width="match_parent"
+                    <LinearLayout
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="left"
-                        android:textSize="@dimen/h3" />
+                        android:orientation="horizontal" >
+
+                        <TextView
+                            android:id="@+id/fragment_partner_history_order_detail_delivery_date_label"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="left"
+                            android:layout_marginRight="@dimen/separator_margin"
+                            android:text="@string/fragment_partner_history_order_detail_delivery_date"
+                            android:textSize="@dimen/h3"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/fragment_partner_history_order_detail_delivery_date"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="left"
+                            android:textSize="@dimen/h3" />
+                    </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -99,7 +116,8 @@
                             android:layout_gravity="left"
                             android:layout_marginRight="@dimen/separator_margin"
                             android:text="@string/fragment_partner_history_order_detail_lines"
-                            android:textSize="@dimen/h3" />
+                            android:textSize="@dimen/h3"
+                            android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/fragment_partner_history_order_detail_lines"
@@ -121,7 +139,8 @@
                             android:layout_gravity="left"
                             android:layout_marginRight="@dimen/separator_margin"
                             android:text="@string/fragment_partner_history_order_detail_amount"
-                            android:textSize="@dimen/h3" />
+                            android:textSize="@dimen/h3"
+                            android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/fragment_partner_history_order_detail_amount"
@@ -140,10 +159,11 @@
                             android:id="@+id/fragment_partner_history_order_detail_margin_label"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginRight="@dimen/separator_margin"
                             android:layout_gravity="left"
+                            android:layout_marginRight="@dimen/separator_margin"
                             android:text="@string/fragment_partner_history_order_detail_margin"
-                            android:textSize="@dimen/h3" />
+                            android:textSize="@dimen/h3"
+                            android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/fragment_partner_history_order_detail_margin"
@@ -164,14 +184,30 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1.2"
                     android:orientation="vertical"
-                    android:padding="@dimen/activity_horizontal_margin" >
+                    android:padding="10dp" >
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:text="@string/fragment_partner_history_order_detail_shop"
+                        android:textSize="@dimen/h3"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/fragment_partner_history_order_detail_shop"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:textSize="@dimen/h3" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
                         android:text="@string/fragment_partner_history_order_detail_address"
-                        android:textSize="@dimen/h3" />
+                        android:textSize="@dimen/h3"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/fragment_partner_history_order_detail_address"

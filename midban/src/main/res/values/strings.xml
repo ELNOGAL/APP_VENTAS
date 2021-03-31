@@ -3,7 +3,7 @@
 
     <string name="app_name">Ventas Valquin</string>
     <string name="action_settings">Settings</string>
-    <string name="configuration_version">Versión: 1.0.9 - Fecha: 30/03/2021 - PGC</string>
+    <string name="configuration_version">Versión: 1.1.0 - Fecha: 31/03/2021 - PGC</string>
 
     <!-- configuration parameters -->
     <string name="database_name">midban</string>
@@ -556,6 +556,7 @@
     <string name="product_not_selected">Ha de seleccionar un producto</string>
     <string name="fragment_order_new_disposition_ref_tv">Referencia:</string>
     <string name="fragment_order_new_disposition_shop_tv">Tienda:</string>
+    <string name="fragment_partner_history_order_detail_shop">Tienda:</string>
     <string name="fragment_order_new_disposition_delivery_date_tv">Entrega:</string>
     <string name="fragment_order_new_disposition_product_favourites">Favoritos</string>
     <string name="fragment_order_new_disposition_loading_items">Cargando...</string>

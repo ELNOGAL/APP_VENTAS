@@ -133,7 +133,7 @@ public class InvoiceDetailActivity extends BaseSupportActivity {
             linePrice.setText(""
                     + new BigDecimal(line.getPriceUnit().doubleValue())
                             .setScale(2, RoundingMode.HALF_UP)
-                    + getResources().getString(R.string.currency_symbol));
+                    + " " + getResources().getString(R.string.currency_symbol));
             linePrice.setLayoutParams(new TableRow.LayoutParams(0,
                     LayoutParams.WRAP_CONTENT, 1f));
             linePrice.setGravity(Gravity.CENTER);
@@ -146,20 +146,20 @@ public class InvoiceDetailActivity extends BaseSupportActivity {
                 R.string.activity_invoice_detail_unit_amount_without_taxes)
                 + " "
                 + invoice.getAmountUntaxed()
-                + getResources().getString(R.string.currency_symbol));
+                + " " + getResources().getString(R.string.currency_symbol));
         TextView amountTax = (TextView) findViewById(R.id.activity_invoice_detail_amount_tax);
         amountTax.setText(getResources().getString(
                 R.string.activity_invoice_detail_unit_amount_taxes)
                 + " "
                 + invoice.getAmountTax()
-                + getResources().getString(R.string.currency_symbol));
+                + " " + getResources().getString(R.string.currency_symbol));
         TextView amountTotal = (TextView) findViewById(R.id.activity_invoice_detail_amount_total);
         amountTotal.setText(getResources().getString(
                 R.string.activity_invoice_detail_unit_amount_total)
                 + " "
                 + new BigDecimal(invoice.getAmountTotal().floatValue())
                         .setScale(2, RoundingMode.HALF_UP)
-                + getResources().getString(R.string.currency_symbol));
+                + " " + getResources().getString(R.string.currency_symbol));
     }
 
     @Override

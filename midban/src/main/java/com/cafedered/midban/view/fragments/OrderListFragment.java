@@ -33,10 +33,13 @@ import com.cafedered.midban.annotations.Wire;
 import com.cafedered.midban.conf.ContextAttributes;
 import com.cafedered.midban.conf.MidbanApplication;
 import com.cafedered.midban.entities.Order;
+import com.cafedered.midban.entities.Shop;
 import com.cafedered.midban.service.repositories.OrderRepository;
 import com.cafedered.midban.service.repositories.PartnerRepository;
+import com.cafedered.midban.service.repositories.ShopRepository;
 import com.cafedered.midban.utils.LoggerUtil;
 import com.cafedered.midban.utils.MessagesForUser;
+import com.cafedered.midban.utils.exceptions.ConfigurationException;
 import com.cafedered.midban.utils.exceptions.ServiceException;
 import com.cafedered.midban.view.adapter.OrderListItemAdapter;
 import com.cafedered.midban.view.base.BaseSupportFragment;
@@ -180,16 +183,30 @@ public class OrderListFragment extends BaseSupportFragment implements
                 float amount_total = 0.0F;
                 float margin = 0.0F;
                 float margin_perc = 0.0F;
+                float amount_untaxed_direct_invoicing = 0.0F;
                 for (Order order : result) {
                     amount_untaxed += order.getAmountUntaxed() != null ? order
                             .getAmountUntaxed().floatValue() : 0.0F;
                     amount_total += order.getAmountTotal() != null ? order
                             .getAmountTotal().floatValue() : 0.0F;
-                    margin += order.getMargin() != null ? order.getMargin()
-                            .floatValue() : 0.0F;
+                    if (order.getShopId() != null) {
+                        try {
+                            Shop shop = ShopRepository.getInstance().getById(order.getShopId().longValue());
+                            if (shop != null && shop.getIndirectInvoicing() == false) {
+                                amount_untaxed_direct_invoicing += order.getAmountUntaxed() != null ? order
+                                        .getAmountUntaxed().floatValue() : 0.0F;
+                                margin += order.getMargin() != null ? order
+                                        .getMargin().floatValue() : 0.0F;
+                            }
+                        } catch (ConfigurationException e) {
+                            e.printStackTrace();
+                        } catch (ServiceException e) {
+                            e.printStackTrace();
+                        }
+                    }
                 }
-                if (amount_total != 0.0F) {
-                    margin_perc = 100 * margin / amount_total;
+                if (amount_untaxed_direct_invoicing != 0.0F) {
+                    margin_perc = 100 * margin / amount_untaxed_direct_invoicing;
                 }
                 amountOrdersUntaxed.setText(view.getResources().getString(
                         R.string.fragment_order_list_amount_untaxed_orders)

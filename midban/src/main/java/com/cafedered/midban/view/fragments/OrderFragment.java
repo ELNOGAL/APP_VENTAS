@@ -196,7 +196,7 @@ public class OrderFragment extends BaseSupportFragment implements IProductSelect
         if (OrderRepository.getCurrentOrder().getAmountTotal() != null)
             orderTotalAmount.setText(OrderRepository.getCurrentOrder()
                     .getAmountTotal().toString()
-                    + getResources().getString(R.string.currency_symbol));
+                    + " " + getResources().getString(R.string.currency_symbol));
         if (OrderRepository.getCurrentOrder().getDateOrder() != null) {
             try {
                 orderDeliveryDate.setText(DateUtil.toFormattedString(DateUtil.parseDate(OrderRepository.getCurrentOrder().getDateOrder()), "dd.MM.yyyy"));
@@ -420,14 +420,14 @@ public class OrderFragment extends BaseSupportFragment implements IProductSelect
         calculateAmounts();
         orderTotalAmount.setText(OrderRepository.getCurrentOrder()
                 .getAmountTotal().toString()
-                + getResources().getString(R.string.currency_symbol));
+                + " " + getResources().getString(R.string.currency_symbol));
         if (OrderRepository.getCurrentOrder().getAmountUntaxed().floatValue() != 0)
             orderMarginAmount.setText(new BigDecimal((OrderRepository
                     .getCurrentOrder().getAmountUntaxed().floatValue()
                     * OrderRepository.getCurrentOrder().getMargin()
                             .floatValue() / 100F)).setScale(2,
                     RoundingMode.HALF_UP).toString()
-                    + getResources().getString(R.string.currency_symbol)
+                    + " " + getResources().getString(R.string.currency_symbol)
                     + " ("
                     + new BigDecimal(OrderRepository.getCurrentOrder()
                             .getMargin().floatValue()
