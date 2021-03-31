@@ -148,9 +148,7 @@ public class OrderListItemAdapter extends BaseAdapter {
         if (order.getShopId() != null) {
             try {
                 Shop shop = ShopRepository.getInstance().getById(order.getShopId().longValue());
-                //if (shop != null && shop.getIndirectInvoicing() == true) {
                 if (shop != null) {
-                    //holder.code.setText(order.getName() + " i");
                     shop_name = shop.getName() == null ? "" : shop.getName();
                 }
             } catch (ConfigurationException e) {
@@ -159,8 +157,8 @@ public class OrderListItemAdapter extends BaseAdapter {
                 e.printStackTrace();
             }
         }
-        // holder.clientOrderRef.setText(order.getClientOrderRef() + "");
-        holder.clientOrderRef.setText(order.getClientOrderRef() == null ? shop_name : shop_name + "\n" + order.getClientOrderRef());
+        holder.clientOrderRef.setText(
+                order.getClientOrderRef() == null || order.getClientOrderRef().equals("") ? shop_name : shop_name + "\n" + order.getClientOrderRef());
         holder.amount.setText("Total: " + new BigDecimal(order.getAmountTotal().floatValue()).setScale(2, RoundingMode.HALF_UP).toString()
                 + " " + holder.amount.getResources().getString(
                         R.string.currency_symbol));
