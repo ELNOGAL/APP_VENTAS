@@ -146,7 +146,7 @@ public class InvoiceRepository extends BaseRepository<Invoice, InvoiceDAO> {
         voucher.setId(voucherId.longValue());
         VoucherRepository.getInstance().saveOrUpdate(voucher);
         try {
-            getRemoteObjects(invoice, user.getLogin(), user.getPasswd(), false);
+            getRemoteObjects(invoice, user.getLogin(), user.getPasswd(), false, false);
         } catch (Exception e) {
             if (LoggerUtil.isDebugEnabled())
                 e.printStackTrace();

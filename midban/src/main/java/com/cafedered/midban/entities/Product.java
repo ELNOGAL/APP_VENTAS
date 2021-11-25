@@ -50,11 +50,7 @@ public class Product extends BaseRemoteEntity {
     @RemoteProperty(name = "image")
     private byte[] imageMedium;
 
-    @Property(columnName = "image_small")
-    @RemoteProperty(name = "image_small")
-    private byte[] imageSmall;
-
-    @Property(columnName = "name_template")
+     @Property(columnName = "name_template")
     @RemoteProperty(name = "name_template")
     private String nameTemplate;
 
@@ -63,27 +59,15 @@ public class Product extends BaseRemoteEntity {
     private Number productTmplId;
 
     @Property(columnName = "ul")
-    @RemoteProperty(name = "ul",
-            entityRef = ProductUl.class,
-            repositoryRef = ProductUlRepository.class,
-            orderedProperties = { "id", "name" })
+    // @RemoteProperty(name = "ul",
+    //         entityRef = ProductUl.class,
+    //         repositoryRef = ProductUlRepository.class,
+    //         orderedProperties = { "id", "name" })
     private Number ul;
-
-    @Property(columnName = "color")
-    @RemoteProperty(name = "color")
-    private Number color;
 
     @Property(columnName = "lst_price")
     @RemoteProperty(name = "lst_price")
     private Number lstPrice;
-
-    @Property(columnName = "partner_ref")
-    @RemoteProperty(name = "partner_ref")
-    private String partnerRef;
-
-    @Property(columnName = "price_extra")
-    @RemoteProperty(name = "price_extra")
-    private Number priceExtra;
 
     @Property(columnName = "sale_ok")
     @RemoteProperty(name = "sale_ok")
@@ -105,10 +89,6 @@ public class Product extends BaseRemoteEntity {
     @RemoteProperty(name = "uos_id")
     private Number uosId;
 
-    @Property(columnName = "list_price")
-    @RemoteProperty(name = "list_price")
-    private Number listPrice;
-
     @Property(columnName = "default_code")
     @RemoteProperty(name = "default_code")
     private String defaultCode;
@@ -122,72 +102,24 @@ public class Product extends BaseRemoteEntity {
     private String dun14;
 
     @Property(columnName = "temperature", type = Property.SQLType.REAL)
-    @RemoteProperty(name = "temperature")
+    // @RemoteProperty(name = "temperature")
     private Number temperature;
-
-    @Property(columnName = "cost_method")
-    @RemoteProperty(name = "cost_method")
-    private String costMethod;
 
     @Property(columnName = "standard_price")
     @RemoteProperty(name = "standard_price")
     private Number standardPrice;
 
-    @Property(columnName = "produce_delay")
-    @RemoteProperty(name = "produce_delay")
-    private Number produceDelay;
-
     @Property(columnName = "active")
     @RemoteProperty(name = "active")
     private Boolean active;
-
-    @Property(columnName = "uom_po_id")
-    @RemoteProperty(name = "uom_po_id")
-    private Number uomPoId;
 
     @Property(columnName = "qty_available", type = Property.SQLType.REAL)
     @RemoteProperty(name = "qty_available")
     private Number qtyAvailable;
 
-    @Property(columnName = "incoming_qty", type = Property.SQLType.REAL)
-    @RemoteProperty(name = "incoming_qty")
-    private Number incomingQty;
-
-    @Property(columnName = "outgoing_qty", type = Property.SQLType.REAL)
-    @RemoteProperty(name = "outgoing_qty")
-    private Number outgoingQty;
-
     @Property(columnName = "virtual_available")
     @RemoteProperty(name = "virtual_available")
     private Number virtualAvailable;
-
-    @Property(columnName = "track_production")
-    @RemoteProperty(name = "track_production")
-    private Boolean trackProduction;
-
-    @Property(columnName = "track_incoming")
-    @RemoteProperty(name = "track_incoming")
-    private Boolean trackIncoming;
-
-    @Property(columnName = "track_outgoing")
-    @RemoteProperty(name = "track_outgoing")
-    private Boolean trackOutgoing;
-
-    @Property(columnName = "state")
-    @RemoteProperty(name = "state")
-    private String state;
-
-    @Property(columnName = "loc_rack")
-    @RemoteProperty(name = "loc_rack")
-    private String locRack;
-
-    @Property(columnName = "loc_row")
-    @RemoteProperty(name = "loc_row")
-    private String locRow;
-
-    @Property(columnName = "loc_case")
-    @RemoteProperty(name = "loc_case")
-    private String locCase;
 
     @Property(columnName = "volume", type = Property.SQLType.REAL)
     @RemoteProperty(name = "volume")
@@ -201,48 +133,24 @@ public class Product extends BaseRemoteEntity {
     @RemoteProperty(name = "weight_net")
     private Number weightNet;
 
-    @Property(columnName = "life_time")
-    @RemoteProperty(name = "life_time")
-    private Number lifeTime;
-
-    @Property(columnName = "use_time")
-    @RemoteProperty(name = "use_time")
-    private Number useTime;
-
-    @Property(columnName = "removal_time")
-    @RemoteProperty(name = "removal_time")
-    private Number removalTime;
-
-    @Property(columnName = "alert_time")
-    @RemoteProperty(name = "alert_time")
-    private Number alertTime;
-
-    @Property(columnName = "warranty")
-    @RemoteProperty(name = "warranty")
-    private Number warranty;
-
-    @Property(columnName = "sale_delay")
-    @RemoteProperty(name = "sale_delay")
-    private Number saleDelay;
-
     @Property(columnName = "box_units")
-    @RemoteProperty(name = "box_units")
+    // @RemoteProperty(name = "box_units")
     private Number boxUnits;
 
     @Property(columnName = "pallet_boxes_pallet")
-    @RemoteProperty(name = "pallet_boxes_pallet")
+    // @RemoteProperty(name = "pallet_boxes_pallet")
     private Number boxesPerPallet;
 
     @Property(columnName = "pallet_gross_weight")
-    @RemoteProperty(name = "pallet_gross_weight")
+    // @RemoteProperty(name = "pallet_gross_weight")
     private Number palletGrossWeight;
 
     @Property(columnName = "pallet_total_height")
-    @RemoteProperty(name = "pallet_total_height")
+    // @RemoteProperty(name = "pallet_total_height")
     private Number palletTotalHeight;
 
     @Property(columnName = "pallet_ul")
-    @RemoteProperty(name = "pallet_ul")
+    // @RemoteProperty(name = "pallet_ul")
     private Number typeOfPallet;
 
     @Property(columnName = "substitute_products")
@@ -285,14 +193,6 @@ public class Product extends BaseRemoteEntity {
         this.imageMedium = imageMedium;
     }
 
-    public byte[] getImageSmall() {
-        return imageSmall;
-    }
-
-    public void setImageSmall(byte[] imageSmall) {
-        this.imageSmall = imageSmall;
-    }
-
     public String getNameTemplate() {
         return nameTemplate;
     }
@@ -317,36 +217,12 @@ public class Product extends BaseRemoteEntity {
         this.defaultCode = code;
     }
 
-    public Number getColor() {
-        return color;
-    }
-
-    public void setColor(Number color) {
-        this.color = color;
-    }
-
     public Number getLstPrice() {
         return lstPrice;
     }
 
     public void setLstPrice(Number lstPrice) {
         this.lstPrice = lstPrice;
-    }
-
-    public String getPartnerRef() {
-        return partnerRef;
-    }
-
-    public void setPartnerRef(String partnerRef) {
-        this.partnerRef = partnerRef;
-    }
-
-    public Number getPriceExtra() {
-        return priceExtra;
-    }
-
-    public void setPriceExtra(Number priceExtra) {
-        this.priceExtra = priceExtra;
     }
 
     public String getType() {
@@ -363,14 +239,6 @@ public class Product extends BaseRemoteEntity {
 
     public void setUomId(Number uomId) {
         this.uomId = uomId;
-    }
-
-    public Number getListPrice() {
-        return listPrice;
-    }
-
-    public void setListPrice(Number listPrice) {
-        this.listPrice = listPrice;
     }
 
     public String getDefaultCode() {
@@ -405,36 +273,12 @@ public class Product extends BaseRemoteEntity {
         this.temperature = temperature;
     }
 
-    public String getCostMethod() {
-        return costMethod;
-    }
-
-    public void setCostMethod(String costMethod) {
-        this.costMethod = costMethod;
-    }
-
     public Number getStandardPrice() {
         return standardPrice;
     }
 
     public void setStandardPrice(Number standardPrice) {
         this.standardPrice = standardPrice;
-    }
-
-    public Number getProduceDelay() {
-        return produceDelay;
-    }
-
-    public void setProduceDelay(Number produceDelay) {
-        this.produceDelay = produceDelay;
-    }
-
-    public Number getUomPoId() {
-        return uomPoId;
-    }
-
-    public void setUomPoId(Number uomPoId) {
-        this.uomPoId = uomPoId;
     }
 
     public Number getQtyAvailable() {
@@ -445,22 +289,6 @@ public class Product extends BaseRemoteEntity {
         this.qtyAvailable = qtyAvailable;
     }
 
-    public Number getIncomingQty() {
-        return incomingQty;
-    }
-
-    public void setIncomingQty(Number incomingQty) {
-        this.incomingQty = incomingQty;
-    }
-
-    public Number getOutgoingQty() {
-        return outgoingQty;
-    }
-
-    public void setOutgoingQty(Number outgoingQty) {
-        this.outgoingQty = outgoingQty;
-    }
-
     public Number getVirtualAvailable() {
         if (virtualAvailable != null)
             return (Number) new BigDecimal(virtualAvailable.floatValue()).setScale(2, BigDecimal.ROUND_HALF_UP);
@@ -469,38 +297,6 @@ public class Product extends BaseRemoteEntity {
 
     public void setVirtualAvailable(Number virtualAvailable) {
         this.virtualAvailable = virtualAvailable;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
-
-    public String getLocRack() {
-        return locRack;
-    }
-
-    public void setLocRack(String locRack) {
-        this.locRack = locRack;
-    }
-
-    public String getLocRow() {
-        return locRow;
-    }
-
-    public void setLocRow(String locRow) {
-        this.locRow = locRow;
-    }
-
-    public String getLocCase() {
-        return locCase;
-    }
-
-    public void setLocCase(String locCase) {
-        this.locCase = locCase;
     }
 
     public Number getVolume() {
@@ -527,54 +323,6 @@ public class Product extends BaseRemoteEntity {
         this.weightNet = weightNet;
     }
 
-    public Number getLifeTime() {
-        return lifeTime;
-    }
-
-    public void setLifeTime(Number lifeTime) {
-        this.lifeTime = lifeTime;
-    }
-
-    public Number getUseTime() {
-        return useTime;
-    }
-
-    public void setUseTime(Number useTime) {
-        this.useTime = useTime;
-    }
-
-    public Number getRemovalTime() {
-        return removalTime;
-    }
-
-    public void setRemovalTime(Number removalTime) {
-        this.removalTime = removalTime;
-    }
-
-    public Number getAlertTime() {
-        return alertTime;
-    }
-
-    public void setAlertTime(Number alertTime) {
-        this.alertTime = alertTime;
-    }
-
-    public Number getWarranty() {
-        return warranty;
-    }
-
-    public void setWarranty(Number warranty) {
-        this.warranty = warranty;
-    }
-
-    public Number getSaleDelay() {
-        return saleDelay;
-    }
-
-    public void setSaleDelay(Number saleDelay) {
-        this.saleDelay = saleDelay;
-    }
-
     public Boolean getSaleOk() {
         return saleOk;
     }
@@ -597,30 +345,6 @@ public class Product extends BaseRemoteEntity {
 
     public void setActive(Boolean active) {
         this.active = active;
-    }
-
-    public Boolean getTrackProduction() {
-        return trackProduction;
-    }
-
-    public void setTrackProduction(Boolean trackProduction) {
-        this.trackProduction = trackProduction;
-    }
-
-    public Boolean getTrackIncoming() {
-        return trackIncoming;
-    }
-
-    public void setTrackIncoming(Boolean trackIncoming) {
-        this.trackIncoming = trackIncoming;
-    }
-
-    public Boolean getTrackOutgoing() {
-        return trackOutgoing;
-    }
-
-    public void setTrackOutgoing(Boolean trackOutgoing) {
-        this.trackOutgoing = trackOutgoing;
     }
 
     public String getSubstituteProducts() {

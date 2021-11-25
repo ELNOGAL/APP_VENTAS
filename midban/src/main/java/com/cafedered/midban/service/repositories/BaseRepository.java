@@ -166,8 +166,13 @@ public class BaseRepository<E extends BaseEntity, D extends BaseDAO<E>> {
 
     @SuppressWarnings("unchecked")
     public int getRemoteObjects(BaseRemoteEntity entity, String login,
-            String passwd, boolean doDeletes) throws ConfigurationException {
-
+            String passwd, boolean doDeletes, boolean updateAllObjects) throws ConfigurationException {
+        // doDeletes: Se borran los registros en local que ya no existen en remoto.
+        // updateAllObjects: Se actualizan todos los registros independientemente de la última fecha de sincronización.
+        //                   Por ejemplo en product.product, como es una extensión de product.template, si modificamos un campo de product.template
+        //                   no siempre se actualiza write_date en product.product. Además en este mismo ejemplo, los stocks de producto
+        //                   son campos compute con store=False y por tanto no se actualizan dichos valores hasta que no haya
+        //                   algún cambio en cualquier otro campo del producto, ya que no se actualiza write_date en product.product.
         int result = 0;
         Date initDate = new Date();
         String error = "";
@@ -240,8 +245,13 @@ public class BaseRepository<E extends BaseEntity, D extends BaseDAO<E>> {
                 filters.add(FilterCollection.FilterOperator.OR);
                 filters.add("id", "in", serverIdsListToRecover.toArray(new Integer[]{}));
             }
-            entities = adapter.searchAndReadObject(
-                    filters, fieldsRemote, utcDate);
+            if (updateAllObjects) {
+                entities = adapter.searchAndReadObject(
+                        filters, fieldsRemote, null);
+            } else {
+                entities = adapter.searchAndReadObject(
+                        filters, fieldsRemote, utcDate);
+            }
             List<E> toSave = new ArrayList<E>();
             if (LoggerUtil.isDebugEnabled()) {
                 System.out.println("Procesada petición de red. " + entities.size() + " elementos. Tiempo: " + (new Date().getTime() - timeInit) / 1000L);
@@ -311,11 +321,11 @@ public class BaseRepository<E extends BaseEntity, D extends BaseDAO<E>> {
                                     }
                                 }
                             } else if (row.get(field) != null
-                                    && !row.get(field).getClass().equals(Date.class))
+                                    && !row.get(field).getClass().equals(Date.class)) {
                                 ReflectionUtils.setValue(anEntity,
-                                                remoteFields.get(field),
-                                                row.get(field));
-                            else {
+                                        remoteFields.get(field),
+                                        row.get(field));
+                            } else {
                                 try {
                                     if (row.get(field) instanceof Date) {
                                         // DAVID - si la propiedad que va a recibir el dato es String hacemos la transformación, sino lo pasamos como Date

@@ -47,9 +47,9 @@ public class OrderSynchronizationService extends Service {
         public void run() {
             try {
                 OrderRepository.getInstance().getRemoteObjects(new Order(), MidbanApplication.getLoggedUser().getLogin(),
-                        MidbanApplication.getLoggedUser().getPasswd(), false);
+                        MidbanApplication.getLoggedUser().getPasswd(), false, false);
                 OrderLineRepository.getInstance().getRemoteObjects(new OrderLine(), MidbanApplication.getLoggedUser().getLogin(),
-                        MidbanApplication.getLoggedUser().getPasswd(), false);
+                        MidbanApplication.getLoggedUser().getPasswd(), false, false);
             } catch (ConfigurationException e) {
                 if (LoggerUtil.isDebugEnabled()) {
                     e.printStackTrace();
@@ -140,10 +140,10 @@ public class OrderSynchronizationService extends Service {
 
                     OrderRepository.getInstance().getRemoteObjects(new Order(),
                             MidbanApplication.getLoggedUser().getLogin(),
-                            MidbanApplication.getLoggedUser().getPasswd(), false);
+                            MidbanApplication.getLoggedUser().getPasswd(), false, false);
                     OrderLineRepository.getInstance().getRemoteObjects(new OrderLine(),
                             MidbanApplication.getLoggedUser().getLogin(),
-                            MidbanApplication.getLoggedUser().getPasswd(), false);
+                            MidbanApplication.getLoggedUser().getPasswd(), false, false);
 
                     // Comento las siguientes lineas porque es lo mismo que se acaba de hacer y
                     // creo que no tiene sentido hacer mas tarde lo mismo que se hace aqui cada 30 segundos

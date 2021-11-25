@@ -163,7 +163,7 @@ public class SynchronizationAsyncTask extends AsyncTask<User, String, Boolean> {
                         "" + currentProgress++ };
                 publishProgress(lastPublishedProgress);
                 ShopRepository.getInstance().getRemoteObjects(new Shop(),
-                        user.getLogin(), user.getPasswd(), true);
+                        user.getLogin(), user.getPasswd(), true, false);
 
             } catch (ConfigurationException e) {
                 throw new SynchronizationErrorException(e,
@@ -175,7 +175,7 @@ public class SynchronizationAsyncTask extends AsyncTask<User, String, Boolean> {
                         "" + currentProgress++ };
                 publishProgress(lastPublishedProgress);
                 PricelistPricesRepository.getInstance().getRemoteObjects(new PricelistPrices(),
-                        user.getLogin(), user.getPasswd(), true);
+                        user.getLogin(), user.getPasswd(), true, false);
             } catch (ConfigurationException e) {
                 throw new SynchronizationErrorException(e,
                         "Error al sincronizar precios.");
@@ -186,7 +186,7 @@ public class SynchronizationAsyncTask extends AsyncTask<User, String, Boolean> {
                         "" + currentProgress++ };
                 publishProgress(lastPublishedProgress);
                 PaymentModeRepository.getInstance().getRemoteObjects(new PaymentMode(),
-                        user.getLogin(), user.getPasswd(), true);
+                        user.getLogin(), user.getPasswd(), true, false);
             } catch (ConfigurationException e) {
                 throw new SynchronizationErrorException(e,
                         "Error al sincronizar métodos de pago.");
@@ -197,7 +197,7 @@ public class SynchronizationAsyncTask extends AsyncTask<User, String, Boolean> {
                         "" + currentProgress++ };
                 publishProgress(lastPublishedProgress);
                 AccountPaymentTermRepository.getInstance().getRemoteObjects(new AccountPaymentTerm(),
-                        user.getLogin(), user.getPasswd(), true);
+                        user.getLogin(), user.getPasswd(), true, false);
             } catch (ConfigurationException e) {
                 throw new SynchronizationErrorException(e,
                         "Error al sincronizar plazos de pago.");
@@ -208,7 +208,7 @@ public class SynchronizationAsyncTask extends AsyncTask<User, String, Boolean> {
                         "" + currentProgress++ };
                 publishProgress(lastPublishedProgress);
                 WarehouseRepository.getInstance().getRemoteObjects(new Warehouse(),
-                        user.getLogin(), user.getPasswd(), true);
+                        user.getLogin(), user.getPasswd(), true, false);
             } catch (ConfigurationException e) {
                 throw new SynchronizationErrorException(e,
                         "Error al sincronizar almacenes.");
@@ -219,7 +219,7 @@ public class SynchronizationAsyncTask extends AsyncTask<User, String, Boolean> {
                         "" + currentProgress++ };
                 publishProgress(lastPublishedProgress);
                 TaxRepository.getInstance().getRemoteObjects(new Tax(),
-                        user.getLogin(), user.getPasswd(), true);
+                        user.getLogin(), user.getPasswd(), true, false);
             } catch (ConfigurationException e) {
                 throw new SynchronizationErrorException(e,
                         "Error al sincronizar impuestos.");
@@ -230,7 +230,7 @@ public class SynchronizationAsyncTask extends AsyncTask<User, String, Boolean> {
                         "" + currentProgress++ };
                 publishProgress(lastPublishedProgress);
                 PartnerCategoryRepository.getInstance().getRemoteObjects(new PartnerCategory(),
-                        user.getLogin(), user.getPasswd(), true);
+                        user.getLogin(), user.getPasswd(), true, false);
             } catch (ConfigurationException e) {
                 throw new SynchronizationErrorException(e,
                         "Error al sincronizar categorías de cliente.");
@@ -241,7 +241,7 @@ public class SynchronizationAsyncTask extends AsyncTask<User, String, Boolean> {
                         "" + currentProgress++ };
                 publishProgress(lastPublishedProgress);
                 CommercialRouteRepository.getInstance().getRemoteObjects(new CommercialRoute(),
-                        user.getLogin(), user.getPasswd(), true);
+                        user.getLogin(), user.getPasswd(), true, false);
             } catch (ConfigurationException e) {
                 throw new SynchronizationErrorException(e,
                         "Error al sincronizar rutas comerciales.");
@@ -262,7 +262,7 @@ public class SynchronizationAsyncTask extends AsyncTask<User, String, Boolean> {
                         "" + currentProgress++ };
                 publishProgress(lastPublishedProgress);
                 PartnerRepository.getInstance().getRemoteObjects(new Partner(),
-                        user.getLogin(), user.getPasswd(), true);
+                        user.getLogin(), user.getPasswd(), true, false);
             } catch (ConfigurationException e) {
                 throw new SynchronizationErrorException(e,
                         "Error al sincronizar clientes.");
@@ -273,7 +273,7 @@ public class SynchronizationAsyncTask extends AsyncTask<User, String, Boolean> {
                         "" + currentProgress++ };
                 publishProgress(lastPublishedProgress);
                 PaymentTypeRepository.getInstance().getRemoteObjects(new AccountJournal(),
-                        user.getLogin(), user.getPasswd(), true);
+                        user.getLogin(), user.getPasswd(), true, false);
             } catch (ConfigurationException e) {
                 throw new SynchronizationErrorException(e,
                         "Error al sincronizar métodos de pago.");
@@ -284,7 +284,7 @@ public class SynchronizationAsyncTask extends AsyncTask<User, String, Boolean> {
                         "" + currentProgress++ };
                 publishProgress(lastPublishedProgress);
                 AccountRepository.getInstance().getRemoteObjects(new Account(),
-                        user.getLogin(), user.getPasswd(), true);
+                        user.getLogin(), user.getPasswd(), true, false);
             } catch (ConfigurationException e) {
                 throw new SynchronizationErrorException(e,
                         "Error al sincronizar cuentas contables.");
@@ -294,7 +294,7 @@ public class SynchronizationAsyncTask extends AsyncTask<User, String, Boolean> {
                         "" + currentProgress++ };
                 publishProgress(lastPublishedProgress);
                 AccountMoveLineRepository.getInstance().getRemoteObjects(new AccountMoveLine(),
-                        user.getLogin(), user.getPasswd(), true);
+                        user.getLogin(), user.getPasswd(), true, false);
             } catch (ConfigurationException e) {
                 throw new SynchronizationErrorException(e,
                         "Error al sincronizar cobros cliente...");
@@ -316,7 +316,7 @@ public class SynchronizationAsyncTask extends AsyncTask<User, String, Boolean> {
                         "" + currentProgress++ };
                 publishProgress(lastPublishedProgress);
                 OrderRepository.getInstance().getRemoteObjects(new Order(),
-                        user.getLogin(), user.getPasswd(), true);
+                        user.getLogin(), user.getPasswd(), true, false);
             } catch (ConfigurationException e) {
                 throw new SynchronizationErrorException(e,
                         "Error al sincronizar pedidos.");
@@ -327,7 +327,7 @@ public class SynchronizationAsyncTask extends AsyncTask<User, String, Boolean> {
                         "" + currentProgress++};
                 publishProgress(lastPublishedProgress);
                 OrderLineRepository.getInstance().getRemoteObjects(new OrderLine(),
-                        user.getLogin(), user.getPasswd(), true);
+                        user.getLogin(), user.getPasswd(), true, false);
             } catch (ConfigurationException e) {
                 throw new SynchronizationErrorException(e,
                         "Error al sincronizar pedidos (líneas).");
@@ -338,7 +338,7 @@ public class SynchronizationAsyncTask extends AsyncTask<User, String, Boolean> {
                         "" + currentProgress++ };
                 publishProgress(lastPublishedProgress);
                 ProductRepository.getInstance().getRemoteObjects(new Product(),
-                        user.getLogin(), user.getPasswd(), true);
+                        user.getLogin(), user.getPasswd(), true, true);
             } catch (ConfigurationException e) {
                 throw new SynchronizationErrorException(e,
                         "Error al sincronizar productos.");
@@ -349,7 +349,7 @@ public class SynchronizationAsyncTask extends AsyncTask<User, String, Boolean> {
                         "" + currentProgress++ };
                 publishProgress(lastPublishedProgress);
                 ProductUlRepository.getInstance().getRemoteObjects(new ProductUl(),
-                        user.getLogin(), user.getPasswd(), true);
+                        user.getLogin(), user.getPasswd(), true, false);
             } catch (ConfigurationException e) {
                 throw new SynchronizationErrorException(e,
                         "Error al sincronizar productos (product_ul).");
@@ -360,7 +360,7 @@ public class SynchronizationAsyncTask extends AsyncTask<User, String, Boolean> {
                         "" + currentProgress++ };
                 publishProgress(lastPublishedProgress);
                 ProductUomCategRepository.getInstance().getRemoteObjects(new ProductUomCateg(),
-                        user.getLogin(), user.getPasswd(), true);
+                        user.getLogin(), user.getPasswd(), true, false);
             } catch (ConfigurationException e) {
                 throw new SynchronizationErrorException(e,
                         "Error al sincronizar productos (product_uom_categ.");
@@ -371,7 +371,7 @@ public class SynchronizationAsyncTask extends AsyncTask<User, String, Boolean> {
                         "" + currentProgress++ };
                 publishProgress(lastPublishedProgress);
                 ProductUomRepository.getInstance().getRemoteObjects(new ProductUom(),
-                        user.getLogin(), user.getPasswd(), true);
+                        user.getLogin(), user.getPasswd(), true, false);
             } catch (ConfigurationException e) {
                 throw new SynchronizationErrorException(e,
                         "Error al sincronizar productos (product_uom).");
@@ -382,7 +382,7 @@ public class SynchronizationAsyncTask extends AsyncTask<User, String, Boolean> {
                         "" + currentProgress++ };
                 publishProgress(lastPublishedProgress);
                 ProductTemplateRepository.getInstance().getRemoteObjects(new ProductTemplate(),
-                        user.getLogin(), user.getPasswd(), true);
+                        user.getLogin(), user.getPasswd(), true, false);
             } catch (ConfigurationException e) {
                 throw new SynchronizationErrorException(e,
                         "Error al sincronizar productos (product_template).");
@@ -393,7 +393,7 @@ public class SynchronizationAsyncTask extends AsyncTask<User, String, Boolean> {
                         "" + currentProgress++ };
                 publishProgress(lastPublishedProgress);
                 ProductCategoryRepository.getInstance().getRemoteObjects(new ProductCategory(),
-                        user.getLogin(), user.getPasswd(), true);
+                        user.getLogin(), user.getPasswd(), true, false);
             } catch (ConfigurationException e) {
                 throw new SynchronizationErrorException(e,
                         "Error al sincronizar productos (product_category).");
@@ -404,7 +404,7 @@ public class SynchronizationAsyncTask extends AsyncTask<User, String, Boolean> {
                         "" + currentProgress++ };
                 publishProgress(lastPublishedProgress);
                 ProductPackagingRepository.getInstance().getRemoteObjects(new ProductPackaging(),
-                        user.getLogin(), user.getPasswd(), true);
+                        user.getLogin(), user.getPasswd(), true, false);
             } catch (ConfigurationException e) {
                 throw new SynchronizationErrorException(e,
                         "Error al sincronizar productos (product_packaging).");
@@ -415,7 +415,7 @@ public class SynchronizationAsyncTask extends AsyncTask<User, String, Boolean> {
                         "" + currentProgress++ };
                 publishProgress(lastPublishedProgress);
                 CompanyRepository.getInstance().getRemoteObjects(new Company(),
-                        user.getLogin(), user.getPasswd(), true);
+                        user.getLogin(), user.getPasswd(), true, false);
             } catch (ConfigurationException e) {
                 currentProgress = MAX_PROGRESS;
                 throw new SynchronizationErrorException(e,
@@ -718,9 +718,9 @@ public class SynchronizationAsyncTask extends AsyncTask<User, String, Boolean> {
                     OrderRepository.getInstance().saveOrUpdate(
                             confirmOrder);
                     OrderRepository.getInstance().getRemoteObjects(new Order(), user[0].getLogin(),
-                            user[0].getPasswd(), false);
+                            user[0].getPasswd(), false, false);
                     OrderLineRepository.getInstance().getRemoteObjects(new OrderLine(), user[0].getLogin(),
-                            user[0].getPasswd(), false);
+                            user[0].getPasswd(), false, false);
 //                    doRemoveOfOldLines(confirmOrder.getLines());
                 } catch (ServiceException e) {
                     if (LoggerUtil.isDebugEnabled())

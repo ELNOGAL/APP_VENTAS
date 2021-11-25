@@ -1066,9 +1066,9 @@ y por tanto al escribir un valor en el commercial_partner_id se propaga a las di
                                         OrderSynchronizationService.anotherThreadSynchronizing = true;
                                         try {
                                             OrderRepository.getInstance().getRemoteObjects(new Order(), user.getLogin(),
-                                                    user.getPasswd(), false);
+                                                    user.getPasswd(), false, false);
                                             OrderLineRepository.getInstance().getRemoteObjects(new OrderLine(), user.getLogin(),
-                                                    user.getPasswd(), false);
+                                                    user.getPasswd(), false, false);
                                         } catch (ConfigurationException e) {
                                             e.printStackTrace();
                                         }
