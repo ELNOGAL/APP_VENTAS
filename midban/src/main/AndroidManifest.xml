@@ -98,8 +98,13 @@
             android:parentActivityName=".view.activities.PortadaActivity"
             android:windowSoftInputMode="stateHidden" >
         </activity>
+        <!-- Añadimos-> android:configChanges="orientation|screenSize"
+        en OrderActivity para evitar que recargue al rotar pantalla.
+        Si necesitamos que lo haga hay que eliminar dicha linea (ej. si tenemos una vista diferente en apaisado)
+        -->
         <activity
             android:name=".view.activities.OrderActivity"
+            android:configChanges="orientation|screenSize"
             android:label="@string/activity_order_title"
             android:parentActivityName=".view.activities.PortadaActivity"
             android:windowSoftInputMode="stateAlwaysHidden">

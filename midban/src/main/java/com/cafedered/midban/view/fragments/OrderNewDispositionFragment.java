@@ -298,6 +298,25 @@ public class OrderNewDispositionFragment extends BaseSupportFragment implements 
                 }
             }
 
+            if (OrderRepository.getCurrentOrder().getShopId() == null
+                    && OrderRepository.getCurrentOrder().getId() == 0L) {
+                try {
+                    // Si se trata de un pedido nuevo y sólo hay una tienda disponible, la seleccionamos automáticamente
+                    // Experimental -> 25-11-2021 Pedro Gómez
+                    Shop shop = new Shop();
+                    shop.setInApp(true);
+                    shop.setActive(true);
+                    List<Shop> shopList = ShopRepository.getInstance().getByExample(shop, Restriction.AND, true, 0, 2);
+                    if (shopList.size() == 1) {
+                        Long id = shopList.get(0).getId();
+                        OrderRepository.getCurrentOrder().setShopId(id);
+                        favouriteProducts = null;
+                    }
+                } catch (ServiceException e) {
+                    e.printStackTrace();
+                }
+            }
+
             if (OrderRepository.getCurrentOrder().getShopId() != null) {
                 try {
                     Shop shop = ShopRepository.getInstance().getById(OrderRepository.getCurrentOrder().getShopId().longValue());
@@ -597,6 +616,7 @@ y por tanto al escribir un valor en el commercial_partner_id se propaga a las di
                 }
                 line.setTaxesId(new Number[]{taxId});
                 OrderRepository.getCurrentOrder().getLines().add(line);
+                MessagesForUser.showMessage(getView(), getResources().getString(R.string.product_free_of_charge_added), Toast.LENGTH_LONG, Level.WARNING);
                 reloadProducts = false;
                 loadOnResume();
                 return;
@@ -1338,10 +1358,12 @@ y por tanto al escribir un valor en el commercial_partner_id se propaga a las di
             }
             currentAllProducts.addAll(result.get("todos"));
             footerView.setVisibility(View.GONE);
-            if (mostrarFavoritos) {
+            if (mostrarFavoritos && adapterFavourite != null) {
                 adapterFavourite.notifyDataSetChanged();
             }
-            adapterAll.notifyDataSetChanged();
+            if (adapterAll != null) {
+                adapterAll.notifyDataSetChanged();
+            }
             allCatalogListView.setOnScrollListener(new InfiniteScrollListener(15) {
                 @Override
                 public void loadMore(final int page, final int totalItemsCount) {

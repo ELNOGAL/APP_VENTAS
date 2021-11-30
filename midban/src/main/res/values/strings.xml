@@ -3,7 +3,7 @@
 
     <string name="app_name">Ventas Valquin</string>
     <string name="action_settings">Settings</string>
-    <string name="configuration_version">Versión: 1.1.1 - Fecha: 25/11/2021 - PGC</string>
+    <string name="configuration_version">Versión: 1.1.2 - Fecha: 30/11/2021 - PGC</string>
 
     <!-- configuration parameters -->
     <string name="database_name">midban</string>
@@ -573,6 +573,7 @@
     <string name="cannot_confirm_while_calculating_prices">No se puede confirmar un pedido mientras se están calculando precios</string>
     <string name="units_cannot_be_modified_when_read_only_mode">No se pueden cambiar las unidades de este pedido. Está en modo lectura.</string>
     <string name="product_was_already_added">El producto ya se había añadido. Sólo puede haber dos líneas para el mismo producto y una de ellas ha de tener precio = 0.</string>
+    <string name="product_free_of_charge_added">Acaba de añadir una línea de producto sin cargo. Asegúrese de que es correcto.</string>
     <string name="cancelacion_pedido">Cancelación de pedido</string>
     <string name="realmente_desea_cancelar_pedido">¿Desea realmente cancelar el pedido?</string>
     <string name="yes">Sí</string>
