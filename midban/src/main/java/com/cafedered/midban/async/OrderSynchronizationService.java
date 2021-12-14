@@ -140,10 +140,10 @@ public class OrderSynchronizationService extends Service {
 
                     OrderRepository.getInstance().getRemoteObjects(new Order(),
                             MidbanApplication.getLoggedUser().getLogin(),
-                            MidbanApplication.getLoggedUser().getPasswd(), false, false);
+                            MidbanApplication.getLoggedUser().getPasswd(), true, false);
                     OrderLineRepository.getInstance().getRemoteObjects(new OrderLine(),
                             MidbanApplication.getLoggedUser().getLogin(),
-                            MidbanApplication.getLoggedUser().getPasswd(), false, false);
+                            MidbanApplication.getLoggedUser().getPasswd(), true, false);
 
                     // Comento las siguientes lineas porque es lo mismo que se acaba de hacer y
                     // creo que no tiene sentido hacer mas tarde lo mismo que se hace aqui cada 30 segundos

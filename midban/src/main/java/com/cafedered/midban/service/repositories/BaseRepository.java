@@ -240,10 +240,10 @@ public class BaseRepository<E extends BaseEntity, D extends BaseDAO<E>> {
                 } catch (DatabaseException e) {
                     e.printStackTrace();
                 }
-            }
-            if (serverIdsListToRecover.size() > 0 && utcDate != null) {
-                filters.add(FilterCollection.FilterOperator.OR);
-                filters.add("id", "in", serverIdsListToRecover.toArray(new Integer[]{}));
+                if ((serverIdsListToRecover.size() > 0) && !updateAllObjects) {
+                    filters.add(FilterCollection.FilterOperator.OR);
+                    filters.add("id", "in", serverIdsListToRecover.toArray(new Integer[]{}));
+                }
             }
             if (updateAllObjects) {
                 entities = adapter.searchAndReadObject(
