@@ -50,8 +50,8 @@ public class Product extends BaseRemoteEntity {
     @RemoteProperty(name = "image")
     private byte[] imageMedium;
 
-     @Property(columnName = "name_template")
-    @RemoteProperty(name = "name_template")
+    @Property(columnName = "name_template")
+    @RemoteProperty(name = "name")  // Usamos este campo en lugar de name_template porque corresponde con el nombre en el idioma del usuario
     private String nameTemplate;
 
     @Property(columnName = "product_tmpl_id")
