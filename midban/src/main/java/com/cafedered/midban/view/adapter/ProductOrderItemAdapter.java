@@ -147,8 +147,8 @@ public class ProductOrderItemAdapter extends BaseAdapter {
                     Product.class.getName() + product.getId() + "0"));
             holder.name.setText(product.getNameTemplate());
             holder.code.setText(product.getCode());
-            if (product.getQtyAvailable() != null)
-                holder.stock.setText("Stock: " + new BigDecimal(product.getQtyAvailable().floatValue()).setScale(2, BigDecimal.ROUND_HALF_UP));
+            if (product.getQtyAvailableImmediately() != null)
+                holder.stock.setText("Stock: " + product.getQtyAvailableImmediately());
             if (product.getUomId() != null) {
                 ProductUom uom = null;
                 try {

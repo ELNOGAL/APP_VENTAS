@@ -121,6 +121,10 @@ public class Product extends BaseRemoteEntity {
     @RemoteProperty(name = "virtual_available")
     private Number virtualAvailable;
 
+    @Property(columnName = "outgoing_qty")
+    @RemoteProperty(name = "outgoing_qty")
+    private Number outgoingQty;
+
     @Property(columnName = "volume", type = Property.SQLType.REAL)
     @RemoteProperty(name = "volume")
     private Number volume;
@@ -282,6 +286,8 @@ public class Product extends BaseRemoteEntity {
     }
 
     public Number getQtyAvailable() {
+        if (qtyAvailable != null)
+            return (Number) new BigDecimal(qtyAvailable.floatValue()).setScale(2, BigDecimal.ROUND_HALF_UP);
         return qtyAvailable;
     }
 
@@ -297,6 +303,27 @@ public class Product extends BaseRemoteEntity {
 
     public void setVirtualAvailable(Number virtualAvailable) {
         this.virtualAvailable = virtualAvailable;
+    }
+
+    public Number getOutgoingQty() {
+        if (outgoingQty != null)
+            return (Number) new BigDecimal(outgoingQty.floatValue()).setScale(2, BigDecimal.ROUND_HALF_UP);
+        return outgoingQty;
+    }
+
+    public void setOutgoingQty(Number outgoingQty) {
+        this.outgoingQty = outgoingQty;
+    }
+
+    public Number getQtyAvailableImmediately() {
+        Number qtyAvailableImmediately = 0;
+        if (getQtyAvailable() != null && getOutgoingQty() != null) {
+            qtyAvailableImmediately = getQtyAvailable().floatValue() - getOutgoingQty().floatValue();
+            if (qtyAvailableImmediately.floatValue() < 0.0F)
+                qtyAvailableImmediately = 0;
+        }
+        qtyAvailableImmediately = (Number) new BigDecimal(qtyAvailableImmediately.floatValue()).setScale(2, BigDecimal.ROUND_HALF_UP);
+        return qtyAvailableImmediately;
     }
 
     public Number getVolume() {

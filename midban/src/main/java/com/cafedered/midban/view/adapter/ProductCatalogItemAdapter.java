@@ -186,10 +186,10 @@ public class ProductCatalogItemAdapter extends BaseAdapter {
                     holder.category.setText("");
                 }
             }
-            if (product.getVirtualAvailable() != null) {
+            if (product.getQtyAvailableImmediately() != null) {
                 holder.stock.setText(vi.getResources().getString(
                         R.string.fragment_product_catalog_stock)
-                        + " " + new BigDecimal(product.getVirtualAvailable().floatValue()).setScale(2, BigDecimal.ROUND_HALF_UP).toString());
+                        + " " + product.getQtyAvailableImmediately());
                 if (product.getUomId() != null) {
                     ProductUom uom = null;
                     try {

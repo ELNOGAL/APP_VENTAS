@@ -111,7 +111,7 @@
             android:id="@+id/fragment_product_card_add_to_cart_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
+            android:layout_weight="1"
             android:drawablePadding="1dp"
             android:drawableRight="@drawable/ficha_producto_anadir_carrito"
             android:lines="1"

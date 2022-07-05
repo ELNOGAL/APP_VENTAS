@@ -101,7 +101,7 @@ public class ProductToReservationDialog extends Dialog {
         setImage();
         productName.setText(product.getNameTemplate());
         productCode.setText("" + product.getId());
-        productStock.setText("" + product.getVirtualAvailable());
+        productStock.setText("" + product.getQtyAvailableImmediately());
         // Obtener precio del producto
         new AsyncTask<String, Void, String>() {
             @Override
@@ -215,7 +215,7 @@ public class ProductToReservationDialog extends Dialog {
         try {
             Float quantityEntered = Float.parseFloat(productQuantity.getText()
                     .toString());
-            if (quantityEntered > product.getVirtualAvailable().floatValue()
+            if (quantityEntered > product.getQtyAvailableImmediately().floatValue()
                     || quantityEntered <= 0) {
                 errors += this.getContext().getResources()
                         .getString(R.string.stock_not_available);

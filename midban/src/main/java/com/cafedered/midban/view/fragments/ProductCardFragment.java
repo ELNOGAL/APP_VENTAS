@@ -80,8 +80,7 @@ public class ProductCardFragment extends BaseSupportFragment {
     @Wire(view = R.id.fragment_product_card_product_code,
             field = "defaultCode")
     private TextView productCode;
-    @Wire(view = R.id.fragment_product_card_product_stock,
-            field = "virtualAvailable")
+    @Wire(view = R.id.fragment_product_card_product_stock)
     private TextView productStock;
     @Wire(view = R.id.fragment_product_card_product_price)
     private TextView productPrice;
@@ -99,15 +98,12 @@ public class ProductCardFragment extends BaseSupportFragment {
     private TextView tabGeneral;
     @Wire(view = R.id.fragment_product_card_tab_logistics)
     private TextView tabLogistics;
-
-
     @Wire(view = R.id.fragment_product_card_tab_sustitutive)
     private TextView tabSustitutive;
     @Wire(view = R.id.fragment_product_card_add_to_cart_button)
     private Button cartButton;
     @Wire(view = R.id.fragment_product_card_substitutives_listview)
     private ListView substitutivesListView;
-
     @Wire(view = R.id.fragment_product_card_product_unit_per_box,
             field = "boxUnits")
     private TextView unitsPerBox;
@@ -138,7 +134,6 @@ public class ProductCardFragment extends BaseSupportFragment {
     @Wire(view = R.id.fragment_product_card_product_discount3,
             field = "discount3")
     private TextView productDiscount3;
-
     @Wire(view = R.id.fragment_product_card_product_discount1_result)
     private TextView productDiscount1Result;
     @Wire(view = R.id.fragment_product_card_product_discount2_result)
@@ -217,6 +212,7 @@ public class ProductCardFragment extends BaseSupportFragment {
                                     ProductCardFragment.this, result));
                 };
             }.execute();
+            productStock.setText("" + product.getQtyAvailableImmediately());
             // Obtener precio del producto
             Partner partner = (Partner) MidbanApplication
                     .getValueFromContext(ContextAttributes.PARTNER_TO_DETAIL);

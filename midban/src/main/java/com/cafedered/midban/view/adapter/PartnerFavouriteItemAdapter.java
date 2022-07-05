@@ -246,7 +246,7 @@ public class PartnerFavouriteItemAdapter extends BaseAdapter {
 
         holder.stock.setText(convertView.getResources().getString(
                 R.string.fragment_partner_favourite_stock)
-                + " " + product.getProduct().getVirtualAvailable());
+                + " " + product.getProduct().getQtyAvailableImmediately());
 
         holder.icons.removeAllViews();
         boolean showCestaActivada = false;
