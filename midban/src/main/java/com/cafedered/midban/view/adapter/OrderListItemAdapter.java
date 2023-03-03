@@ -174,7 +174,9 @@ public class OrderListItemAdapter extends BaseAdapter {
         else if (order.getState() != null && order.getState().equals("not_sent"))
             holder.state.setText("Pdte. sincro");
         else if (order.getState() != null && order.getState().equals("wait_risk"))
-            holder.state.setText("Esp. riesgo");
+            holder.state.setText("Pdte. riesgo");
+        else if (order.getState() != null && order.getState().equals("risk_approved"))
+            holder.state.setText("Riesgo OK");
         else if (order.getState() != null && order.getState().equals("progress"))
             holder.state.setText("Confirmado");
         else if (order.getState() != null && order.getState().equals("shipping_except"))
