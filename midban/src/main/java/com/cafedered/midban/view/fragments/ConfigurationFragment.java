@@ -89,6 +89,7 @@ public class ConfigurationFragment extends BaseSupportFragment {
                 configurationTransformer.toUi(configuration, this);
             else {
                 // FIXME delete this hardcoded test data
+                // PGC
                 protocol.setText("http");
                 openErpServer.setText("ip/hostname");
                 openErpPort.setText("80");

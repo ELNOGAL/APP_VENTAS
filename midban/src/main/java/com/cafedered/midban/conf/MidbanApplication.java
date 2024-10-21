@@ -60,9 +60,9 @@ public class MidbanApplication extends Application implements LifecycleObserver 
     private Map<String, Object> values = new HashMap<String, Object>();
     public final static String PREFIX = "HORECA_";
     public static Boolean debugEnabled;
-//  public static int activeCompany = 1; // EL NOGAL
-    public static int activeCompany = 2; // VALQUIN
-//  public static int activeCompany = 3; // QUIVAL
+//  public static int activeCompany = 1; // EL NOGAL PGC
+    public static int activeCompany = 2; // VALQUIN PGC
+//  public static int activeCompany = 3; // QUIVAL PGC
     public static boolean appInForeground = true;
 
     public static int getResourceLogo() {

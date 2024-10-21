@@ -66,7 +66,7 @@ public class OrderRepository extends BaseRepository<Order, OrderDAO> {
     }
 
     public enum DateFilters {
-        LAST_ORDER(0), LAST_30_DAYS(-30), LAST_90_DAYS(-90), LAST_YEAR(-365);
+        LAST_ORDER(0), LAST_30_DAYS(-30), LAST_90_DAYS(-90), LAST_YEAR(-365), ALL_ORDERS(-730);
 
         private int datesBack;
 
@@ -112,7 +112,7 @@ public class OrderRepository extends BaseRepository<Order, OrderDAO> {
 
     public List<Product> getProductFavouritesForPartner(Long idPartner, Long idShop) {
         return dao.getProductsOfPartnerWithDateFilters(
-                idPartner, idShop, DateFilters.LAST_YEAR.getDatesBack());
+                idPartner, idShop, DateFilters.ALL_ORDERS.getDatesBack());
     }
 
     @SuppressLint("DefaultLocale")

@@ -347,7 +347,9 @@ public class Order extends BaseRemoteEntity implements Comparable<Order> {
     public FilterCollection getRemoteFilters() {
         FilterCollection filters = new FilterCollection();
         Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DATE, -365);
+        // Dias totales que se van a sincronizar los pedidos
+        // Hasta 21/10/2024 teniamos 365
+        calendar.add(Calendar.DATE, -460); // 15 meses = 460 dias / Max 730 dias, sino modificar ALL_ORDERS / PGC
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {
             filters.add("date_order", ">", formatter.format(calendar.getTime()));
