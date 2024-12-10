@@ -67,6 +67,8 @@ public class ConfigurationFragment extends BaseSupportFragment {
     private EditText openErpDatabase;
     @Wire(field = "username", view = R.id.fragment_configuration_field_username)
     private EditText defaultUser;
+    @Wire(field = "maxDaysToSync", view = R.id.fragment_configuration_field_max_days_to_synchronize)
+    private EditText defaultMaxDaysToSync;
     @Wire(view = R.id.tv_configuration_version)
     private TextView version;
     @Wire(view = R.id.fragment_configuration_field_warehouse)
@@ -95,6 +97,8 @@ public class ConfigurationFragment extends BaseSupportFragment {
                 openErpPort.setText("80");
                 openErpDatabase.setText("database_name");
                 defaultUser.setText("user_name");
+                defaultMaxDaysToSync.setText("365");
+
             }
 
             version.setOnClickListener(new View.OnClickListener() {
@@ -137,9 +141,16 @@ public class ConfigurationFragment extends BaseSupportFragment {
                     new Configuration(), this);
             System.out.println(conf.toString());
             conf.setId(1L);
+            Boolean guardarOk = true;
+            if (Integer.parseInt(defaultMaxDaysToSync.getText().toString()) > 730) {
+                guardarOk = false;
+                MessagesForUser.showMessage(getView(), "Máximo de días a sincronizar = 730 días (2 años)", Toast.LENGTH_LONG, Level.SEVERE);
+            }
             if (warehouseSelector.getSelectedItem() == null) {
-                MessagesForUser.showMessage(getView(), "Ha de seleccionar un almacén.", Toast.LENGTH_LONG, Level.SEVERE);
-            } else {
+                guardarOk = false;
+                MessagesForUser.showMessage(getView(), "Ha de seleccionar un almacén", Toast.LENGTH_LONG, Level.SEVERE);
+            }
+            if (guardarOk) {
                 new AlertDialog.Builder(getActivity())
                         .setIcon(android.R.drawable.ic_dialog_alert)
                         .setTitle(R.string.confirmar_configuracion)

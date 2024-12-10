@@ -28,6 +28,7 @@ import android.widget.Toast;
 
 import com.cafedered.cafedroidlitedao.extractor.Restriction;
 import com.cafedered.midban.R;
+import com.cafedered.midban.conf.MidbanApplication;
 import com.cafedered.midban.entities.Account;
 import com.cafedered.midban.entities.AccountJournal;
 import com.cafedered.midban.entities.AccountMoveLine;
@@ -93,7 +94,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -312,7 +315,12 @@ public class SynchronizationAsyncTask extends AsyncTask<User, String, Boolean> {
             }
 
             try {
-                lastPublishedProgress = new String[] { "Sincronizando pedidos...",
+                Calendar c = Calendar.getInstance();
+                Date now = c.getTime();
+                c.add(Calendar.DATE, -MidbanApplication.getMaxDaysToSync());
+                Date pastDate = c.getTime();
+                SimpleDateFormat pastDateFormated = new SimpleDateFormat("dd-MM-yyyy");
+                lastPublishedProgress = new String[] { "Sincronizando pedidos desde el " + pastDateFormated.format(pastDate) + "...",
                         "" + currentProgress++ };
                 publishProgress(lastPublishedProgress);
                 OrderRepository.getInstance().getRemoteObjects(new Order(),
@@ -323,7 +331,12 @@ public class SynchronizationAsyncTask extends AsyncTask<User, String, Boolean> {
             }
 
             try {
-                lastPublishedProgress = new String[] { "Sincronizando pedidos (líneas)...",
+                Calendar c = Calendar.getInstance();
+                Date now = c.getTime();
+                c.add(Calendar.DATE, -MidbanApplication.getMaxDaysToSync());
+                Date pastDate = c.getTime();
+                SimpleDateFormat pastDateFormated = new SimpleDateFormat("dd-MM-yyyy");
+                lastPublishedProgress = new String[] { "Sincronizando pedidos (líneas) desde el " + pastDateFormated.format(pastDate) + "...",
                         "" + currentProgress++};
                 publishProgress(lastPublishedProgress);
                 OrderLineRepository.getInstance().getRemoteObjects(new OrderLine(),

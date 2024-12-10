@@ -37,8 +37,10 @@ public class Configuration extends BaseEntity {
     private String dbOpenErp;
     @Property(columnName = "default_username")
     private String username;
-	@Property(columnName = "warehouse_id")
-	Number warehouseId;
+    @Property(columnName = "max_days_to_sync")
+    private Number maxDaysToSync;
+    @Property(columnName = "warehouse_id")
+    Number warehouseId;
 //	@Property(columnName = "email_logs")
 //	private String emailLogs;
 
@@ -118,7 +120,15 @@ public class Configuration extends BaseEntity {
         this.protocol = protocol;
     }
 
-    @Override
+    public Number getMaxDaysToSync() {
+        return maxDaysToSync;
+    }
+
+    public void setMaxDaysToSync(Number maxDaysToSync) {
+        this.maxDaysToSync = maxDaysToSync;
+    }
+
+	@Override
 	public Long getId() {
 		return id;
 	}

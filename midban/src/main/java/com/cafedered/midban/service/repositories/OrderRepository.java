@@ -21,6 +21,7 @@ import android.annotation.SuppressLint;
 
 import com.cafedered.cafedroidlitedao.exceptions.DatabaseException;
 import com.cafedered.cafedroidlitedao.extractor.Restriction;
+import com.cafedered.midban.conf.MidbanApplication;
 import com.cafedered.midban.dao.OrderDAO;
 import com.cafedered.midban.entities.Order;
 import com.cafedered.midban.entities.Product;
@@ -66,7 +67,7 @@ public class OrderRepository extends BaseRepository<Order, OrderDAO> {
     }
 
     public enum DateFilters {
-        LAST_ORDER(0), LAST_30_DAYS(-30), LAST_90_DAYS(-90), LAST_YEAR(-365), ALL_ORDERS(-730);
+        LAST_ORDER(0), LAST_30_DAYS(-30), LAST_90_DAYS(-90), LAST_YEAR(-365), MAX_DAYS_TO_SYNC(-MidbanApplication.getMaxDaysToSync());
 
         private int datesBack;
 
@@ -112,7 +113,7 @@ public class OrderRepository extends BaseRepository<Order, OrderDAO> {
 
     public List<Product> getProductFavouritesForPartner(Long idPartner, Long idShop) {
         return dao.getProductsOfPartnerWithDateFilters(
-                idPartner, idShop, DateFilters.ALL_ORDERS.getDatesBack());
+                idPartner, idShop, DateFilters.MAX_DAYS_TO_SYNC.getDatesBack());
     }
 
     @SuppressLint("DefaultLocale")

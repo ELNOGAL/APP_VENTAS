@@ -75,6 +75,8 @@ public class FavouritesPartnerFragment extends BaseSupportFragment {
     private TextView tabLastMonth;
     @Wire(view = R.id.fragment_partner_favourites_last_year_selector)
     private TextView tabLastYear;
+    @Wire(view = R.id.fragment_partner_favourites_all_days_selector)
+    private TextView tabAllDays;
     private boolean isFirst = true;
     private Partner partner;
     private OrderRepository.DateFilters currentDateFilter;
@@ -172,7 +174,8 @@ public class FavouritesPartnerFragment extends BaseSupportFragment {
 
     @Click(views = { R.id.fragment_partner_favourites_last_order_selector,
             R.id.fragment_partner_favourites_last_30_days_selector,
-            R.id.fragment_partner_favourites_last_year_selector })
+            R.id.fragment_partner_favourites_last_year_selector,
+            R.id.fragment_partner_favourites_all_days_selector })
     public void onClickTab(View v) {
         switch (Integer.parseInt(v.getTag().toString())) {
         case 1: {
@@ -182,6 +185,8 @@ public class FavouritesPartnerFragment extends BaseSupportFragment {
                     R.color.midban_grey));
             tabLastOrder.setBackgroundColor(getResources().getColor(
                     R.color.midban_darker_grey));
+            tabAllDays.setBackgroundColor(getResources().getColor(
+                    R.color.midban_grey));
             currentDateFilter = OrderRepository.DateFilters.LAST_ORDER;
             break;
         }
@@ -191,6 +196,8 @@ public class FavouritesPartnerFragment extends BaseSupportFragment {
             tabLastYear.setBackgroundColor(getResources().getColor(
                     R.color.midban_grey));
             tabLastOrder.setBackgroundColor(getResources().getColor(
+                    R.color.midban_grey));
+            tabAllDays.setBackgroundColor(getResources().getColor(
                     R.color.midban_grey));
             currentDateFilter = OrderRepository.DateFilters.LAST_30_DAYS;
             break;
@@ -202,7 +209,21 @@ public class FavouritesPartnerFragment extends BaseSupportFragment {
                     R.color.midban_darker_grey));
             tabLastOrder.setBackgroundColor(getResources().getColor(
                     R.color.midban_grey));
+            tabAllDays.setBackgroundColor(getResources().getColor(
+                    R.color.midban_grey));
             currentDateFilter = OrderRepository.DateFilters.LAST_YEAR;
+            break;
+        }
+        case 4: {
+            tabLastMonth.setBackgroundColor(getResources().getColor(
+                    R.color.midban_grey));
+            tabLastYear.setBackgroundColor(getResources().getColor(
+                    R.color.midban_grey));
+            tabLastOrder.setBackgroundColor(getResources().getColor(
+                    R.color.midban_grey));
+            tabAllDays.setBackgroundColor(getResources().getColor(
+                    R.color.midban_darker_grey));
+            currentDateFilter = OrderRepository.DateFilters.MAX_DAYS_TO_SYNC;
             break;
         }
         }

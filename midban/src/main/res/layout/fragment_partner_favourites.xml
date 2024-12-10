@@ -112,7 +112,21 @@
             android:tag="3"
             android:text="@string/fragment_partner_favourites_last_year_selector"
             android:textSize="@dimen/h4" />
-        
+
+        <TextView
+            android:id="@+id/fragment_partner_favourites_all_days_selector"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:background="@color/midban_grey"
+            android:paddingBottom="@dimen/label_to_value_margin"
+            android:paddingLeft="@dimen/button_horizontal_padding"
+            android:paddingRight="@dimen/button_horizontal_padding"
+            android:paddingTop="@dimen/label_to_value_margin"
+            android:tag="4"
+            android:text="@string/fragment_partner_favourites_all_days_selector"
+            android:textSize="@dimen/h4" />
+
     </LinearLayout>
 
     <ListView

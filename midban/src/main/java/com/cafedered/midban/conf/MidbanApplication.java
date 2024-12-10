@@ -35,6 +35,7 @@ import com.cafedered.midban.dao.ContextDAO;
 import com.cafedered.midban.entities.Company;
 import com.cafedered.midban.entities.User;
 import com.cafedered.midban.service.repositories.CompanyRepository;
+import com.cafedered.midban.service.repositories.ConfigurationRepository;
 import com.cafedered.midban.service.repositories.UserRepository;
 import com.cafedered.midban.utils.GMailSender;
 import com.cafedered.midban.utils.LoggerUtil;
@@ -86,6 +87,19 @@ public class MidbanApplication extends Application implements LifecycleObserver 
         }
         if ((actualCompany != null) && (actualCompany.getSalesAppProductPricelist() != null) && (!"".equals(actualCompany.getSalesAppProductPricelist().toString()))) {
             result = actualCompany.getSalesAppProductPricelist().toString();
+        }
+        return result;
+    }
+
+    public static int getMaxDaysToSync() {
+        int result = 365;
+        try {
+            result = ConfigurationRepository.getInstance()
+                    .getConfiguration().getMaxDaysToSync().intValue();
+        } catch (ConfigurationException e) {
+            throw new RuntimeException(e);
+        } catch (ServiceException e) {
+            throw new RuntimeException(e);
         }
         return result;
     }
